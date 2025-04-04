@@ -1,0 +1,74 @@
+audi cars 
+
+audi s8 :
+	rown blue black
+	
+audi rs7 :
+
+	red grey black
+	
+audi rs6 :
+
+	grey blue black
+	
+audi rs5 coupe :
+
+	red grey white 
+	
+audi rs3 :
+
+	yellow white green 
+__________________________________________________________
+
+
+Mercedes cars 
+
+Mercedes s63 e perfromance :
+
+	green white black
+	
+Mercedes g63 :
+
+	green red white 
+
+Mercedes gt63coupe :
+
+	black grey orange
+	
+Mercedes gt63 s e perfromance:
+
+	grey yellow balck
+
+Mercedes c63 :
+
+	black blue 
+	
+_____________________________________________________________
+
+bmw cars
+
+bmw m2 :	
+
+	blue green white 
+	
+bmw m3 :
+
+	black green red
+	
+bmw m8alpina :
+
+	blue green white 
+
+bmw m4 :
+	
+	black green blue 
+	
+bmw m5 : 
+
+	green red black
+	
+bmw i7 :
+
+	black blue white 
+________________________________________________________________________
+
