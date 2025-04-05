@@ -1,8 +1,6 @@
 const data = require("../data.json")
 
 
-
-
 // get all cars 
 exports.getCars = (req, res) => {
     const sneaker = data.cars;
@@ -15,11 +13,10 @@ exports.getCars = (req, res) => {
 exports.getCarById = (req, res) => {
     const id = parseInt(req.params.id);
 
-
     const cars = data.cars
     const car = cars.find($ => $.id === id);
 
-    if (sneaker) {
+    if (car === undefined) {
         return res, status(404).json({
             message: "cars not found"
         });
