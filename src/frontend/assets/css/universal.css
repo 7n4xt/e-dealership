@@ -1,0 +1,66 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+    font-weight: bold;
+    font-family: "Poppins", sans-serif;
+}
+
+/* @font-face {
+    font-family: 'BrightMarching';
+     src: url('/assets/Fonts/BrightMarching-Regular.otf'), format('opentype'); *
+    font-weight: normal;
+    font-style: normal;
+  }
+  
+  #newfont {
+    font-family: 'BrightMarching';
+  } */
+
+body {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    flex: 1fr, 2fr;
+    align-content: center;
+    padding: 40px 50px;
+}
+
+.right-section {
+    display: flex;
+    gap: 30px;
+    font-family: "Poppins", serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: larger;
+}
+
+.right-section a:link {
+    color: #000000;
+    position: relative;
+    text-decoration: none;
+  }
+
+  .right-section a:visited {
+    color: #000000;
+    position: relative;
+    text-decoration: none;
+  }
+
+.left-section {
+    display: flex;
+    justify-content: space-around;
+    width: 12vw;
+}
+
+.icon img {
+    width: 30px;
+    height: 30px;
+}
+
