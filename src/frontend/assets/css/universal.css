@@ -1,10 +1,10 @@
 * {
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
-    text-decoration: none;
-    font-weight: bold;
-    font-family: "Poppins", sans-serif;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  text-decoration: none;
+  font-weight: bold;
+  font-family: "Poppins", sans-serif;
 }
 
 /* @font-face {
@@ -18,49 +18,43 @@
     font-family: 'BrightMarching';
   } */
 
-body {
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-}
-
 nav {
-    display: flex;
-    justify-content: space-between;
-    flex: 1fr, 2fr;
-    align-content: center;
-    padding: 40px 50px;
+  display: flex;
+  justify-content: space-between;
+  flex: 1fr, 2fr;
+  align-content: center;
+  padding: 40px 50px;
 }
 
 .right-section {
-    display: flex;
-    gap: 30px;
-    font-family: "Poppins", serif;
-    font-weight: 400;
-    font-style: normal;
-    font-size: larger;
+  display: flex;
+  gap: 30px;
+  font-family: "Poppins", serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: larger;
 }
 
 .right-section a:link {
-    color: #000000;
-    position: relative;
-    text-decoration: none;
-  }
+  color: #ffffff;
+  position: relative;
+  text-decoration: none;
+}
 
-  .right-section a:visited {
-    color: #000000;
-    position: relative;
-    text-decoration: none;
-  }
+.right-section a:visited {
+  color: #ffffff;
+  position: relative;
+  text-decoration: none;
+}
 
 .left-section {
-    display: flex;
-    justify-content: space-around;
-    width: 12vw;
+  display: flex;
+  justify-content: space-evenly;
+  width: 12vw;
+  gap: 10px;
 }
 
 .icon img {
-    width: 30px;
-    height: 30px;
+  width: 40px;
+  height: 40px;
 }
-
