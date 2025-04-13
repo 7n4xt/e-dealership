@@ -4,133 +4,248 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- google fonts -->
+    <!-- Google fonts: Inter for Apple-like typography -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <!-- css files -->
     <link rel="stylesheet" href="./assets/css/main.css">
     <link rel="stylesheet" href="./assets/css/universal.css">
-    <title>Home Page | E-Dealership</title>
+    <title>E-Dealership | Premium Performance Cars</title>
 </head>
 
 <body>
     <nav>
-        <div class="right-section">
+        <div class="logo-section">
             <a href="./index.html">
                 <h2>E-Dealership</h2>
             </a>
         </div>
-        <div class="left-section">
-            <div class="icon home">
-                <a href="./index.html">
-                    <img src="./assets/icons/home-icon.png" alt="home">
-                </a>
-            </div>
-            <div class="icon cart">
-                <a href="./cart.html">
-                    <img src="./assets/icons/cart-icon.png" alt="cart">
-                </a>
-            </div>
-            <div class="icon wishlist">
-                <a href="./wishlist.html">
-                    <img src="./assets/icons/wishlist-icon.png" alt="wishlist">
-                </a>
-            </div>
-            <div class="icon about">
-                <a href="./about.html">
-                    <img src="./assets/icons/info-icon.png" alt="about">
-                </a>
+        <div class="nav-actions">
+            <ul class="nav-links">
+                <li><a href="./index.html" class="active">Home</a></li>
+                <li><a href="./inventory.html">Inventory</a></li>
+                <li><a href="./about.html">About</a></li>
+            </ul>
+            <div class="nav-icons">
+                <div class="icon cart">
+                    <a href="./cart.html">
+                        <img src="./assets/icons/cart-icon.png" alt="cart">
+                    </a>
+                </div>
+                <div class="icon wishlist">
+                    <a href="./wishlist.html">
+                        <img src="./assets/icons/wishlist-icon.png" alt="wishlist">
+                    </a>
+                </div>
             </div>
         </div>
     </nav>
 
-    <main>
+    <header class="hero">
         <div class="container">
-
-            <div class="main-header">
-                <h1>
-                    The Best Platform For Buying Your First Performence Car
-                </h1>
-                <p>
-                    We are the best platform for buying your first performance cars. We have a wide range of cars to
-                    choose from.
+            <div class="hero-content">
+                <h1 class="hero-title">Experience Performance</h1>
+                <p class="hero-subtitle">
+                    Find and reserve your perfect performance car with our premium selection.
                 </p>
-            </div>
-
-            <div class="main-search">
-                <input class="search-input" type="text" placeholder="Search for your dream car">
-                <div class="search-icon">
-                    <img src="./assets/icons/search-icon.png" alt="search-icon">
-                    <input type="submit" value="">
+                <div class="search-container">
+                    <input class="search-input" type="text" placeholder="Search for your dream car">
+                    <button class="search-button">
+                        <img src="./assets/icons/search-icon.png" alt="search">
+                    </button>
                 </div>
             </div>
-
-            <div class="wrapper">
-                 <img class="item item1" src="./assets/images/Audi-Logo.png" alt="">
-                 <img class="item item2" src="./assets/images/audi-rs-logo.png" alt="">
-                 <img class="item item3" src="./assets/images/BMW-Logo.png" alt="">
-                 <img class="item item4" src="./assets/images/BMW-M-logo.png" alt="">
-                 <img class="item item5" src="./assets/images/mercedes-amg-logo.png" alt="">
-                 <img class="item item6" src="./assets/images/Mercedes-Benz-Logo.png" alt="">
-              </div>
         </div>
+    </header>
 
-        </div>
-    </main>
-
-    <section>
-        <div class="left-filter-section">
-            <div class="f-head">
-                <h4>Filter</h4>
-                <p>Clear all filter</p>
-            </div>
-        </div>
-        <!-- ------------------------ grid right section ----------------------------- -->
-        <div class="grid-container">
-            <div class="grid-header">
-                <div class="grid-header-info">
-                    <p class="choose-car">Choose your car</p>
-                    <p class="available-cars">16 cars are available</p>
+    <section class="featured-brands">
+        <div class="container">
+            <h2 class="section-title">Premium Brands</h2>
+            <div class="brands-slider">
+                <div class="brand-item">
+                    <img src="./assets/images/Audi-Logo.png" alt="Audi">
                 </div>
-                <div class="grid-header-sort">
-                    <p class="sort-by">Sort by</p>
-                    <select name="sort" id="sort">
-                        <option value="price">Price</option>
-                        <option value="milage">Milage</option>
-                        <option value="reduction">Reduction</option>
-                    </select>
+                <div class="brand-item">
+                    <img src="./assets/images/BMW-Logo.png" alt="BMW">
                 </div>
-            </div>
-            <div class="item-grid-container">
-                <div class="grid-item">
-                    <div class="g-head">
-                        <h3>Audi RS3</h3>
-                        <div class="g-brand-info">
-                            <p class="division">Sedan</p>
-                            <p class="tier">Sport</p>
-                        </div>
-                    </div>
-                    <img class="item-img" src="../backend/audicars/audi_rs3_green_side.png" alt="">
-                    <div class="g-foot">
-                        <p class="item-price">80, 000$</p>
-                        <div class="reduction-milage">
-                            <p class="item-milage">10,000 km</p>
-                            <p class="item-reduction">10% reduction</p>
-                        </div>
-                        <div class="item-foot-icons">
-    
-                        </div>
-                    </div>
+                <div class="brand-item">
+                    <img src="./assets/images/BMW-M-logo.png" alt="BMW M">
+                </div>
+                <div class="brand-item">
+                    <img src="./assets/images/Mercedes-Benz-Logo.png" alt="Mercedes-Benz">
+                </div>
+                <div class="brand-item">
+                    <img src="./assets/images/mercedes-amg-logo.png" alt="Mercedes-AMG">
+                </div>
+                <div class="brand-item">
+                    <img src="./assets/images/audi-rs-logo.png" alt="Audi RS">
                 </div>
             </div>
         </div>
     </section>
 
+    <section class="vehicles-section">
+        <div class="container">
+            <div class="vehicles-header">
+                <h2 class="section-title">Choose your vehicle</h2>
+                <p class="vehicles-available">16 vehicles available</p>
+            </div>
+            
+            <div class="filter-sort-container">
+                <div class="filter-section">
+                    <button class="filter-button">
+                        <span>Filter</span>
+                        <img src="./assets/icons/filter-icon.png" alt="Filter">
+                    </button>
+                    <div class="filter-tags">
+                        <div class="filter-tag">€50 - €100</div>
+                        <div class="filter-tag">€150 - €200</div>
+                        <div class="filter-tag">SUV</div>
+                        <div class="filter-tag">Automatic</div>
+                    </div>
+                </div>
+                <div class="sort-section">
+                    <label for="sort-select">Sort by</label>
+                    <select id="sort-select" class="sort-select">
+                        <option value="popular">Most Popular</option>
+                        <option value="price-low">Price: Low to High</option>
+                        <option value="price-high">Price: High to Low</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="vehicles-grid">
+                <div class="vehicle-card">
+                    <div class="vehicle-image">
+                        <img src="./assets/images/bmw-m440.jpg" alt="BMW M440 Coupe">
+                        <div class="vehicle-tag">Early Bird Special</div>
+                    </div>
+                    <div class="vehicle-details">
+                        <div class="vehicle-name-type">
+                            <h3>BMW M440</h3>
+                            <p>Coupe</p>
+                        </div>
+                        <div class="vehicle-price">
+                            <div class="price">€159<span class="price-period">/day</span></div>
+                            <div class="price-total">€1,127.84 total</div>
+                        </div>
+                    </div>
+                    <div class="vehicle-features">
+                        <div class="feature">
+                            <img src="./assets/icons/seats-icon.png" alt="Seats">
+                            <span>2 seats</span>
+                        </div>
+                        <div class="feature">
+                            <img src="./assets/icons/transmission-icon.png" alt="Transmission">
+                            <span>Automatic</span>
+                        </div>
+                        <div class="feature">
+                            <img src="./assets/icons/mileage-icon.png" alt="Mileage">
+                            <span>900 km included</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="vehicle-card">
+                    <div class="vehicle-image">
+                        <img src="./assets/images/vw-troc.jpg" alt="VW T-Roc">
+                        <div class="vehicle-tag">Early Bird Special</div>
+                    </div>
+                    <div class="vehicle-details">
+                        <div class="vehicle-name-type">
+                            <h3>VW T-Roc</h3>
+                            <p>SUV</p>
+                        </div>
+                        <div class="vehicle-price">
+                            <div class="price">€58<span class="price-period">/day</span></div>
+                            <div class="price-total">€712.84 total</div>
+                        </div>
+                    </div>
+                    <div class="vehicle-features">
+                        <div class="feature">
+                            <img src="./assets/icons/seats-icon.png" alt="Seats">
+                            <span>5 seats</span>
+                        </div>
+                        <div class="feature">
+                            <img src="./assets/icons/transmission-icon.png" alt="Transmission">
+                            <span>Manual</span>
+                        </div>
+                        <div class="feature">
+                            <img src="./assets/icons/mileage-icon.png" alt="Mileage">
+                            <span>2,200 km included</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="vehicle-card">
+                    <div class="vehicle-image">
+                        <img src="./assets/images/bmw-x3.jpg" alt="BMW X3">
+                        <div class="vehicle-tag">Early Bird Special</div>
+                    </div>
+                    <div class="vehicle-details">
+                        <div class="vehicle-name-type">
+                            <h3>BMW X3</h3>
+                            <p>SUV</p>
+                        </div>
+                        <div class="vehicle-price">
+                            <div class="price">€70<span class="price-period">/day</span></div>
+                            <div class="price-total">€1,002.29 total</div>
+                        </div>
+                    </div>
+                    <div class="vehicle-features">
+                        <div class="feature">
+                            <img src="./assets/icons/seats-icon.png" alt="Seats">
+                            <span>5 seats</span>
+                        </div>
+                        <div class="feature">
+                            <img src="./assets/icons/transmission-icon.png" alt="Transmission">
+                            <span>Automatic</span>
+                        </div>
+                        <div class="feature">
+                            <img src="./assets/icons/mileage-icon.png" alt="Mileage">
+                            <span>1,200 km included</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="load-more">
+                <button class="load-more-button">Load More Vehicles</button>
+            </div>
+        </div>
+    </section>
+
     <footer>
-        
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <h2>E-Dealership</h2>
+                    <p>Premium performance cars</p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h4>Company</h4>
+                        <ul>
+                            <li><a href="./about.html">About Us</a></li>
+                            <li><a href="./contact.html">Contact</a></li>
+                            <li><a href="./careers.html">Careers</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h4>Support</h4>
+                        <ul>
+                            <li><a href="./faq.html">FAQ</a></li>
+                            <li><a href="./terms.html">Terms of Service</a></li>
+                            <li><a href="./privacy.html">Privacy Policy</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 E-Dealership. All rights reserved.</p>
+            </div>
+        </div>
     </footer>
 
     <script src="./js/main.js"></script>
