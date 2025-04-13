@@ -96,24 +96,33 @@
                     <p class="available-cars">16 cars are available</p>
                 </div>
                 <div class="grid-header-sort">
-
+                    <p class="sort-by">Sort by</p>
+                    <select name="sort" id="sort">
+                        <option value="price">Price</option>
+                        <option value="milage">Milage</option>
+                        <option value="reduction">Reduction</option>
+                    </select>
                 </div>
             </div>
-            <div class="grid-item">
-                <div class="g-head">
-                    <h3>Audi RS3</h3>
-                    <div class="g-brand-info">
-
+            <div class="item-grid-container">
+                <div class="grid-item">
+                    <div class="g-head">
+                        <h3>Audi RS3</h3>
+                        <div class="g-brand-info">
+                            <p class="division">Sedan</p>
+                            <p class="tier">Sport</p>
+                        </div>
                     </div>
-                </div>
-                <img class="item-img" src="../backend/audicars/audi_rs3_green_side.png" alt="">
-                <div class="g-foot">
-                    <p class="item-price">80, 000$</p>
-                    <div class="reduction-milage">
-
-                    </div>
-                    <div class="item-foot-icons">
-
+                    <img class="item-img" src="../backend/audicars/audi_rs3_green_side.png" alt="">
+                    <div class="g-foot">
+                        <p class="item-price">80, 000$</p>
+                        <div class="reduction-milage">
+                            <p class="item-milage">10,000 km</p>
+                            <p class="item-reduction">10% reduction</p>
+                        </div>
+                        <div class="item-foot-icons">
+    
+                        </div>
                     </div>
                 </div>
             </div>
@@ -123,6 +132,7 @@
     <footer>
         
     </footer>
+
     <script src="./js/main.js"></script>
 </body>
 
