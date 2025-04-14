@@ -539,3 +539,214 @@ footer {
         flex-direction: column;
     }
 }
+/* Add this to your main.css or create a new CSS file */
+
+/* Slide Panel Base Styles */
+.slide-panel {
+    position: fixed;
+    top: 0;
+    right: -400px;
+    width: 400px;
+    height: 100vh;
+    background-color: #fff;
+    box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    transition: right 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.slide-panel.open {
+    right: 0;
+}
+
+/* Slide Panel Overlay */
+.slide-panel-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+}
+
+.slide-panel-overlay.active {
+    opacity: 1;
+    pointer-events: all;
+}
+
+body.panel-open {
+    overflow: hidden;
+}
+
+/* Slide Panel Header */
+.slide-panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    border-bottom: 1px solid #eee;
+}
+
+.slide-panel-header h3 {
+    margin: 0;
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.close-panel {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 0;
+    margin: 0;
+    color: #333;
+}
+
+/* Slide Panel Content */
+.slide-panel-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 10px 0;
+}
+
+.empty-message {
+    padding: 20px;
+    text-align: center;
+    color: #888;
+}
+
+/* Item Styles */
+.slide-panel-item {
+    display: flex;
+    padding: 15px 20px;
+    border-bottom: 1px solid #eee;
+    position: relative;
+}
+
+.item-image {
+    width: 80px;
+    height: 60px;
+    margin-right: 15px;
+    overflow: hidden;
+    border-radius: 4px;
+}
+
+.item-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.item-details {
+    flex: 1;
+}
+
+.item-details h4 {
+    margin: 0 0 5px;
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.item-type {
+    margin: 0 0 8px;
+    color: #777;
+    font-size: 0.85rem;
+}
+
+.item-price {
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+.item-price span {
+    font-size: 0.85rem;
+    color: #777;
+    font-weight: normal;
+}
+
+.item-total {
+    font-size: 0.85rem;
+    color: #777;
+    margin-top: 5px;
+}
+
+/* Item Actions */
+.item-actions {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 8px;
+    margin-left: 10px;
+}
+
+.remove-btn, 
+.add-to-cart-btn {
+    padding: 6px 12px;
+    font-size: 0.85rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-align: center;
+    font-weight: 500;
+}
+
+.remove-btn {
+    background-color: transparent;
+    border: 1px solid #ff5252;
+    color: #ff5252;
+}
+
+.remove-btn:hover {
+    background-color: #ff5252;
+    color: white;
+}
+
+.add-to-cart-btn {
+    background-color: transparent;
+    border: 1px solid #2196f3;
+    color: #2196f3;
+}
+
+.add-to-cart-btn:hover {
+    background-color: #2196f3;
+    color: white;
+}
+
+/* Footer with action button */
+.slide-panel-footer {
+    padding: 20px;
+    border-top: 1px solid #eee;
+    background-color: #fff;
+}
+
+.place-order-btn {
+    width: 100%;
+    padding: 12px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.place-order-btn:hover {
+    background-color: #45a049;
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+    .slide-panel {
+        width: 100%;
+        right: -100%;
+    }
+}
