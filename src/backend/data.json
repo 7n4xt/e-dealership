@@ -15,9 +15,32 @@
       "delivery_time": 4,
       "delivery_price": 0,
       "reduction": 5,
-      "img_1": "assets/img/cars/audi/s8/img1.jpg",
-      "img_2": "assets/img/cars/audi/s8/img2.jpg",
-      "img_3": "assets/img/cars/audi/s8/img3.jpg",
+      "images": {
+        "brown": {
+          "main": "audi_s8_brown_main.png",
+          "front": "audi_s8_brown_front.png",
+          "side": "audi_s8_brown_side.png",
+          "back": "audi_s8_brown_back.png",
+          "interior": "audi_s8_brown_interior.png",
+          "seat": "audi_s8_brown_seat.png"
+        },
+        "blue": {
+          "main": "audi_s8_blue_main.png",
+          "front": "audi_s8_blue_front.png",
+          "side": "audi_s8_blue_side.png",
+          "back": "audi_s8_blue_back.png",
+          "interior": "audi_s8_blue_interior.png",
+          "seat": "audi_s8_blue_seat.png"
+        },
+        "black": {
+          "main": "audi_s8_black_main.png",
+          "front": "audi_s8_black_front.png",
+          "side": "audi_s8_black_side.png",
+          "back": "audi_s8_black_back.png",
+          "interior": "audi_s8_black_interior.png",
+          "seat": "audi_s8_black_seat.png"
+        }
+      },
       "available": true,
       "engine_options": "4.0L V8;Hybrid",
       "horsepower": 563,
@@ -45,9 +68,32 @@
       "delivery_time": 3,
       "delivery_price": 1500,
       "reduction": 0,
-      "img_1": "assets/img/cars/audi/rs7/img1.jpg",
-      "img_2": "assets/img/cars/audi/rs7/img2.jpg",
-      "img_3": "assets/img/cars/audi/rs7/img3.jpg",
+      "images": {
+        "red": {
+          "main": "audi_rs7_red_main.png",
+          "front": "audi_rs7_red_front.png",
+          "side": "audi_rs7_red_side.png",
+          "back": "audi_rs7_red_back.png",
+          "interior": "audi_rs7_red_interior.png",
+          "seat": "audi_rs7_red_seat.png"
+        },
+        "grey": {
+          "main": "audi_rs7_grey_main.png",
+          "front": "audi_rs7_grey_front.png",
+          "side": "audi_rs7_grey_side.png",
+          "back": "audi_rs7_grey_back.png",
+          "interior": "audi_rs7_grey_interior.png",
+          "seat": "audi_rs7_grey_seat.png"
+        },
+        "black": {
+          "main": "audi_rs7_black_main.png",
+          "front": "audi_rs7_black_front.png",
+          "side": "audi_rs7_black_side.png",
+          "back": "audi_rs7_black_back.png",
+          "interior": "audi_rs7_black_interior.png",
+          "seat": "audi_rs7_black_seat.png"
+        }
+      },
       "available": true,
       "engine_options": "4.0L V8",
       "horsepower": 591,
@@ -75,9 +121,32 @@
       "delivery_time": 5,
       "delivery_price": 2000,
       "reduction": 3,
-      "img_1": "assets/img/cars/audi/rs6/img1.jpg",
-      "img_2": "assets/img/cars/audi/rs6/img2.jpg",
-      "img_3": "assets/img/cars/audi/rs6/img3.jpg",
+      "images": {
+        "grey": {
+          "main": "audi_rs6_grey_main.png",
+          "front": "audi_rs6_grey_front.png",
+          "side": "audi_rs6_grey_side.png",
+          "back": "audi_rs6_grey_back.png",
+          "interior": "audi_rs6_grey_interior.png",
+          "seat": "audi_rs6_grey_seat.png"
+        },
+        "blue": {
+          "main": "audi_rs6_blue_main.png",
+          "front": "audi_rs6_blue_front.png",
+          "side": "audi_rs6_blue_side.png",
+          "back": "audi_rs6_blue_back.png",
+          "interior": "audi_rs6_blue_interior.png",
+          "seat": "audi_rs6_blue_seat.png"
+        },
+        "black": {
+          "main": "audi_rs6_black_main.png",
+          "front": "audi_rs6_black_front.png",
+          "side": "audi_rs6_black_side.png",
+          "back": "audi_rs6_black_back.png",
+          "interior": "audi_rs6_black_interior.png",
+          "seat": "audi_rs6_black_seat.png"
+        }
+      },
       "available": true,
       "engine_options": "4.0L V8",
       "horsepower": 591,
@@ -105,9 +174,32 @@
       "delivery_time": 2,
       "delivery_price": 0,
       "reduction": 0,
-      "img_1": "assets/img/cars/audi/rs5/img1.jpg",
-      "img_2": "assets/img/cars/audi/rs5/img2.jpg",
-      "img_3": "assets/img/cars/audi/rs5/img3.jpg",
+      "images": {
+        "red": {
+          "main": "audi_rs5_coupe_red_main.png",
+          "front": "audi_rs5_coupe_red_front.png",
+          "side": "audi_rs5_coupe_red_side.png",
+          "back": "audi_rs5_coupe_red_back.png",
+          "interior": "audi_rs5_coupe_red_interior.png",
+          "seat": "audi_rs5_coupe_red_seat.png"
+        },
+        "grey": {
+          "main": "audi_rs5_coupe_grey_main.png",
+          "front": "audi_rs5_coupe_grey_front.png",
+          "side": "audi_rs5_coupe_grey_side.png",
+          "back": "audi_rs5_coupe_grey_back.png",
+          "interior": "audi_rs5_coupe_grey_interior.png",
+          "seat": "audi_rs5_coupe_grey_seat.png"
+        },
+        "white": {
+          "main": "audi_rs5_coupe_white_main.png",
+          "front": "audi_rs5_coupe_white_front.png",
+          "side": "audi_rs5_coupe_white_side.png",
+          "back": "audi_rs5_coupe_white_back.png",
+          "interior": "audi_rs5_coupe_white_interior.png",
+          "seat": "audi_rs5_coupe_white_seat.png"
+        }
+      },
       "available": false,
       "engine_options": "2.9L V6",
       "horsepower": 444,
@@ -135,9 +227,32 @@
       "delivery_time": 3,
       "delivery_price": 1000,
       "reduction": 4,
-      "img_1": "assets/img/cars/audi/rs3/img1.jpg",
-      "img_2": "assets/img/cars/audi/rs3/img2.jpg",
-      "img_3": "assets/img/cars/audi/rs3/img3.jpg",
+      "images": {
+        "yellow": {
+          "main": "audi_rs3_yellow_main.png",
+          "front": "audi_rs3_yellow_front.png",
+          "side": "audi_rs3_yellow_side.png",
+          "back": "audi_rs3_yellow_back.png",
+          "interior": "audi_rs3_yellow_interior.png",
+          "seat": "audi_rs3_yellow_seat.png"
+        },
+        "white": {
+          "main": "audi_rs3_white_main.png",
+          "front": "audi_rs3_white_front.png",
+          "side": "audi_rs3_white_side.png",
+          "back": "audi_rs3_white_back.png",
+          "interior": "audi_rs3_white_interior.png",
+          "seat": "audi_rs3_white_seat.png"
+        },
+        "green": {
+          "main": "audi_rs3_green_main.png",
+          "front": "audi_rs3_green_front.png",
+          "side": "audi_rs3_green_side.png",
+          "back": "audi_rs3_green_back.png",
+          "interior": "audi_rs3_green_interior.png",
+          "seat": "audi_rs3_green_seat.png"
+        }
+      },
       "available": true,
       "engine_options": "2.5L I5",
       "horsepower": 401,
@@ -165,9 +280,32 @@
       "delivery_time": 6,
       "delivery_price": 0,
       "reduction": 0,
-      "img_1": "assets/img/cars/mercedes/s63/img1.jpg",
-      "img_2": "assets/img/cars/mercedes/s63/img2.jpg",
-      "img_3": "assets/img/cars/mercedes/s63/img3.jpg",
+      "images": {
+        "green": {
+          "main": "mercedes_s63_green_main.png",
+          "front": "mercedes_s63_green_front.png",
+          "side": "mercedes_s63_green_side.png",
+          "back": "mercedes_s63_green_back.png",
+          "interior": "mercedes_s63_green_interior.png",
+          "seat": "mercedes_s63_green_seat.png"
+        },
+        "white": {
+          "main": "mercedes_s63_white_main.png",
+          "front": "mercedes_s63_white_front.png",
+          "side": "mercedes_s63_white_side.png",
+          "back": "mercedes_s63_white_back.png",
+          "interior": "mercedes_s63_white_interior.png",
+          "seat": "mercedes_s63_white_seat.png"
+        },
+        "black": {
+          "main": "mercedes_s63_black_main.png",
+          "front": "mercedes_s63_black_front.png",
+          "side": "mercedes_s63_black_side.png",
+          "back": "mercedes_s63_black_back.png",
+          "interior": "mercedes_s63_black_interior.png",
+          "seat": "mercedes_s63_black_seat.png"
+        }
+      },
       "available": true,
       "engine_options": "4.0L V8 Hybrid",
       "horsepower": 791,
@@ -195,9 +333,32 @@
       "delivery_time": 5,
       "delivery_price": 2000,
       "reduction": 0,
-      "img_1": "assets/img/cars/mercedes/g63/img1.jpg",
-      "img_2": "assets/img/cars/mercedes/g63/img2.jpg",
-      "img_3": "assets/img/cars/mercedes/g63/img3.jpg",
+      "images": {
+        "green": {
+          "main": "mercedes_g63_green_main.png",
+          "front": "mercedes_g63_green_front.png",
+          "side": "mercedes_g63_green_side.png",
+          "back": "mercedes_g63_green_back.png",
+          "interior": "mercedes_g63_green_interior.png",
+          "seat": "mercedes_g63_green_seat.png"
+        },
+        "red": {
+          "main": "mercedes_g63_red_main.png",
+          "front": "mercedes_g63_red_front.png",
+          "side": "mercedes_g63_red_side.png",
+          "back": "mercedes_g63_red_back.png",
+          "interior": "mercedes_g63_red_interior.png",
+          "seat": "mercedes_g63_red_seat.png"
+        },
+        "white": {
+          "main": "mercedes_g63_white_main.png",
+          "front": "mercedes_g63_white_front.png",
+          "side": "mercedes_g63_white_side.png",
+          "back": "mercedes_g63_white_back.png",
+          "interior": "mercedes_g63_white_interior.png",
+          "seat": "mercedes_g63_white_seat.png"
+        }
+      },
       "available": true,
       "engine_options": "4.0L V8 BiTurbo",
       "horsepower": 577,
@@ -225,9 +386,32 @@
       "delivery_time": 4,
       "delivery_price": 1500,
       "reduction": 3,
-      "img_1": "assets/img/cars/mercedes/gt63coupe/img1.jpg",
-      "img_2": "assets/img/cars/mercedes/gt63coupe/img2.jpg",
-      "img_3": "assets/img/cars/mercedes/gt63coupe/img3.jpg",
+      "images": {
+        "black": {
+          "main": "mercedes_gt63coupe_black_main.png",
+          "front": "mercedes_gt63coupe_black_front.png",
+          "side": "mercedes_gt63coupe_black_side.png",
+          "back": "mercedes_gt63coupe_black_back.png",
+          "interior": "mercedes_gt63coupe_black_interior.png",
+          "seat": "mercedes_gt63coupe_black_seat.png"
+        },
+        "grey": {
+          "main": "mercedes_gt63coupe_grey_main.png",
+          "front": "mercedes_gt63coupe_grey_front.png",
+          "side": "mercedes_gt63coupe_grey_side.png",
+          "back": "mercedes_gt63coupe_grey_back.png",
+          "interior": "mercedes_gt63coupe_grey_interior.png",
+          "seat": "mercedes_gt63coupe_grey_seat.png"
+        },
+        "orange": {
+          "main": "mercedes_gt63coupe_orange_main.png",
+          "front": "mercedes_gt63coupe_orange_front.png",
+          "side": "mercedes_gt63coupe_orange_side.png",
+          "back": "mercedes_gt63coupe_orange_back.png",
+          "interior": "mercedes_gt63coupe_orange_interior.png",
+          "seat": "mercedes_gt63coupe_orange_seat.png"
+        }
+      },
       "available": true,
       "engine_options": "4.0L V8 BiTurbo",
       "horsepower": 630,
@@ -255,9 +439,32 @@
       "delivery_time": 7,
       "delivery_price": 0,
       "reduction": 0,
-      "img_1": "assets/img/cars/mercedes/gt63se/img1.jpg",
-      "img_2": "assets/img/cars/mercedes/gt63se/img2.jpg",
-      "img_3": "assets/img/cars/mercedes/gt63se/img3.jpg",
+      "images": {
+        "grey": {
+          "main": "mercedes_gt63_grey_main.png",
+          "front": "mercedes_gt63_grey_front.png",
+          "side": "mercedes_gt63_grey_side.png",
+          "back": "mercedes_gt63_grey_back.png",
+          "interior": "mercedes_gt63_grey_interior.png",
+          "seat": "mercedes_gt63_grey_seat.png"
+        },
+        "yellow": {
+          "main": "mercedes_gt63_yellow_main.png",
+          "front": "mercedes_gt63_yellow_front.png",
+          "side": "mercedes_gt63_yellow_side.png",
+          "back": "mercedes_gt63_yellow_back.png",
+          "interior": "mercedes_gt63_yellow_interior.png",
+          "seat": "mercedes_gt63_yellow_seat.png"
+        },
+        "black": {
+          "main": "mercedes_gt63_black_main.png",
+          "front": "mercedes_gt63_black_front.png",
+          "side": "mercedes_gt63_black_side.png",
+          "back": "mercedes_gt63_black_back.png",
+          "interior": "mercedes_gt63_black_interior.png",
+          "seat": "mercedes_gt63_black_seat.png"
+        }
+      },
       "available": false,
       "engine_options": "4.0L V8 Hybrid",
       "horsepower": 843,
@@ -284,9 +491,24 @@
       "delivery_time": 3,
       "delivery_price": 1000,
       "reduction": 5,
-      "img_1": "assets/img/cars/mercedes/c63/img1.jpg",
-      "img_2": "assets/img/cars/mercedes/c63/img2.jpg",
-      "img_3": "assets/img/cars/mercedes/c63/img3.jpg",
+      "images": {
+        "black": {
+          "main": "mercedes_c63_black_main.png",
+          "front": "mercedes_c63_black_front.png",
+          "side": "mercedes_c63_black_side.png",
+          "back": "mercedes_c63_black_back.png",
+          "interior": "mercedes_c63_black_interior.png",
+          "seat": "mercedes_c63_black_seat.png"
+        },
+        "blue": {
+          "main": "mercedes_c63_blue_main.png",
+          "front": "mercedes_c63_blue_front.png",
+          "side": "mercedes_c63_blue_side.png",
+          "back": "mercedes_c63_blue_back.png",
+          "interior": "mercedes_c63_blue_interior.png",
+          "seat": "mercedes_c63_blue_seat.png"
+        }
+      },
       "available": true,
       "engine_options": "2.0L I4 Hybrid",
       "horsepower": 671,
@@ -314,9 +536,32 @@
       "delivery_time": 2,
       "delivery_price": 1000,
       "reduction": 0,
-      "img_1": "assets/img/cars/bmw/m2/img1.jpg",
-      "img_2": "assets/img/cars/bmw/m2/img2.jpg",
-      "img_3": "assets/img/cars/bmw/m2/img3.jpg",
+      "images": {
+        "blue": {
+          "main": "bmw_m2_blue_main.png",
+          "front": "bmw_m2_blue_front.png",
+          "side": "bmw_m2_blue_side.png",
+          "back": "bmw_m2_blue_back.png",
+          "interior": "bmw_m2_blue_interior.png",
+          "seat": "bmw_m2_blue_seat.png"
+        },
+        "green": {
+          "main": "bmw_m2_green_main.png",
+          "front": "bmw_m2_green_front.png",
+          "side": "bmw_m2_green_side.png",
+          "back": "bmw_m2_green_back.png",
+          "interior": "bmw_m2_green_interior.png",
+          "seat": "bmw_m2_green_seat.png"
+        },
+        "white": {
+          "main": "bmw_m2_white_main.png",
+          "front": "bmw_m2_white_front.png",
+          "side": "bmw_m2_white_side.png",
+          "back": "bmw_m2_white_back.png",
+          "interior": "bmw_m2_white_interior.png",
+          "seat": "bmw_m2_white_seat.png"
+        }
+      },
       "available": true,
       "engine_options": "3.0L I6",
       "horsepower": 453,
@@ -344,9 +589,32 @@
       "delivery_time": 4,
       "delivery_price": 1500,
       "reduction": 2,
-      "img_1": "assets/img/cars/bmw/m3/img1.jpg",
-      "img_2": "assets/img/cars/bmw/m3/img2.jpg",
-      "img_3": "assets/img/cars/bmw/m3/img3.jpg",
+      "images": {
+        "black": {
+          "main": "bmw_m3_black_main.png",
+          "front": "bmw_m3_black_front.png",
+          "side": "bmw_m3_black_side.png",
+          "back": "bmw_m3_black_back.png",
+          "interior": "bmw_m3_black_interior.png",
+          "seat": "bmw_m3_black_seat.png"
+        },
+        "green": {
+          "main": "bmw_m3_green_main.png",
+          "front": "bmw_m3_green_front.png",
+          "side": "bmw_m3_green_side.png",
+          "back": "bmw_m3_green_back.png",
+          "interior": "bmw_m3_green_interior.png",
+          "seat": "bmw_m3_green_seat.png"
+        },
+        "red": {
+          "main": "bmw_m3_red_main.png",
+          "front": "bmw_m3_red_front.png",
+          "side": "bmw_m3_red_side.png",
+          "back": "bmw_m3_red_back.png",
+          "interior": "bmw_m3_red_interior.png",
+          "seat": "bmw_m3_red_seat.png"
+        }
+      },
       "available": true,
       "engine_options": "3.0L I6 Twin-Turbo",
       "horsepower": 503,
@@ -374,9 +642,32 @@
       "delivery_time": 6,
       "delivery_price": 0,
       "reduction": 0,
-      "img_1": "assets/img/cars/bmw/m8alpina/img1.jpg",
-      "img_2": "assets/img/cars/bmw/m8alpina/img2.jpg",
-      "img_3": "assets/img/cars/bmw/m8alpina/img3.jpg",
+      "images": {
+        "blue": {
+          "main": "bmw_m8alpina_blue_main.png",
+          "front": "bmw_m8alpina_blue_front.png",
+          "side": "bmw_m8alpina_blue_side.png",
+          "back": "bmw_m8alpina_blue_back.png",
+          "interior": "bmw_m8alpina_blue_interior.png",
+          "seat": "bmw_m8alpina_blue_seat.png"
+        },
+        "green": {
+          "main": "bmw_m8alpina_green_main.png",
+          "front": "bmw_m8alpina_green_front.png",
+          "side": "bmw_m8alpina_green_side.png",
+          "back": "bmw_m8alpina_green_back.png",
+          "interior": "bmw_m8alpina_green_interior.png",
+          "seat": "bmw_m8alpina_green_seat.png"
+        },
+        "white": {
+          "main": "bmw_m8alpina_white_main.png",
+          "front": "bmw_m8alpina_white_front.png",
+          "side": "bmw_m8alpina_white_side.png",
+          "back": "bmw_m8alpina_white_back.png",
+          "interior": "bmw_m8alpina_white_interior.png",
+          "seat": "bmw_m8alpina_white_seat.png"
+        }
+      },
       "available": false,
       "engine_options": "4.4L V8 Twin-Turbo",
       "horsepower": 617,
@@ -404,9 +695,32 @@
       "delivery_time": 3,
       "delivery_price": 1200,
       "reduction": 2,
-      "img_1": "assets/img/cars/bmw/m4/img1.jpg",
-      "img_2": "assets/img/cars/bmw/m4/img2.jpg",
-      "img_3": "assets/img/cars/bmw/m4/img3.jpg",
+      "images": {
+        "black": {
+          "main": "bmw_m4_black_main.png",
+          "front": "bmw_m4_black_front.png",
+          "side": "bmw_m4_black_side.png",
+          "back": "bmw_m4_black_back.png",
+          "interior": "bmw_m4_black_interior.png",
+          "seat": "bmw_m4_black_seat.png"
+        },
+        "green": {
+          "main": "bmw_m4_green_main.png",
+          "front": "bmw_m4_green_front.png",
+          "side": "bmw_m4_green_side.png",
+          "back": "bmw_m4_green_back.png",
+          "interior": "bmw_m4_green_interior.png",
+          "seat": "bmw_m4_green_seat.png"
+        },
+        "blue": {
+          "main": "bmw_m4_blue_main.png",
+          "front": "bmw_m4_blue_front.png",
+          "side": "bmw_m4_blue_side.png",
+          "back": "bmw_m4_blue_back.png",
+          "interior": "bmw_m4_blue_interior.png",
+          "seat": "bmw_m4_blue_seat.png"
+        }
+      },
       "available": true,
       "engine_options": "3.0L I6 Twin-Turbo",
       "horsepower": 503,
@@ -434,9 +748,32 @@
       "delivery_time": 5,
       "delivery_price": 0,
       "reduction": 3,
-      "img_1": "assets/img/cars/bmw/m5/img1.jpg",
-      "img_2": "assets/img/cars/bmw/m5/img2.jpg",
-      "img_3": "assets/img/cars/bmw/m5/img3.jpg",
+      "images": {
+        "green": {
+          "main": "bmw_m5_green_main.png",
+          "front": "bmw_m5_green_front.png",
+          "side": "bmw_m5_green_side.png",
+          "back": "bmw_m5_green_back.png",
+          "interior": "bmw_m5_green_interior.png",
+          "seat": "bmw_m5_green_seat.png"
+        },
+        "red": {
+          "main": "bmw_m5_red_main.png",
+          "front": "bmw_m5_red_front.png",
+          "side": "bmw_m5_red_side.png",
+          "back": "bmw_m5_red_back.png",
+          "interior": "bmw_m5_red_interior.png",
+          "seat": "bmw_m5_red_seat.png"
+        },
+        "black": {
+          "main": "bmw_m5_black_main.png",
+          "front": "bmw_m5_black_front.png",
+          "side": "bmw_m5_black_side.png",
+          "back": "bmw_m5_black_back.png",
+          "interior": "bmw_m5_black_interior.png",
+          "seat": "bmw_m5_black_seat.png"
+        }
+      },
       "available": true,
       "engine_options": "4.4L V8 Twin-Turbo",
       "horsepower": 600,
@@ -464,9 +801,32 @@
       "delivery_time": 4,
       "delivery_price": 0,
       "reduction": 0,
-      "img_1": "assets/img/cars/bmw/i7/img1.jpg",
-      "img_2": "assets/img/cars/bmw/i7/img2.jpg",
-      "img_3": "assets/img/cars/bmw/i7/img3.jpg",
+      "images": {
+        "black": {
+          "main": "bmw_m7_black_main.png",
+          "front": "bmw_m7_black_front.png",
+          "side": "bmw_m7_black_side.png",
+          "back": "bmw_m7_black_back.png",
+          "interior": "bmw_m7_black_interior.png",
+          "seat": "bmw_m7_black_seat.png"
+        },
+        "blue": {
+          "main": "bmw_m7_blue_main.png",
+          "front": "bmw_m7_blue_front.png",
+          "side": "bmw_m7_blue_side.png",
+          "back": "bmw_m7_blue_back.png",
+          "interior": "bmw_m7_blue_interior.png",
+          "seat": "bmw_m7_blue_seat.png"
+        },
+        "white": {
+          "main": "bmw_m7_white_main.png",
+          "front": "bmw_m7_white_front.png",
+          "side": "bmw_m7_white_side.png",
+          "back": "bmw_m7_white_back.png",
+          "interior": "bmw_m7_white_interior.png",
+          "seat": "bmw_m7_white_seat.png"
+        }
+      },
       "available": true,
       "engine_options": "Electric Dual Motor",
       "horsepower": 536,

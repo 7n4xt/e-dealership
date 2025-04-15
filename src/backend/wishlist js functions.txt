@@ -1,0 +1,23 @@
+wishlist.js
+	functions so that the slide work
+main.js
+	main functionalities
+	stock manager
+	fecth data
+	show more products
+	add to wishlist and cart
+cart.js
+	functions so that the slides work
+	order and location using api for delivery
+details.js
+	pop pages to view data
+-----------------------------------------------------------------------
+
+just need to link these files to the index page
+ex:
+	<script src="./js/main.js"></script>
+
+
+when prompting to AI tell him to use the same design.
+use the main files as references 
+like adding index and all css files with some files from backend as well. 
