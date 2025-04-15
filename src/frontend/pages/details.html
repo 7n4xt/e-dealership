@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Google fonts: Inter for Apple-like typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- css files -->
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <link rel="stylesheet" href="../assets/css/universal.css">
+    <link rel="stylesheet" href="../assets/css/details.css">
+    <title>Car Details | E-Dealership</title>
+</head>
+
+<body>
+    <nav>
+        <div class="logo-section">
+            <a href="../index.html">
+                <h2>E-Dealership</h2>
+            </a>
+        </div>
+        <div class="nav-actions">
+            <ul class="nav-links">
+                <li><a href="./index.html">Home</a></li>
+                <li><a href="./inventory.html">Inventory</a></li>
+                <li><a href="./about.html">About</a></li>
+            </ul>
+            <div class="nav-icons">
+                <div class="icon cart">
+                    <a href="../cart.html">
+                        <img src="../assets/icons/cart-icon.png" alt="cart">
+                    </a>
+                </div>
+                <div class="icon wishlist">
+                    <a href="../wishlist.html">
+                        <img src="../assets/icons/wishlist-icon.png" alt="wishlist">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="car-details-container">
+        <div class="container">
+            <div class="loading-spinner" id="loading">
+                <div class="spinner"></div>
+                <p>Loading car details...</p>
+            </div>
+            
+            <div class="car-details" id="carDetails" style="display: none;">
+                <div class="car-header">
+                    <div class="car-title">
+                        <h1 id="carTitle"></h1>
+                        <p id="carYear"></p>
+                    </div>
+                    <div class="car-price">
+                        <h2 id="carPrice"></h2>
+                        <p id="carDiscount"></p>
+                    </div>
+                </div>
+                
+                <div class="car-gallery">
+                    <div class="main-image">
+                        <img id="mainImage" src="" alt="Car Main Image">
+                    </div>
+                    <div class="thumbnail-images" id="thumbnailImages">
+                        <!-- Thumbnails will be inserted here -->
+                    </div>
+                </div>
+                
+                <div class="car-colors" id="colorOptions">
+                    <h3>Available Colors</h3>
+                    <div class="color-options" id="colorButtons">
+                        <!-- Color buttons will be inserted here -->
+                    </div>
+                </div>
+                
+                <div class="car-info">
+                    <div class="car-description">
+                        <h3>Description</h3>
+                        <p id="carDescription"></p>
+                    </div>
+                    
+                    <div class="car-specs">
+                        <h3>Specifications</h3>
+                        <div class="specs-grid">
+                            <div class="spec-item">
+                                <span class="spec-label">Brand</span>
+                                <span class="spec-value" id="carBrand"></span>
+                            </div>
+                            <div class="spec-item">
+                                <span class="spec-label">Model</span>
+                                <span class="spec-value" id="carModel"></span>
+                            </div>
+                            <div class="spec-item">
+                                <span class="spec-label">Year</span>
+                                <span class="spec-value" id="specYear"></span>
+                            </div>
+                            <div class="spec-item">
+                                <span class="spec-label">Delivery</span>
+                                <span class="spec-value" id="carDelivery"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="car-actions">
+                    <button class="btn btn-primary" id="addToCart">
+                        Add to Cart
+                    </button>
+                    <button class="btn btn-outline" id="addToWishlist">
+                        Add to Wishlist
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <h2>E-Dealership</h2>
+                    <p>Premium performance cars</p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h4>Company</h4>
+                        <ul>
+                            <li><a href="./about.html">About Us</a></li>
+                            <li><a href="./contact.html">Contact</a></li>
+                            <li><a href="./careers.html">Careers</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h4>Support</h4>
+                        <ul>
+                            <li><a href="./faq.html">FAQ</a></li>
+                            <li><a href="./terms.html">Terms of Service</a></li>
+                            <li><a href="./privacy.html">Privacy Policy</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 E-Dealership. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/details.js"></script>
+</body>
+
+</html>
