@@ -176,28 +176,28 @@
       "reduction": 0,
       "images": {
         "red": {
-          "main": "audi_rs5_coupe_red_main.png",
-          "front": "audi_rs5_coupe_red_front.png",
-          "side": "audi_rs5_coupe_red_side.png",
-          "back": "audi_rs5_coupe_red_back.png",
-          "interior": "audi_rs5_coupe_red_interior.png",
-          "seat": "audi_rs5_coupe_red_seat.png"
+          "main": "audi_rs5coupe_red_main.png",
+          "front": "audi_rs5_oupe_red_front.png",
+          "side": "audi_rs5coupe_red_side.png",
+          "back": "audi_rs5coupe_red_back.png",
+          "interior": "audi_rs5coupe_red_interior.png",
+          "seat": "audi_rs5coupe_red_seat.png"
         },
         "grey": {
-          "main": "audi_rs5_coupe_grey_main.png",
-          "front": "audi_rs5_coupe_grey_front.png",
-          "side": "audi_rs5_coupe_grey_side.png",
-          "back": "audi_rs5_coupe_grey_back.png",
-          "interior": "audi_rs5_coupe_grey_interior.png",
-          "seat": "audi_rs5_coupe_grey_seat.png"
+          "main": "audi_rs5coupe_grey_main.png",
+          "front": "audi_rs5coupe_grey_front.png",
+          "side": "audi_rs5coupe_grey_side.png",
+          "back": "audi_rs5coupe_grey_back.png",
+          "interior": "audi_rs5coupe_grey_interior.png",
+          "seat": "audi_rs5_oupe_grey_seat.png"
         },
         "white": {
-          "main": "audi_rs5_coupe_white_main.png",
-          "front": "audi_rs5_coupe_white_front.png",
-          "side": "audi_rs5_coupe_white_side.png",
-          "back": "audi_rs5_coupe_white_back.png",
-          "interior": "audi_rs5_coupe_white_interior.png",
-          "seat": "audi_rs5_coupe_white_seat.png"
+          "main": "audi_rs5coupe_white_main.png",
+          "front": "audi_rs5coupe_white_front.png",
+          "side": "audi_rs5coupe_white_side.png",
+          "back": "audi_rs5coupe_white_back.png",
+          "interior": "audi_rs5coupe_white_interior.png",
+          "seat": "audi_rs5coupe_white_seat.png"
         }
       },
       "available": false,
@@ -282,28 +282,28 @@
       "reduction": 0,
       "images": {
         "green": {
-          "main": "mercedes_s63_green_main.png",
-          "front": "mercedes_s63_green_front.png",
-          "side": "mercedes_s63_green_side.png",
-          "back": "mercedes_s63_green_back.png",
-          "interior": "mercedes_s63_green_interior.png",
-          "seat": "mercedes_s63_green_seat.png"
+          "main": "mercedes_s63_green_main.jpg",
+          "front": "mercedes_s63_green_front.jpg",
+          "side": "mercedes_s63_green_side.jpg",
+          "back": "mercedes_s63_green_back.jpg",
+          "interior": "mercedes_s63_green_interior.jpg",
+          "seat": "mercedes_s63_green_seat.jpg"
         },
         "white": {
-          "main": "mercedes_s63_white_main.png",
-          "front": "mercedes_s63_white_front.png",
-          "side": "mercedes_s63_white_side.png",
-          "back": "mercedes_s63_white_back.png",
-          "interior": "mercedes_s63_white_interior.png",
-          "seat": "mercedes_s63_white_seat.png"
+          "main": "mercedes_s63_white_main.jpg",
+          "front": "mercedes_s63_white_front.jpg",
+          "side": "mercedes_s63_white_side.jpg",
+          "back": "mercedes_s63_white_back.jpg",
+          "interior": "mercedes_s63_white_interior.jpg",
+          "seat": "mercedes_s63_white_seat.jpg"
         },
         "black": {
-          "main": "mercedes_s63_black_main.png",
-          "front": "mercedes_s63_black_front.png",
-          "side": "mercedes_s63_black_side.png",
-          "back": "mercedes_s63_black_back.png",
-          "interior": "mercedes_s63_black_interior.png",
-          "seat": "mercedes_s63_black_seat.png"
+          "main": "mercedes_s63_black_main.jpg",
+          "front": "mercedes_s63_black_front.jpg",
+          "side": "mercedes_s63_black_side.jpg",
+          "back": "mercedes_s63_black_back.jpg",
+          "interior": "mercedes_s63_black_interior.jpg",
+          "seat": "mercedes_s63_black_seat.jpg"
         }
       },
       "available": true,
@@ -335,28 +335,28 @@
       "reduction": 0,
       "images": {
         "green": {
-          "main": "mercedes_g63_green_main.png",
-          "front": "mercedes_g63_green_front.png",
-          "side": "mercedes_g63_green_side.png",
-          "back": "mercedes_g63_green_back.png",
-          "interior": "mercedes_g63_green_interior.png",
-          "seat": "mercedes_g63_green_seat.png"
+          "main": "mercedes_g63_green_main.jpg",
+          "front": "mercedes_g63_green_front.jpg",
+          "side": "mercedes_g63_green_side.jpg",
+          "back": "mercedes_g63_green_back.jpg",
+          "interior": "mercedes_g63_green_interior.jpg",
+          "seat": "mercedes_g63_green_seat.jpg"
         },
         "red": {
-          "main": "mercedes_g63_red_main.png",
-          "front": "mercedes_g63_red_front.png",
-          "side": "mercedes_g63_red_side.png",
-          "back": "mercedes_g63_red_back.png",
-          "interior": "mercedes_g63_red_interior.png",
-          "seat": "mercedes_g63_red_seat.png"
+          "main": "mercedes_g63_red_main.jpg",
+          "front": "mercedes_g63_red_front.jpg",
+          "side": "mercedes_g63_red_side.jpg",
+          "back": "mercedes_g63_red_back.jpg",
+          "interior": "mercedes_g63_red_interior.jpg",
+          "seat": "mercedes_g63_red_seat.jpg"
         },
         "white": {
-          "main": "mercedes_g63_white_main.png",
-          "front": "mercedes_g63_white_front.png",
-          "side": "mercedes_g63_white_side.png",
-          "back": "mercedes_g63_white_back.png",
-          "interior": "mercedes_g63_white_interior.png",
-          "seat": "mercedes_g63_white_seat.png"
+          "main": "mercedes_g63_white_main.jpg",
+          "front": "mercedes_g63_white_front.jpg",
+          "side": "mercedes_g63_white_side.jpg",
+          "back": "mercedes_g63_white_back.jpg",
+          "interior": "mercedes_g63_white_interior.jpg",
+          "seat": "mercedes_g63_white_seat.jpg"
         }
       },
       "available": true,
@@ -388,28 +388,28 @@
       "reduction": 3,
       "images": {
         "black": {
-          "main": "mercedes_gt63coupe_black_main.png",
-          "front": "mercedes_gt63coupe_black_front.png",
-          "side": "mercedes_gt63coupe_black_side.png",
-          "back": "mercedes_gt63coupe_black_back.png",
-          "interior": "mercedes_gt63coupe_black_interior.png",
-          "seat": "mercedes_gt63coupe_black_seat.png"
+          "main": "mercedes_gt63coupe_black_main.jpg",
+          "front": "mercedes_gt63coupe_black_front.jpg",
+          "side": "mercedes_gt63coupe_black_side.jpg",
+          "back": "mercedes_gt63coupe_black_back.jpg",
+          "interior": "mercedes_gt63coupe_black_interior.jpg",
+          "seat": "mercedes_gt63coupe_black_seat.jpg"
         },
         "grey": {
-          "main": "mercedes_gt63coupe_grey_main.png",
-          "front": "mercedes_gt63coupe_grey_front.png",
-          "side": "mercedes_gt63coupe_grey_side.png",
-          "back": "mercedes_gt63coupe_grey_back.png",
-          "interior": "mercedes_gt63coupe_grey_interior.png",
-          "seat": "mercedes_gt63coupe_grey_seat.png"
+          "main": "mercedes_gt63coupe_grey_main.jpg",
+          "front": "mercedes_gt63coupe_grey_front.jpg",
+          "side": "mercedes_gt63coupe_grey_side.jpg",
+          "back": "mercedes_gt63coupe_grey_back.jpg",
+          "interior": "mercedes_gt63coupe_grey_interior.jpg",
+          "seat": "mercedes_gt63coupe_grey_seat.jpg"
         },
         "orange": {
-          "main": "mercedes_gt63coupe_orange_main.png",
-          "front": "mercedes_gt63coupe_orange_front.png",
-          "side": "mercedes_gt63coupe_orange_side.png",
-          "back": "mercedes_gt63coupe_orange_back.png",
-          "interior": "mercedes_gt63coupe_orange_interior.png",
-          "seat": "mercedes_gt63coupe_orange_seat.png"
+          "main": "mercedes_gt63coupe_orange_main.jpg",
+          "front": "mercedes_gt63coupe_orange_front.jpg",
+          "side": "mercedes_gt63coupe_orange_side.jpg",
+          "back": "mercedes_gt63coupe_orange_back.jpg",
+          "interior": "mercedes_gt63coupe_orange_interior.jpg",
+          "seat": "mercedes_gt63coupe_orange_seat.jpg"
         }
       },
       "available": true,
@@ -441,28 +441,28 @@
       "reduction": 0,
       "images": {
         "grey": {
-          "main": "mercedes_gt63_grey_main.png",
-          "front": "mercedes_gt63_grey_front.png",
-          "side": "mercedes_gt63_grey_side.png",
-          "back": "mercedes_gt63_grey_back.png",
-          "interior": "mercedes_gt63_grey_interior.png",
-          "seat": "mercedes_gt63_grey_seat.png"
+          "main": "mercedes_gt63_grey_main.jpg",
+          "front": "mercedes_gt63_grey_front.jpg",
+          "side": "mercedes_gt63_grey_side.jpg",
+          "back": "mercedes_gt63_grey_back.jpg",
+          "interior": "mercedes_gt63_grey_interior.jpg",
+          "seat": "mercedes_gt63_grey_seat.jpg"
         },
         "yellow": {
-          "main": "mercedes_gt63_yellow_main.png",
-          "front": "mercedes_gt63_yellow_front.png",
-          "side": "mercedes_gt63_yellow_side.png",
-          "back": "mercedes_gt63_yellow_back.png",
-          "interior": "mercedes_gt63_yellow_interior.png",
-          "seat": "mercedes_gt63_yellow_seat.png"
+          "main": "mercedes_gt63_yellow_main.jpg",
+          "front": "mercedes_gt63_yellow_front.jpg",
+          "side": "mercedes_gt63_yellow_side.jpg",
+          "back": "mercedes_gt63_yellow_back.jpg",
+          "interior": "mercedes_gt63_yellow_interior.jpg",
+          "seat": "mercedes_gt63_yellow_seat.jpg"
         },
         "black": {
-          "main": "mercedes_gt63_black_main.png",
-          "front": "mercedes_gt63_black_front.png",
-          "side": "mercedes_gt63_black_side.png",
-          "back": "mercedes_gt63_black_back.png",
-          "interior": "mercedes_gt63_black_interior.png",
-          "seat": "mercedes_gt63_black_seat.png"
+          "main": "mercedes_gt63_black_main.jpg",
+          "front": "mercedes_gt63_black_front.jpg",
+          "side": "mercedes_gt63_black_side.jpg",
+          "back": "mercedes_gt63_black_back.jpg",
+          "interior": "mercedes_gt63_black_interior.jpg",
+          "seat": "mercedes_gt63_black_seat.jpg"
         }
       },
       "available": false,
@@ -493,20 +493,20 @@
       "reduction": 5,
       "images": {
         "black": {
-          "main": "mercedes_c63_black_main.png",
-          "front": "mercedes_c63_black_front.png",
-          "side": "mercedes_c63_black_side.png",
-          "back": "mercedes_c63_black_back.png",
-          "interior": "mercedes_c63_black_interior.png",
-          "seat": "mercedes_c63_black_seat.png"
+          "main": "mercedes_c63_black_main.jpg",
+          "front": "mercedes_c63_black_front.jpg",
+          "side": "mercedes_c63_black_side.jpg",
+          "back": "mercedes_c63_black_back.jpg",
+          "interior": "mercedes_c63_black_interior.jpg",
+          "seat": "mercedes_c63_black_seat.jpg"
         },
         "blue": {
-          "main": "mercedes_c63_blue_main.png",
-          "front": "mercedes_c63_blue_front.png",
-          "side": "mercedes_c63_blue_side.png",
-          "back": "mercedes_c63_blue_back.png",
-          "interior": "mercedes_c63_blue_interior.png",
-          "seat": "mercedes_c63_blue_seat.png"
+          "main": "mercedes_c63_blue_main.jpg",
+          "front": "mercedes_c63_blue_front.jpg",
+          "side": "mercedes_c63_blue_side.jpg",
+          "back": "mercedes_c63_blue_back.jpg",
+          "interior": "mercedes_c63_blue_interior.jpg",
+          "seat": "mercedes_c63_blue_seat.jpg"
         }
       },
       "available": true,
@@ -644,28 +644,28 @@
       "reduction": 0,
       "images": {
         "blue": {
-          "main": "bmw_m8alpina_blue_main.png",
-          "front": "bmw_m8alpina_blue_front.png",
-          "side": "bmw_m8alpina_blue_side.png",
-          "back": "bmw_m8alpina_blue_back.png",
-          "interior": "bmw_m8alpina_blue_interior.png",
-          "seat": "bmw_m8alpina_blue_seat.png"
+          "main": "bmw_m8alpina_blue_main.jpg",
+          "front": "bmw_m8alpina_blue_front.jpg",
+          "side": "bmw_m8alpina_blue_side.jpg",
+          "back": "bmw_m8alpina_blue_back.jpg",
+          "interior": "bmw_m8alpina_blue_interior.jpg",
+          "seat": "bmw_m8alpina_blue_seat.jpg"
         },
         "green": {
-          "main": "bmw_m8alpina_green_main.png",
-          "front": "bmw_m8alpina_green_front.png",
-          "side": "bmw_m8alpina_green_side.png",
-          "back": "bmw_m8alpina_green_back.png",
-          "interior": "bmw_m8alpina_green_interior.png",
-          "seat": "bmw_m8alpina_green_seat.png"
+          "main": "bmw_m8alpina_green_main.jpg",
+          "front": "bmw_m8alpina_green_front.jpg",
+          "side": "bmw_m8alpina_green_side.jpg",
+          "back": "bmw_m8alpina_green_back.jpg",
+          "interior": "bmw_m8alpina_green_interior.jpg",
+          "seat": "bmw_m8alpina_green_seat.jpg"
         },
         "white": {
-          "main": "bmw_m8alpina_white_main.png",
-          "front": "bmw_m8alpina_white_front.png",
-          "side": "bmw_m8alpina_white_side.png",
-          "back": "bmw_m8alpina_white_back.png",
-          "interior": "bmw_m8alpina_white_interior.png",
-          "seat": "bmw_m8alpina_white_seat.png"
+          "main": "bmw_m8alpina_white_main.jpg",
+          "front": "bmw_m8alpina_white_front.jpg",
+          "side": "bmw_m8alpina_white_side.jpg",
+          "back": "bmw_m8alpina_white_back.jpg",
+          "interior": "bmw_m8alpina_white_interior.jpg",
+          "seat": "bmw_m8alpina_white_seat.jpg"
         }
       },
       "available": false,
