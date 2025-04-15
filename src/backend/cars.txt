@@ -3,21 +3,27 @@ audi cars
 audi s8 :
 	rown blue black
 	
+	main front back side  interior seat
 audi rs7 :
 
 	red grey black
-	
+
+		main front back side  interior seat
 audi rs6 :
 
 	grey blue black
 	
+		main front back side  interior seat
 audi rs5 coupe :
 
 	red grey white 
 	
+		main front back side  interior seat
 audi rs3 :
 
-	yellow white green 
+	yellow white green
+
+		main front back side  interior seat 
 __________________________________________________________
 
 
@@ -26,23 +32,23 @@ Mercedes cars
 Mercedes s63 e perfromance :
 
 	green white black
-	
+		main front back side  interior 
 Mercedes g63 :
 
 	green red white 
-
+		main front back side  interior seat
 Mercedes gt63coupe :
 
 	black grey orange
-	
+		main front back side  interior seat
 Mercedes gt63 s e perfromance:
 
 	grey yellow balck
-
+	main front back side  interior seat
 Mercedes c63 :
 
 	black blue 
-	
+		main front back side  interior seat
 _____________________________________________________________
 
 bmw cars
@@ -50,25 +56,26 @@ bmw cars
 bmw m2 :	
 
 	blue green white 
-	
+		main front back side  interior seat
 bmw m3 :
 
 	black green red
-	
+		main front back side  interior seat
 bmw m8alpina :
 
 	blue green white 
-
+	main front back side  interior seat
 bmw m4 :
 	
 	black green blue 
-	
+		main front back side  interior seat
 bmw m5 : 
 
 	green red black
-	
+		main front back side  interior seat
 bmw i7 :
 
 	black blue white 
+		main front back side  interior seat seat
 ________________________________________________________________________
 
