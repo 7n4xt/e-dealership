@@ -19,7 +19,7 @@ body {
 .hero {
     position: relative;
     height: 80vh;
-    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.7)), 
+    background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), 
                       url(../images/2024-Nissan-GT-R-T-Spec-Takumi-Edition-002-2160.jpg);
     background-size: cover;
     background-position: center;
@@ -42,14 +42,14 @@ body {
 .hero-content {
     position: relative;
     z-index: 2;
-    max-width: 700px;
+    max-width: 1000px;
     margin: 0 auto;
     text-align: center;
     padding: 0 20px;
 }
 
 .hero-title {
-    font-size: 3.5rem;
+    font-size: 5rem;
     font-weight: 700;
     margin-bottom: 1rem;
     background: linear-gradient(90deg, #fff, #a2a2a2);
@@ -386,8 +386,8 @@ body {
 }
 
 .feature img {
-    width: 16px;
-    height: 16px;
+    width: 25px;
+    height: 25px;
     opacity: 0.7;
 }
 

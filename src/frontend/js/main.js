@@ -93,15 +93,15 @@ function createCarCard(car) {
     </div>
     <div class="vehicle-features">
       <div class="feature">
-        <img src="../assets/icons/palette-icon.png" alt="Colors">
+        <img src="./assets/icons/colors.png" alt="Colors">
         <span>${car.colors.length} colors</span>
       </div>
       <div class="feature">
-        <img src="../assets/icons/truck-icon.png" alt="Delivery">
+        <img src="./assets/icons/time.png" alt="Delivery">
         <span>${car.delivery_time} weeks delivery</span>
       </div>
       <div class="feature">
-        <img src="../assets/icons/tag-icon.png" alt="Price">
+        <img src="./assets/icons/Delivery.png" alt="Price">
         <span>${car.delivery_price === 0 ? 'Free delivery' : `€${car.delivery_price} delivery`}</span>
       </div>
     </div>

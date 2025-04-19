@@ -1,4 +1,13 @@
-/* Universal Styles */
+
+@font-face {
+  font-family: 'quicking-font';
+  src: url('../fonts/quicking.otf') format('opentype');
+}
+
+#newfont {
+  font-family: 'quicking-font';
+}
+
 * {
   padding: 0;
   margin: 0;
@@ -46,7 +55,8 @@ nav {
 
 .logo-section h2 {
   font-size: 1.8rem;
-  font-weight: 600;
+  font-family: "quicking-font";
+  font-weight: 400;
   color: #fff;
   transition: opacity 0.3s ease;
 }
