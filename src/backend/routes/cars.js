@@ -1,9 +1,17 @@
 const express = require("express");
 const router = express.Router();
-const controllers = require("../controllers/car")
+const controllers = require("../controllers/car");
+const path = require('path');
 
-//Define les routes 
-router.get('/cars', controllers.getCars)
+// Define routes 
+router.get('/cars', controllers.getCars);
 router.get('/car/:id', controllers.getCarById);
+
+// Serve images from the img directory
+router.get('/img/:imageName', (req, res) => {
+    const imageName = req.params.imageName;
+    const imagePath = path.join(__dirname, '../img', imageName);
+    res.sendFile(imagePath);
+});
 
 module.exports = router;

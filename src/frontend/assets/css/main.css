@@ -19,8 +19,8 @@ body {
 .hero {
     position: relative;
     height: 80vh;
-    background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), 
-                      url(../images/2024-Nissan-GT-R-T-Spec-Takumi-Edition-002-2160.jpg);
+    background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)),
+        url(../images/2024-Nissan-GT-R-T-Spec-Takumi-Edition-002-2160.jpg);
     background-size: cover;
     background-position: center;
     display: flex;
@@ -313,11 +313,31 @@ body {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.5s ease;
+    position: absolute;
+    top: 0;
+    left: 0;
+    transition: opacity 0.5s ease;
+}
+
+.vehicle-image .exterior-view {
+    opacity: 1;
+}
+
+.vehicle-image .interior-view {
+    opacity: 0;
+}
+
+.vehicle-card:hover .vehicle-image .exterior-view {
+    opacity: 0;
+}
+
+.vehicle-card:hover .vehicle-image .interior-view {
+    opacity: 1;
 }
 
 .vehicle-card:hover .vehicle-image img {
-    transform: scale(1.05);
+    transform: none;
+    /* Remove the scale effect on hover */
 }
 
 .vehicle-tag {
@@ -508,6 +528,7 @@ footer {
         opacity: 0;
         transform: translateY(30px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
@@ -519,24 +540,25 @@ footer {
     .hero-title {
         font-size: 2.5rem;
     }
-    
+
     .hero-subtitle {
         font-size: 1rem;
     }
-    
+
     .filter-sort-container {
         flex-direction: column;
         align-items: flex-start;
         gap: 20px;
     }
-    
+
     .sort-section {
         width: 100%;
         justify-content: space-between;
     }
-    
+
     .footer-content {
         flex-direction: column;
     }
 }
+
 /* Add this to your main.css or create a new CSS file */
