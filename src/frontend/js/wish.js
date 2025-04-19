@@ -1,6 +1,5 @@
-// First, let's add this code to your cart.js file
 document.addEventListener('DOMContentLoaded', function() {
-    // Cart functionality
+    // Enhanced cart and wishlist functionality
     const cartIcon = document.querySelector('.cart img');
     const wishlistIcon = document.querySelector('.wishlist img');
     
@@ -35,13 +34,23 @@ document.addEventListener('DOMContentLoaded', function() {
         document.body.appendChild(slidePanel);
     }
     
-    // Cart panel functionality
+    // Cart panel functionality with counter badge
+    const cartBadge = document.createElement('span');
+    cartBadge.className = 'item-counter';
+    cartBadge.textContent = cartItems.length;
+    cartIcon.parentNode.appendChild(cartBadge);
+    
     cartIcon.addEventListener('click', function(e) {
         e.preventDefault();
         openSlidePanel('cart');
     });
     
-    // Wishlist panel functionality
+    // Wishlist panel functionality with counter badge
+    const wishlistBadge = document.createElement('span');
+    wishlistBadge.className = 'item-counter';
+    wishlistBadge.textContent = wishlistItems.length;
+    wishlistIcon.parentNode.appendChild(wishlistBadge);
+    
     wishlistIcon.addEventListener('click', function(e) {
         e.preventDefault();
         openSlidePanel('wishlist');
@@ -50,12 +59,12 @@ document.addEventListener('DOMContentLoaded', function() {
     function openSlidePanel(type) {
         slidePanel.innerHTML = ''; // Clear panel content
         
-        // Panel header
+        // Panel header with premium design
         const header = document.createElement('div');
         header.className = 'slide-panel-header';
         
         const title = document.createElement('h3');
-        title.textContent = type === 'cart' ? 'Your Cart' : 'Your Wishlist';
+        title.textContent = type === 'cart' ? 'Your Shopping Bag' : 'Your Wishlist';
         
         const closeBtn = document.createElement('button');
         closeBtn.className = 'close-panel';
@@ -73,11 +82,28 @@ document.addEventListener('DOMContentLoaded', function() {
         const items = type === 'cart' ? cartItems : wishlistItems;
         
         if (items.length === 0) {
-            const emptyMessage = document.createElement('p');
+            const emptyMessage = document.createElement('div');
             emptyMessage.className = 'empty-message';
-            emptyMessage.textContent = type === 'cart' 
-                ? 'Your cart is empty.' 
-                : 'Your wishlist is empty.';
+            
+            const emptyIcon = document.createElement('div');
+            emptyIcon.className = 'empty-icon';
+            emptyIcon.innerHTML = type === 'cart' ? 
+                '<svg width="40" height="40" viewBox="0 0 24 24"><path fill="currentColor" d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>' : 
+                '<svg width="40" height="40" viewBox="0 0 24 24"><path fill="currentColor" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>';
+            
+            const emptyText = document.createElement('p');
+            emptyText.textContent = type === 'cart' ? 
+                'Your shopping bag is empty.' : 
+                'Your wishlist is empty.';
+            
+            const browseLink = document.createElement('a');
+            browseLink.href = '#vehicles-section';
+            browseLink.textContent = 'Browse our collection';
+            browseLink.className = 'browse-link';
+            
+            emptyMessage.appendChild(emptyIcon);
+            emptyMessage.appendChild(emptyText);
+            emptyMessage.appendChild(browseLink);
             content.appendChild(emptyMessage);
         } else {
             items.forEach(item => {
@@ -93,22 +119,59 @@ document.addEventListener('DOMContentLoaded', function() {
             const footer = document.createElement('div');
             footer.className = 'slide-panel-footer';
             
+            // Item count and subtotal display for cart
             if (type === 'cart') {
+                const subtotalRow = document.createElement('div');
+                subtotalRow.className = 'subtotal-row';
+                
+                const itemCount = document.createElement('span');
+                itemCount.className = 'item-count';
+                itemCount.textContent = `${items.length} item${items.length > 1 ? 's' : ''}`;
+                
+                const subtotal = items.reduce((total, item) => total + item.total, 0);
+                const subtotalAmount = document.createElement('span');
+                subtotalAmount.className = 'subtotal-amount';
+                subtotalAmount.textContent = `Subtotal: €${subtotal.toFixed(2)}`;
+                
+                subtotalRow.appendChild(itemCount);
+                subtotalRow.appendChild(subtotalAmount);
+                footer.appendChild(subtotalRow);
+                
+                // Order buttons
+                const buttonRow = document.createElement('div');
+                buttonRow.className = 'button-row';
+                
+                const continueBtn = document.createElement('button');
+                continueBtn.className = 'continue-shopping-btn';
+                continueBtn.textContent = 'Continue Shopping';
+                continueBtn.addEventListener('click', closeSlidePanel);
+                
                 const orderBtn = document.createElement('button');
                 orderBtn.className = 'place-order-btn';
-                orderBtn.textContent = 'Place Order';
+                orderBtn.textContent = 'Proceed to Checkout';
                 orderBtn.addEventListener('click', showCheckoutProcess);
-                footer.appendChild(orderBtn);
+                
+                buttonRow.appendChild(continueBtn);
+                buttonRow.appendChild(orderBtn);
+                footer.appendChild(buttonRow);
+            } else {
+                // Wishlist actions
+                const moveAllBtn = document.createElement('button');
+                moveAllBtn.className = 'move-all-btn';
+                moveAllBtn.textContent = 'Move All to Bag';
+                moveAllBtn.addEventListener('click', moveAllToCart);
+                
+                footer.appendChild(moveAllBtn);
             }
             
             slidePanel.appendChild(footer);
         }
         
-        // Show the panel
+        // Show the panel with animation
         slidePanel.classList.add('open');
         document.body.classList.add('panel-open');
         
-        // Add overlay
+        // Add overlay with fade-in effect
         addOverlay();
     }
     
@@ -116,7 +179,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const itemElement = document.createElement('div');
         itemElement.className = 'slide-panel-item';
         
-        // Item image
+        // Item image with hover zoom effect
         const imageContainer = document.createElement('div');
         imageContainer.className = 'item-image';
         const image = document.createElement('img');
@@ -124,12 +187,20 @@ document.addEventListener('DOMContentLoaded', function() {
         image.alt = item.name;
         imageContainer.appendChild(image);
         
-        // Item details
+        // Quick view button overlay
+        const quickViewBtn = document.createElement('button');
+        quickViewBtn.className = 'quick-view-btn';
+        quickViewBtn.textContent = 'Quick View';
+        quickViewBtn.addEventListener('click', () => showQuickView(item));
+        imageContainer.appendChild(quickViewBtn);
+        
+        // Item details with enhanced styling
         const details = document.createElement('div');
         details.className = 'item-details';
         
         const itemName = document.createElement('h4');
         itemName.textContent = item.name;
+        itemName.className = 'item-name';
         
         const itemType = document.createElement('p');
         itemType.className = 'item-type';
@@ -141,21 +212,56 @@ document.addEventListener('DOMContentLoaded', function() {
         
         const itemTotal = document.createElement('div');
         itemTotal.className = 'item-total';
-        itemTotal.textContent = `€${item.total} total`;
+        itemTotal.textContent = `€${item.total.toFixed(2)} total`;
         
         details.appendChild(itemName);
         details.appendChild(itemType);
         details.appendChild(itemPrice);
         details.appendChild(itemTotal);
         
-        // Action buttons
+        // Enhanced action buttons
         const actions = document.createElement('div');
         actions.className = 'item-actions';
         
         if (type === 'cart') {
+            // Quantity selector
+            const quantityControl = document.createElement('div');
+            quantityControl.className = 'quantity-control';
+            
+            const minusBtn = document.createElement('button');
+            minusBtn.className = 'quantity-btn minus';
+            minusBtn.textContent = '-';
+            minusBtn.addEventListener('click', () => updateQuantity(item.id, -1));
+            
+            const quantityDisplay = document.createElement('span');
+            quantityDisplay.className = 'quantity-display';
+            quantityDisplay.textContent = '1';
+            
+            const plusBtn = document.createElement('button');
+            plusBtn.className = 'quantity-btn plus';
+            plusBtn.textContent = '+';
+            plusBtn.addEventListener('click', () => updateQuantity(item.id, 1));
+            
+            quantityControl.appendChild(minusBtn);
+            quantityControl.appendChild(quantityDisplay);
+            quantityControl.appendChild(plusBtn);
+            actions.appendChild(quantityControl);
+            
+            // Save for later button (moves to wishlist)
+            const saveBtn = document.createElement('button');
+            saveBtn.className = 'save-for-later-btn';
+            saveBtn.textContent = 'Save for Later';
+            saveBtn.dataset.id = item.id;
+            saveBtn.addEventListener('click', function() {
+                moveToWishlist(item.id);
+            });
+            actions.appendChild(saveBtn);
+            
+            // Remove button
             const removeBtn = document.createElement('button');
             removeBtn.className = 'remove-btn';
-            removeBtn.textContent = 'Remove';
+            removeBtn.innerHTML = '&times;';
+            removeBtn.title = 'Remove';
             removeBtn.dataset.id = item.id;
             removeBtn.addEventListener('click', function() {
                 removeFromCart(item.id);
@@ -164,7 +270,7 @@ document.addEventListener('DOMContentLoaded', function() {
         } else if (type === 'wishlist') {
             const addToCartBtn = document.createElement('button');
             addToCartBtn.className = 'add-to-cart-btn';
-            addToCartBtn.textContent = 'Add to Cart';
+            addToCartBtn.textContent = 'Add to Bag';
             addToCartBtn.dataset.id = item.id;
             addToCartBtn.addEventListener('click', function() {
                 addToCartFromWishlist(item.id);
@@ -173,7 +279,8 @@ document.addEventListener('DOMContentLoaded', function() {
             
             const removeBtn = document.createElement('button');
             removeBtn.className = 'remove-btn';
-            removeBtn.textContent = 'Remove';
+            removeBtn.innerHTML = '&times;';
+            removeBtn.title = 'Remove';
             removeBtn.dataset.id = item.id;
             removeBtn.addEventListener('click', function() {
                 removeFromWishlist(item.id);
@@ -219,25 +326,310 @@ document.addEventListener('DOMContentLoaded', function() {
     
     function removeFromCart(itemId) {
         cartItems = cartItems.filter(item => item.id !== itemId);
+        updateCartCounter();
         openSlidePanel('cart'); // Refresh the panel
     }
     
     function removeFromWishlist(itemId) {
         wishlistItems = wishlistItems.filter(item => item.id !== itemId);
+        updateWishlistCounter();
         openSlidePanel('wishlist'); // Refresh the panel
     }
     
     function addToCartFromWishlist(itemId) {
         const item = wishlistItems.find(item => item.id === itemId);
         if (item) {
-            cartItems.push(item);
+            // Check if item already exists in cart
+            const existingItem = cartItems.find(cartItem => cartItem.id === itemId);
+            if (!existingItem) {
+                cartItems.push(item);
+            }
+            
+            // Show added to cart animation
+            showAddedAnimation();
+            
             removeFromWishlist(itemId);
+            updateCartCounter();
             openSlidePanel('cart'); // Switch to cart panel
         }
     }
     
+    function moveToWishlist(itemId) {
+        const item = cartItems.find(item => item.id === itemId);
+        if (item) {
+            // Check if item already exists in wishlist
+            const existingItem = wishlistItems.find(wishItem => wishItem.id === itemId);
+            if (!existingItem) {
+                wishlistItems.push(item);
+            }
+            
+            removeFromCart(itemId);
+            updateWishlistCounter();
+            openSlidePanel('wishlist'); // Switch to wishlist panel
+        }
+    }
+    
+    function moveAllToCart() {
+        if (wishlistItems.length === 0) return;
+        
+        // For each wishlist item, add to cart if not already there
+        wishlistItems.forEach(item => {
+            const existingItem = cartItems.find(cartItem => cartItem.id === item.id);
+            if (!existingItem) {
+                cartItems.push(item);
+            }
+        });
+        
+        // Clear wishlist
+        wishlistItems = [];
+        
+        // Show success toast notification
+        showToast('All items moved to your shopping bag');
+        
+        // Update counters
+        updateCartCounter();
+        updateWishlistCounter();
+        
+        // Switch to cart panel
+        openSlidePanel('cart');
+    }
+    
+    function updateQuantity(itemId, change) {
+        // In a real app, this would update the quantity and recalculate total
+        // For this example, we'll just show a notification
+        showToast('Quantity updated');
+    }
+    
+    function updateCartCounter() {
+        const cartBadge = document.querySelector('.cart .item-counter');
+        if (cartBadge) {
+            cartBadge.textContent = cartItems.length;
+            
+            // Hide badge if cart is empty
+            if (cartItems.length === 0) {
+                cartBadge.style.display = 'none';
+            } else {
+                cartBadge.style.display = 'flex';
+            }
+        }
+    }
+    
+    function updateWishlistCounter() {
+        const wishlistBadge = document.querySelector('.wishlist .item-counter');
+        if (wishlistBadge) {
+            wishlistBadge.textContent = wishlistItems.length;
+            
+            // Hide badge if wishlist is empty
+            if (wishlistItems.length === 0) {
+                wishlistBadge.style.display = 'none';
+            } else {
+                wishlistBadge.style.display = 'flex';
+            }
+        }
+    }
+    
+    function showAddedAnimation() {
+        // Create toast notification
+        showToast('Item added to your shopping bag');
+    }
+    
+    function showToast(message) {
+        const toast = document.createElement('div');
+        toast.className = 'toast-notification';
+        toast.textContent = message;
+        
+        document.body.appendChild(toast);
+        
+        // Show the toast with animation
+        setTimeout(() => {
+            toast.classList.add('show');
+        }, 10);
+        
+        // Remove the toast after 3 seconds
+        setTimeout(() => {
+            toast.classList.remove('show');
+            setTimeout(() => {
+                toast.remove();
+            }, 300);
+        }, 3000);
+    }
+    
+    function showQuickView(item) {
+        // Create quick view modal
+        const modal = document.createElement('div');
+        modal.className = 'quick-view-modal';
+        
+        const modalContent = document.createElement('div');
+        modalContent.className = 'modal-content';
+        
+        // Close button
+        const closeModalBtn = document.createElement('button');
+        closeModalBtn.className = 'close-modal';
+        closeModalBtn.innerHTML = '&times;';
+        closeModalBtn.addEventListener('click', () => {
+            modal.classList.remove('show');
+            setTimeout(() => {
+                modal.remove();
+            }, 300);
+        });
+        
+        // Left column for image gallery
+        const imageGallery = document.createElement('div');
+        imageGallery.className = 'image-gallery';
+        
+        const mainImage = document.createElement('div');
+        mainImage.className = 'main-image';
+        mainImage.innerHTML = `<img src="${item.image}" alt="${item.name}">`;
+        
+        // Image thumbnails (would be populated with actual thumbnails in a real app)
+        const thumbnails = document.createElement('div');
+        thumbnails.className = 'thumbnails';
+        for (let i = 0; i < 3; i++) {
+            const thumb = document.createElement('div');
+            thumb.className = 'thumbnail';
+            thumb.innerHTML = `<img src="${item.image}" alt="View ${i+1}">`;
+            thumbnails.appendChild(thumb);
+        }
+        
+        imageGallery.appendChild(mainImage);
+        imageGallery.appendChild(thumbnails);
+        
+        // Right column for product details
+        const productDetails = document.createElement('div');
+        productDetails.className = 'product-details';
+        
+        productDetails.innerHTML = `
+            <h2 class="product-name">${item.name}</h2>
+            <p class="product-type">${item.type}</p>
+            <div class="product-price">€${item.price}<span>/day</span></div>
+            <div class="product-total">€${item.total.toFixed(2)} total</div>
+            <div class="product-description">
+                <p>Experience luxury and performance with our premium ${item.type.toLowerCase()}. 
+                Featuring cutting-edge technology, superior comfort, and exceptional driving dynamics.</p>
+            </div>
+            <div class="product-features">
+                <h4>Key Features:</h4>
+                <ul>
+                    <li>Premium leather interior</li>
+                    <li>Advanced navigation system</li>
+                    <li>Automatic climate control</li>
+                    <li>Sport-tuned suspension</li>
+                </ul>
+            </div>
+            <div class="product-actions">
+                <button class="add-to-cart-btn">Add to Bag</button>
+                <button class="add-to-wishlist-btn">Add to Wishlist</button>
+            </div>
+        `;
+        
+        // Add action button listeners
+        modalContent.appendChild(closeModalBtn);
+        modalContent.appendChild(imageGallery);
+        modalContent.appendChild(productDetails);
+        
+        modal.appendChild(modalContent);
+        document.body.appendChild(modal);
+        
+        // Show modal with animation
+        setTimeout(() => {
+            modal.classList.add('show');
+        }, 10);
+        
+        // Add event listeners for the action buttons
+        const addToCartBtn = productDetails.querySelector('.add-to-cart-btn');
+        addToCartBtn.addEventListener('click', () => {
+            // Check if item is already in cart
+            const existingItem = cartItems.find(cartItem => cartItem.id === item.id);
+            if (!existingItem) {
+                cartItems.push(item);
+                updateCartCounter();
+                showAddedAnimation();
+            }
+            
+            // Close modal
+            modal.classList.remove('show');
+            setTimeout(() => {
+                modal.remove();
+            }, 300);
+            
+            // Open cart panel
+            openSlidePanel('cart');
+        });
+        
+        const addToWishlistBtn = productDetails.querySelector('.add-to-wishlist-btn');
+        addToWishlistBtn.addEventListener('click', () => {
+            // Check if item is already in wishlist
+            const existingItem = wishlistItems.find(wishItem => wishItem.id === item.id);
+            if (!existingItem) {
+                wishlistItems.push(item);
+                updateWishlistCounter();
+                showToast('Item added to your wishlist');
+            }
+            
+            // Close modal
+            modal.classList.remove('show');
+            setTimeout(() => {
+                modal.remove();
+            }, 300);
+        });
+    }
+    
+    // Enhanced checkout process with multi-step approach
     function showCheckoutProcess() {
-        // Clear panel content to replace with checkout process
+        // Create multi-step checkout container
+        const checkoutContainer = document.createElement('div');
+        checkoutContainer.className = 'checkout-container';
+        
+        // Create steps indicator
+        const stepsIndicator = document.createElement('div');
+        stepsIndicator.className = 'checkout-steps';
+        
+        const steps = [
+            { id: 'delivery', label: 'Delivery' },
+            { id: 'payment', label: 'Payment' },
+            { id: 'review', label: 'Review' }
+        ];
+        
+        steps.forEach((step, index) => {
+            const stepElement = document.createElement('div');
+            stepElement.className = 'step';
+            stepElement.dataset.step = step.id;
+            
+            const stepNumber = document.createElement('div');
+            stepNumber.className = 'step-number';
+            stepNumber.textContent = index + 1;
+            
+            const stepLabel = document.createElement('div');
+            stepLabel.className = 'step-label';
+            stepLabel.textContent = step.label;
+            
+            stepElement.appendChild(stepNumber);
+            stepElement.appendChild(stepLabel);
+            stepsIndicator.appendChild(stepElement);
+            
+            // Add connector line between steps (except for the last step)
+            if (index < steps.length - 1) {
+                const connector = document.createElement('div');
+                connector.className = 'step-connector';
+                stepsIndicator.appendChild(connector);
+            }
+        });
+        
+        checkoutContainer.appendChild(stepsIndicator);
+        
+        // Create content area for steps
+        const stepContent = document.createElement('div');
+        stepContent.className = 'step-content';
+        checkoutContainer.appendChild(stepContent);
+        
+        // Show the first step (delivery)
+        showDeliveryStep(stepContent);
+        
+        // Set the first step as active
+        const firstStep = stepsIndicator.querySelector('.step[data-step="delivery"]');
+        firstStep.classList.add('active');
+        
+        // Clear panel content and set new content
         slidePanel.innerHTML = '';
         
         // Create header
@@ -254,126 +646,238 @@ document.addEventListener('DOMContentLoaded', function() {
         
         header.appendChild(title);
         header.appendChild(closeBtn);
-        slidePanel.appendChild(header);
         
-        // Create checkout content
-        const checkoutContent = document.createElement('div');
-        checkoutContent.className = 'checkout-content';
+        // Add header and checkout container to slide panel
+        slidePanel.appendChild(header);
+        slidePanel.appendChild(checkoutContainer);
+        
+        // Add navigation buttons
+        const navButtons = document.createElement('div');
+        navButtons.className = 'checkout-nav-buttons';
+        
+        const backBtn = document.createElement('button');
+        backBtn.className = 'back-btn';
+        backBtn.textContent = 'Back';
+        backBtn.style.display = 'none'; // Hide initially
+        backBtn.addEventListener('click', () => navigateCheckoutStep('prev'));
+        
+        const nextBtn = document.createElement('button');
+        nextBtn.className = 'next-btn';
+        nextBtn.textContent = 'Continue to Payment';
+        nextBtn.addEventListener('click', () => navigateCheckoutStep('next'));
+        
+        navButtons.appendChild(backBtn);
+        navButtons.appendChild(nextBtn);
+        slidePanel.appendChild(navButtons);
+        
+        // Store the current step
+        slidePanel.dataset.currentStep = 'delivery';
+        slidePanel.dataset.currentStepIndex = '0';
+    }
+    
+    function showDeliveryStep(container) {
+        container.innerHTML = ''; // Clear container
         
         // Order summary section
-        const orderSummary = document.createElement('div');
-        orderSummary.className = 'order-summary';
+        const orderSummary = createOrderSummary();
+        container.appendChild(orderSummary);
         
-        const summaryTitle = document.createElement('h4');
-        summaryTitle.textContent = 'Order Summary';
-        orderSummary.appendChild(summaryTitle);
-        
-        const itemsList = document.createElement('div');
-        itemsList.className = 'items-list';
-        
-        // Calculate total
-        let totalAmount = 0;
-        
-        cartItems.forEach(item => {
-            const itemRow = document.createElement('div');
-            itemRow.className = 'summary-item';
-            
-            const itemName = document.createElement('span');
-            itemName.className = 'item-name';
-            itemName.textContent = `${item.name} (${item.type})`;
-            
-            const itemPrice = document.createElement('span');
-            itemPrice.className = 'item-price';
-            itemPrice.textContent = `€${item.total}`;
-            
-            totalAmount += item.total;
-            
-            itemRow.appendChild(itemName);
-            itemRow.appendChild(itemPrice);
-            itemsList.appendChild(itemRow);
-        });
-        
-        const totalRow = document.createElement('div');
-        totalRow.className = 'summary-total';
-        
-        const totalLabel = document.createElement('span');
-        totalLabel.textContent = 'Total';
-        
-        const totalValue = document.createElement('span');
-        totalValue.className = 'total-value';
-        totalValue.textContent = `€${totalAmount.toFixed(2)}`;
-        
-        totalRow.appendChild(totalLabel);
-        totalRow.appendChild(totalValue);
-        
-        orderSummary.appendChild(itemsList);
-        orderSummary.appendChild(totalRow);
-        checkoutContent.appendChild(orderSummary);
-        
-        // Location section
-        const locationSection = document.createElement('div');
-        locationSection.className = 'location-section';
-        
-        const locationTitle = document.createElement('h4');
-        locationTitle.textContent = 'Your Location';
-        locationSection.appendChild(locationTitle);
-        
-        const locationDisplay = document.createElement('div');
-        locationDisplay.className = 'location-display';
-        locationDisplay.innerHTML = '<p>Detecting your location...</p>';
-        locationSection.appendChild(locationDisplay);
-        
-        // Create map container
-        const mapContainer = document.createElement('div');
-        mapContainer.id = 'map';
-        mapContainer.className = 'map-container';
-        mapContainer.style.height = '180px';
-        mapContainer.style.borderRadius = '8px';
-        mapContainer.style.marginTop = '10px';
-        locationSection.appendChild(mapContainer);
-        
-        checkoutContent.appendChild(locationSection);
-        
-        // Delivery options section
+        // Delivery section
         const deliverySection = document.createElement('div');
         deliverySection.className = 'delivery-section';
         
         const deliveryTitle = document.createElement('h4');
         deliveryTitle.textContent = 'Delivery Method';
+        deliveryTitle.className = 'section-title';
         deliverySection.appendChild(deliveryTitle);
         
+        // Create enhanced delivery options
         const deliveryOptions = [
-            { id: 'pickup', name: 'Dealership Pickup', price: 0 },
-            { id: 'standard', name: 'Standard Delivery (3-5 days)', price: 50 },
-            { id: 'express', name: 'Express Delivery (1-2 days)', price: 100 }
+            { 
+                id: 'premium', 
+                name: 'Premium Delivery', 
+                description: 'White glove service with in-person handover',
+                price: 150,
+                time: '1-2 days',
+                icon: '🏆'
+            },
+            { 
+                id: 'standard', 
+                name: 'Standard Delivery', 
+                description: 'Professional delivery to your location',
+                price: 50,
+                time: '3-5 days',
+                icon: '🚚'
+            },
+            { 
+                id: 'pickup', 
+                name: 'Dealership Pickup', 
+                description: 'Visit our location for vehicle collection',
+                price: 0,
+                time: 'Same day',
+                icon: '🏢'
+            }
         ];
         
         deliveryOptions.forEach(option => {
-            const optionRow = document.createElement('div');
-            optionRow.className = 'delivery-option';
+            const optionCard = document.createElement('div');
+            optionCard.className = 'delivery-option-card';
+            optionCard.dataset.optionId = option.id;
             
-            const radioInput = document.createElement('input');
-            radioInput.type = 'radio';
-            radioInput.name = 'delivery';
-            radioInput.id = option.id;
-            radioInput.value = option.id;
-            if (option.id === 'standard') radioInput.checked = true;
+            // Preselect premium option
+            if (option.id === 'premium') {
+                optionCard.classList.add('selected');
+            }
             
-            const label = document.createElement('label');
-            label.htmlFor = option.id;
-            label.textContent = option.name;
+            optionCard.innerHTML = `
+                <div class="option-icon">${option.icon}</div>
+                <div class="option-details">
+                    <h5>${option.name}</h5>
+                    <p>${option.description}</p>
+                    <div class="option-meta">
+                        <span class="option-time">${option.time}</span>
+                        <span class="option-price">${option.price === 0 ? 'Free' : `€${option.price}`}</span>
+                    </div>
+                </div>
+                <div class="option-radio">
+                    <div class="radio-circle ${option.id === 'premium' ? 'selected' : ''}"></div>
+                </div>
+            `;
             
-            const price = document.createElement('span');
-            price.className = 'option-price';
-            price.textContent = option.price === 0 ? 'Free' : `€${option.price}`;
+            // Add click event to select option
+            optionCard.addEventListener('click', () => {
+                // Remove selected class from all options
+                document.querySelectorAll('.delivery-option-card').forEach(card => {
+                    card.classList.remove('selected');
+                    card.querySelector('.radio-circle').classList.remove('selected');
+                });
+                
+                // Add selected class to clicked option
+                optionCard.classList.add('selected');
+                optionCard.querySelector('.radio-circle').classList.add('selected');
+            });
             
-            optionRow.appendChild(radioInput);
-            optionRow.appendChild(label);
-            optionRow.appendChild(price);
-            deliverySection.appendChild(optionRow);
+            deliverySection.appendChild(optionCard);
         });
         
-        checkoutContent.appendChild(deliverySection);
+        container.appendChild(deliverySection);
+        
+        // Add location section
+        const locationSection = document.createElement('div');
+        locationSection.className = 'location-section';
+        
+        const locationTitle = document.createElement('h4');
+        locationTitle.textContent = 'Delivery Address';
+        locationTitle.className = 'section-title';
+        locationSection.appendChild(locationTitle);
+        
+        // Address form
+        const addressForm = document.createElement('div');
+        addressForm.className = 'address-form';
+        
+        // Two-column layout for form
+        // Two-column layout for form
+        const formRow1 = document.createElement('div');
+        formRow1.className = 'form-row';
+        
+        const nameInput = createFormField('text', 'fullName', 'Full Name', true);
+        const emailInput = createFormField('email', 'email', 'Email Address', true);
+        
+        formRow1.appendChild(nameInput);
+        formRow1.appendChild(emailInput);
+        
+        const formRow2 = document.createElement('div');
+        formRow2.className = 'form-row';
+        
+        const phoneInput = createFormField('tel', 'phone', 'Phone Number', true);
+        const addressInput = createFormField('text', 'address', 'Street Address', true);
+        
+        formRow2.appendChild(phoneInput);
+        formRow2.appendChild(addressInput);
+        
+        const formRow3 = document.createElement('div');
+        formRow3.className = 'form-row';
+        
+        const cityInput = createFormField('text', 'city', 'City', true);
+        const zipInput = createFormField('text', 'zip', 'Postal/Zip Code', true);
+        
+        formRow3.appendChild(cityInput);
+        formRow3.appendChild(zipInput);
+        
+        const formRow4 = document.createElement('div');
+        formRow4.className = 'form-row';
+        
+        const countryInput = createFormField('text', 'country', 'Country', true);
+        const stateInput = createFormField('text', 'state', 'State/Province', true);
+        
+        formRow4.appendChild(countryInput);
+        formRow4.appendChild(stateInput);
+        
+        addressForm.appendChild(formRow1);
+        addressForm.appendChild(formRow2);
+        addressForm.appendChild(formRow3);
+        addressForm.appendChild(formRow4);
+        
+        locationSection.appendChild(addressForm);
+        container.appendChild(locationSection);
+    }
+    
+    function createFormField(type, id, label, required) {
+        const fieldWrapper = document.createElement('div');
+        fieldWrapper.className = 'form-field';
+        
+        const labelElement = document.createElement('label');
+        labelElement.setAttribute('for', id);
+        labelElement.textContent = label;
+        if (required) {
+            const requiredMark = document.createElement('span');
+            requiredMark.className = 'required-mark';
+            requiredMark.textContent = '*';
+            labelElement.appendChild(requiredMark);
+        }
+        
+        const inputElement = document.createElement('input');
+        inputElement.type = type;
+        inputElement.id = id;
+        inputElement.name = id;
+        inputElement.required = required;
+        
+        // Add validation visual cues
+        inputElement.addEventListener('blur', function() {
+            if (this.value.trim() === '' && required) {
+                this.classList.add('invalid');
+                
+                // Check if error message already exists
+                let errorMsg = fieldWrapper.querySelector('.error-message');
+                if (!errorMsg) {
+                    errorMsg = document.createElement('div');
+                    errorMsg.className = 'error-message';
+                    errorMsg.textContent = `${label} is required`;
+                    fieldWrapper.appendChild(errorMsg);
+                }
+            } else {
+                this.classList.remove('invalid');
+                
+                // Remove error message if exists
+                const errorMsg = fieldWrapper.querySelector('.error-message');
+                if (errorMsg) {
+                    errorMsg.remove();
+                }
+            }
+        });
+        
+        fieldWrapper.appendChild(labelElement);
+        fieldWrapper.appendChild(inputElement);
+        
+        return fieldWrapper;
+    }
+    
+    function showPaymentStep(container) {
+        container.innerHTML = ''; // Clear container
+        
+        // Order summary section
+        const orderSummary = createOrderSummary();
+        container.appendChild(orderSummary);
         
         // Payment method section
         const paymentSection = document.createElement('div');
@@ -381,285 +885,449 @@ document.addEventListener('DOMContentLoaded', function() {
         
         const paymentTitle = document.createElement('h4');
         paymentTitle.textContent = 'Payment Method';
+        paymentTitle.className = 'section-title';
         paymentSection.appendChild(paymentTitle);
         
         // Create payment options
-        const paymentMethods = [
-            { id: 'credit-card', name: 'Credit Card' },
-            { id: 'paypal', name: 'PayPal' },
-            { id: 'bank-transfer', name: 'Bank Transfer' }
+        const paymentOptions = [
+            { 
+                id: 'credit-card', 
+                name: 'Credit Card', 
+                icon: '💳',
+                selected: true
+            },
+            { 
+                id: 'paypal', 
+                name: 'PayPal', 
+                icon: '🅿️'
+            },
+            { 
+                id: 'bank-transfer', 
+                name: 'Bank Transfer', 
+                icon: '🏦'
+            }
         ];
         
-        paymentMethods.forEach(method => {
-            const methodRow = document.createElement('div');
-            methodRow.className = 'payment-method';
+        const paymentSelector = document.createElement('div');
+        paymentSelector.className = 'payment-selector';
+        
+        paymentOptions.forEach(option => {
+            const paymentOption = document.createElement('div');
+            paymentOption.className = `payment-option ${option.selected ? 'selected' : ''}`;
+            paymentOption.dataset.paymentId = option.id;
             
-            const radioInput = document.createElement('input');
-            radioInput.type = 'radio';
-            radioInput.name = 'payment';
-            radioInput.id = method.id;
-            radioInput.value = method.id;
-            if (method.id === 'credit-card') radioInput.checked = true;
-            
-            const label = document.createElement('label');
-            label.htmlFor = method.id;
-            label.textContent = method.name;
-            
-            methodRow.appendChild(radioInput);
-            methodRow.appendChild(label);
-            paymentSection.appendChild(methodRow);
-        });
-        
-        // Credit card form (initially visible, would be toggled based on selection in a full implementation)
-        const creditCardForm = document.createElement('div');
-        creditCardForm.className = 'credit-card-form';
-        
-        const cardNumberField = createFormField('card-number', 'Card Number', 'text', 'xxxx xxxx xxxx xxxx');
-        const cardHolderField = createFormField('card-holder', 'Card Holder Name', 'text', 'Full Name');
-        
-        const cardRowFlex = document.createElement('div');
-        cardRowFlex.className = 'card-row-flex';
-        cardRowFlex.style.display = 'flex';
-        cardRowFlex.style.gap = '10px';
-        
-        const expiryField = createFormField('expiry', 'Expiry (MM/YY)', 'text', 'MM/YY');
-        expiryField.style.flex = '1';
-        const cvvField = createFormField('cvv', 'CVV', 'text', '123');
-        cvvField.style.flex = '1';
-        
-        cardRowFlex.appendChild(expiryField);
-        cardRowFlex.appendChild(cvvField);
-        
-        creditCardForm.appendChild(cardNumberField);
-        creditCardForm.appendChild(cardHolderField);
-        creditCardForm.appendChild(cardRowFlex);
-        
-        paymentSection.appendChild(creditCardForm);
-        checkoutContent.appendChild(paymentSection);
-        
-        // Add checkout content to slide panel
-        slidePanel.appendChild(checkoutContent);
-        
-        // Footer with place order button
-        const footer = document.createElement('div');
-        footer.className = 'slide-panel-footer';
-        
-        const confirmBtn = document.createElement('button');
-        confirmBtn.className = 'place-order-btn';
-        confirmBtn.textContent = 'Confirm Order';
-        confirmBtn.addEventListener('click', placeOrder);
-        
-        footer.appendChild(confirmBtn);
-        slidePanel.appendChild(footer);
-        
-        // Get real-time location and initialize map
-        loadGoogleMapsAPI().then(() => {
-            getUserLocation(locationDisplay, mapContainer);
-        }).catch(error => {
-            console.error("Error loading Google Maps API:", error);
-            locationDisplay.innerHTML = `
-                <p>Unable to load maps. Please enter your address manually:</p>
-                <textarea placeholder="Enter your full address" rows="3" style="width: 100%; margin-top: 8px;"></textarea>
+            paymentOption.innerHTML = `
+                <div class="payment-icon">${option.icon}</div>
+                <div class="payment-name">${option.name}</div>
+                <div class="option-radio">
+                    <div class="radio-circle ${option.selected ? 'selected' : ''}"></div>
+                </div>
             `;
+            
+            paymentOption.addEventListener('click', () => {
+                // Remove selected class from all options
+                document.querySelectorAll('.payment-option').forEach(opt => {
+                    opt.classList.remove('selected');
+                    opt.querySelector('.radio-circle').classList.remove('selected');
+                });
+                
+                // Add selected class to clicked option
+                paymentOption.classList.add('selected');
+                paymentOption.querySelector('.radio-circle').classList.add('selected');
+                
+                // Show relevant payment form
+                showPaymentForm(option.id);
+            });
+            
+            paymentSelector.appendChild(paymentOption);
         });
+        
+        paymentSection.appendChild(paymentSelector);
+        
+        // Payment details container
+        const paymentDetailsContainer = document.createElement('div');
+        paymentDetailsContainer.className = 'payment-details-container';
+        paymentSection.appendChild(paymentDetailsContainer);
+        
+        container.appendChild(paymentSection);
+        
+        // Show credit card form by default
+        showPaymentForm('credit-card');
     }
     
-    function loadGoogleMapsAPI() {
-        return new Promise((resolve, reject) => {
-            // Check if Google Maps API is already loaded
-            if (window.google && window.google.maps) {
-                resolve();
-                return;
-            }
-            
-            // Your Google Maps API Key - replace with your actual API key
-            const apiKey = 'YOUR_GOOGLE_MAPS_API_KEY';
-            
-            // Create script element to load Google Maps API
-            const script = document.createElement('script');
-            script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&libraries=places`;
-            script.async = true;
-            script.defer = true;
-            
-            script.onload = resolve;
-            script.onerror = () => reject(new Error('Google Maps failed to load'));
-            
-            document.head.appendChild(script);
-        });
-    }
-    
-    function createFormField(id, label, type, placeholder) {
-        const fieldContainer = document.createElement('div');
-        fieldContainer.className = 'form-field';
+    function showPaymentForm(paymentType) {
+        const container = document.querySelector('.payment-details-container');
+        if (!container) return;
         
-        const labelElement = document.createElement('label');
-        labelElement.htmlFor = id;
-        labelElement.textContent = label;
+        container.innerHTML = ''; // Clear container
         
-        const input = document.createElement('input');
-        input.type = type;
-        input.id = id;
-        input.name = id;
-        input.placeholder = placeholder;
-        
-        fieldContainer.appendChild(labelElement);
-        fieldContainer.appendChild(input);
-        
-        return fieldContainer;
-    }
-    
-    function getUserLocation(locationDisplay, mapContainer) {
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(
-                (position) => {
-                    const latitude = position.coords.latitude;
-                    const longitude = position.coords.longitude;
-                    
-                    // Display coordinates
-                    locationDisplay.innerHTML = `
-                        <p><strong>Current location detected:</strong></p>
-                        <p>Latitude: ${latitude.toFixed(6)}</p>
-                        <p>Longitude: ${longitude.toFixed(6)}</p>
-                    `;
-                    
-                    // Initialize Google Map
-                    initMap(latitude, longitude, mapContainer.id);
-                    
-                    // Get address using reverse geocoding
-                    reverseGeocode(latitude, longitude, locationDisplay);
-                },
-                (error) => {
-                    console.error("Error getting location:", error);
-                    locationDisplay.innerHTML = `
-                        <p>Unable to get your location. Error: ${error.message}</p>
-                        <p>Please enter your address manually:</p>
-                        <textarea placeholder="Enter your full address" rows="3" style="width: 100%; margin-top: 8px;"></textarea>
-                    `;
-                }
-            );
-        } else {
-            locationDisplay.innerHTML = `
-                <p>Geolocation is not supported by this browser.</p>
-                <p>Please enter your address manually:</p>
-                <textarea placeholder="Enter your full address" rows="3" style="width: 100%; margin-top: 8px;"></textarea>
+        if (paymentType === 'credit-card') {
+            const cardForm = document.createElement('div');
+            cardForm.className = 'credit-card-form';
+            
+            // Card number row
+            const cardNumberField = createFormField('text', 'cardNumber', 'Card Number', true);
+            cardNumberField.className = 'card-number-field';
+            
+            // Add card icons
+            const cardIcons = document.createElement('div');
+            cardIcons.className = 'card-icons';
+            cardIcons.innerHTML = `
+                <span class="card-icon visa">Visa</span>
+                <span class="card-icon mastercard">MC</span>
+                <span class="card-icon amex">Amex</span>
             `;
+            
+            cardNumberField.appendChild(cardIcons);
+            
+            // Expiration and CVV row
+            const expiryRow = document.createElement('div');
+            expiryRow.className = 'form-row';
+            
+            const expiryField = createFormField('text', 'expiry', 'Expiration (MM/YY)', true);
+            const cvvField = createFormField('text', 'cvv', 'Security Code', true);
+            
+            expiryRow.appendChild(expiryField);
+            expiryRow.appendChild(cvvField);
+            
+            // Name on card
+            const nameOnCardField = createFormField('text', 'nameOnCard', 'Name on Card', true);
+            
+            // Save card checkbox
+            const saveCardRow = document.createElement('div');
+            saveCardRow.className = 'save-card-row';
+            
+            const saveCardLabel = document.createElement('label');
+            saveCardLabel.className = 'checkbox-label';
+            
+            const saveCardCheckbox = document.createElement('input');
+            saveCardCheckbox.type = 'checkbox';
+            saveCardCheckbox.id = 'saveCard';
+            saveCardCheckbox.checked = true;
+            
+            const checkboxCustom = document.createElement('span');
+            checkboxCustom.className = 'checkbox-custom';
+            
+            const saveCardText = document.createElement('span');
+            saveCardText.textContent = 'Save card for future rentals';
+            
+            saveCardLabel.appendChild(saveCardCheckbox);
+            saveCardLabel.appendChild(checkboxCustom);
+            saveCardLabel.appendChild(saveCardText);
+            saveCardRow.appendChild(saveCardLabel);
+            
+            // Assemble the form
+            cardForm.appendChild(cardNumberField);
+            cardForm.appendChild(expiryRow);
+            cardForm.appendChild(nameOnCardField);
+            cardForm.appendChild(saveCardRow);
+            
+            container.appendChild(cardForm);
+        } else if (paymentType === 'paypal') {
+            const paypalInfo = document.createElement('div');
+            paypalInfo.className = 'payment-info-box';
+            paypalInfo.innerHTML = `
+                <p>You will be redirected to PayPal to complete your payment securely.</p>
+                <div class="paypal-logo">PayPal</div>
+            `;
+            container.appendChild(paypalInfo);
+        } else if (paymentType === 'bank-transfer') {
+            const bankInfo = document.createElement('div');
+            bankInfo.className = 'payment-info-box';
+            bankInfo.innerHTML = `
+                <p>Please transfer the total amount to the following bank account:</p>
+                <div class="bank-details">
+                    <p><strong>Bank:</strong> Euro Premium Bank</p>
+                    <p><strong>Account Name:</strong> Premium Auto Rentals</p>
+                    <p><strong>IBAN:</strong> DE89 3704 0044 0532 0130 00</p>
+                    <p><strong>BIC:</strong> COBADEFFXXX</p>
+                    <p><strong>Reference:</strong> ORDER-${Date.now().toString().substr(-6)}</p>
+                </div>
+                <p class="note">Your reservation will be confirmed once payment is received.</p>
+            `;
+            container.appendChild(bankInfo);
         }
     }
     
-    function initMap(latitude, longitude, mapContainerId) {
-        // Create a map centered at user's location
-        const map = new google.maps.Map(document.getElementById(mapContainerId), {
-            center: { lat: latitude, lng: longitude },
-            zoom: 14,
-            mapTypeControl: false,
-            streetViewControl: false,
-            fullscreenControl: false
+    function showReviewStep(container) {
+        container.innerHTML = ''; // Clear container
+        
+        // Create order review
+        const reviewSection = document.createElement('div');
+        reviewSection.className = 'review-section';
+        
+        const reviewTitle = document.createElement('h4');
+        reviewTitle.textContent = 'Order Review';
+        reviewTitle.className = 'section-title';
+        reviewSection.appendChild(reviewTitle);
+        
+        // Order summary
+        const orderSummary = createOrderSummary(true); // true for detailed view
+        reviewSection.appendChild(orderSummary);
+        
+        // Delivery summary
+        const deliverySummary = document.createElement('div');
+        deliverySummary.className = 'summary-box';
+        
+        const deliveryTitle = document.createElement('h5');
+        deliveryTitle.textContent = 'Delivery Details';
+        deliveryTitle.className = 'summary-title';
+        
+        const deliveryAddress = document.createElement('div');
+        deliveryAddress.className = 'delivery-address';
+        deliveryAddress.innerHTML = `
+            <p>John Doe</p>
+            <p>123 Main Street</p>
+            <p>Munich, 80331</p>
+            <p>Germany</p>
+            <p>Phone: +49 123 456789</p>
+        `;
+        
+        const deliveryMethod = document.createElement('div');
+        deliveryMethod.className = 'delivery-method';
+        deliveryMethod.innerHTML = `
+            <p><strong>Method:</strong> Premium Delivery</p>
+            <p><strong>Estimated Delivery:</strong> 1-2 days</p>
+        `;
+        
+        const editDeliveryBtn = document.createElement('button');
+        editDeliveryBtn.className = 'edit-button';
+        editDeliveryBtn.textContent = 'Edit';
+        editDeliveryBtn.addEventListener('click', () => {
+            // Go back to delivery step
+            navigateCheckoutStep('delivery');
         });
         
-        // Add a marker at user's location
-        const marker = new google.maps.Marker({
-            position: { lat: latitude, lng: longitude },
-            map: map,
-            title: 'Your Location',
-            animation: google.maps.Animation.DROP
+        deliverySummary.appendChild(deliveryTitle);
+        deliverySummary.appendChild(deliveryAddress);
+        deliverySummary.appendChild(deliveryMethod);
+        deliverySummary.appendChild(editDeliveryBtn);
+        
+        // Payment summary
+        const paymentSummary = document.createElement('div');
+        paymentSummary.className = 'summary-box';
+        
+        const paymentTitle = document.createElement('h5');
+        paymentTitle.textContent = 'Payment Details';
+        paymentTitle.className = 'summary-title';
+        
+        const paymentMethod = document.createElement('div');
+        paymentMethod.className = 'payment-method';
+        paymentMethod.innerHTML = `
+            <p><strong>Method:</strong> Credit Card</p>
+            <p><strong>Card:</strong> Visa ending in 1234</p>
+        `;
+        
+        const editPaymentBtn = document.createElement('button');
+        editPaymentBtn.className = 'edit-button';
+        editPaymentBtn.textContent = 'Edit';
+        editPaymentBtn.addEventListener('click', () => {
+            // Go back to payment step
+            navigateCheckoutStep('payment');
         });
         
-        // Add a circle to show accuracy/delivery area
-        const circle = new google.maps.Circle({
-            map: map,
-            center: { lat: latitude, lng: longitude },
-            radius: 800, // 800 meters radius
-            strokeColor: '#2196F3',
-            strokeOpacity: 0.8,
-            strokeWeight: 2,
-            fillColor: '#2196F3',
-            fillOpacity: 0.2
-        });
+        paymentSummary.appendChild(paymentTitle);
+        paymentSummary.appendChild(paymentMethod);
+        paymentSummary.appendChild(editPaymentBtn);
+        
+        // Terms and conditions
+        const termsSection = document.createElement('div');
+        termsSection.className = 'terms-section';
+        
+        const termsCheckbox = document.createElement('label');
+        termsCheckbox.className = 'checkbox-label';
+        
+        const checkbox = document.createElement('input');
+        checkbox.type = 'checkbox';
+        checkbox.id = 'termsAgreed';
+        
+        const checkboxCustom = document.createElement('span');
+        checkboxCustom.className = 'checkbox-custom';
+        
+        const termsText = document.createElement('span');
+        termsText.innerHTML = 'I agree to the <a href="#" class="terms-link">Terms and Conditions</a> and <a href="#" class="privacy-link">Privacy Policy</a>';
+        
+        termsCheckbox.appendChild(checkbox);
+        termsCheckbox.appendChild(checkboxCustom);
+        termsCheckbox.appendChild(termsText);
+        
+        termsSection.appendChild(termsCheckbox);
+        
+        // Add all sections to container
+        reviewSection.appendChild(deliverySummary);
+        reviewSection.appendChild(paymentSummary);
+        reviewSection.appendChild(termsSection);
+        container.appendChild(reviewSection);
     }
     
-    function reverseGeocode(latitude, longitude, locationDisplay) {
-        const geocoder = new google.maps.Geocoder();
-        const latlng = { lat: latitude, lng: longitude };
+    function createOrderSummary(detailed = false) {
+        const orderSummary = document.createElement('div');
+        orderSummary.className = 'order-summary';
         
-        geocoder.geocode({ location: latlng }, (results, status) => {
-            if (status === 'OK') {
-                if (results[0]) {
-                    // Get the formatted address
-                    const address = results[0].formatted_address;
-                    
-                    // Update the display with the address
-                    locationDisplay.innerHTML = `
-                        <p><strong>Delivery address:</strong></p>
-                        <p>${address}</p>
-                        <p class="coordinates">Lat: ${latitude.toFixed(6)}, Lng: ${longitude.toFixed(6)}</p>
-                        <button class="edit-address-btn">Edit Address</button>
-                    `;
-                    
-                    // Add event listener to the edit address button
-                    const editBtn = locationDisplay.querySelector('.edit-address-btn');
-                    editBtn.addEventListener('click', () => {
-                        locationDisplay.innerHTML = `
-                            <p><strong>Edit Delivery Address:</strong></p>
-                            <textarea class="address-input" rows="3" style="width: 100%;">${address}</textarea>
-                            <button class="save-address-btn">Save Address</button>
-                        `;
-                        
-                        // Add event listener to the save button
-                        const saveBtn = locationDisplay.querySelector('.save-address-btn');
-                        saveBtn.addEventListener('click', () => {
-                            const newAddress = locationDisplay.querySelector('.address-input').value;
-                            locationDisplay.innerHTML = `
-                                <p><strong>Delivery address:</strong></p>
-                                <p>${newAddress}</p>
-                                <button class="edit-address-btn">Edit Address</button>
-                            `;
-                            
-                            // Re-add the event listener to the new edit button
-                            const newEditBtn = locationDisplay.querySelector('.edit-address-btn');
-                            newEditBtn.addEventListener('click', () => {
-                                locationDisplay.innerHTML = `
-                                    <p><strong>Edit Delivery Address:</strong></p>
-                                    <textarea class="address-input" rows="3" style="width: 100%;">${newAddress}</textarea>
-                                    <button class="save-address-btn">Save Address</button>
-                                `;
-                            });
-                        });
-                    });
-                } else {
-                    console.error('No results found for geocoding');
-                }
+        const summaryTitle = document.createElement('h4');
+        summaryTitle.textContent = 'Order Summary';
+        summaryTitle.className = 'section-title';
+        orderSummary.appendChild(summaryTitle);
+        
+        // Items list
+        if (detailed) {
+            const itemsList = document.createElement('div');
+            itemsList.className = 'summary-items';
+            
+            cartItems.forEach(item => {
+                const itemRow = document.createElement('div');
+                itemRow.className = 'summary-item-row';
+                
+                itemRow.innerHTML = `
+                    <div class="summary-item-image">
+                        <img src="${item.image}" alt="${item.name}">
+                    </div>
+                    <div class="summary-item-details">
+                        <h5>${item.name}</h5>
+                        <p>${item.type}</p>
+                    </div>
+                    <div class="summary-item-price">
+                        €${item.price}/day
+                    </div>
+                `;
+                
+                itemsList.appendChild(itemRow);
+            });
+            
+            orderSummary.appendChild(itemsList);
+        } else {
+            // Simple item count
+            const itemCount = document.createElement('div');
+            itemCount.className = 'item-count';
+            itemCount.textContent = `${cartItems.length} vehicle${cartItems.length > 1 ? 's' : ''}`;
+            orderSummary.appendChild(itemCount);
+        }
+        
+        // Cost breakdown
+        const costBreakdown = document.createElement('div');
+        costBreakdown.className = 'cost-breakdown';
+        
+        // Calculate totals (in a real app, these would be properly calculated)
+        const subtotal = cartItems.reduce((total, item) => total + item.total, 0);
+        const deliveryFee = 150; // Premium delivery
+        const tax = subtotal * 0.19; // 19% VAT
+        const total = subtotal + deliveryFee + tax;
+        
+        costBreakdown.innerHTML = `
+            <div class="cost-row">
+                <span>Subtotal</span>
+                <span>€${subtotal.toFixed(2)}</span>
+            </div>
+            <div class="cost-row">
+                <span>Delivery Fee</span>
+                <span>€${deliveryFee.toFixed(2)}</span>
+            </div>
+            <div class="cost-row">
+                <span>Tax (19% VAT)</span>
+                <span>€${tax.toFixed(2)}</span>
+            </div>
+            <div class="cost-row total">
+                <span>Total</span>
+                <span>€${total.toFixed(2)}</span>
+            </div>
+        `;
+        
+        orderSummary.appendChild(costBreakdown);
+        
+        return orderSummary;
+    }
+    
+    function navigateCheckoutStep(direction) {
+        const steps = ['delivery', 'payment', 'review'];
+        const currentStep = slidePanel.dataset.currentStep;
+        const currentIndex = parseInt(slidePanel.dataset.currentStepIndex);
+        
+        let newIndex;
+        if (direction === 'next') {
+            newIndex = currentIndex + 1;
+        } else if (direction === 'prev') {
+            newIndex = currentIndex - 1;
+        } else {
+            // If a specific step is requested
+            newIndex = steps.indexOf(direction);
+        }
+        
+        // Ensure index is within bounds
+        if (newIndex < 0) newIndex = 0;
+        if (newIndex >= steps.length) newIndex = steps.length - 1;
+        
+        const newStep = steps[newIndex];
+        
+        // Update indicators
+        document.querySelectorAll('.checkout-steps .step').forEach((step, index) => {
+            if (index === newIndex) {
+                step.classList.add('active');
+            } else if (index < newIndex) {
+                step.classList.add('completed');
+                step.classList.remove('active');
             } else {
-                console.error('Geocoder failed due to: ' + status);
+                step.classList.remove('active', 'completed');
             }
         });
+        
+        // Update content
+        const stepContent = document.querySelector('.step-content');
+        if (newStep === 'delivery') {
+            showDeliveryStep(stepContent);
+        } else if (newStep === 'payment') {
+            showPaymentStep(stepContent);
+        } else if (newStep === 'review') {
+            showReviewStep(stepContent);
+        }
+        
+        // Update buttons
+        const backBtn = document.querySelector('.back-btn');
+        const nextBtn = document.querySelector('.next-btn');
+        
+        if (newIndex === 0) {
+            backBtn.style.display = 'none';
+        } else {
+            backBtn.style.display = 'block';
+        }
+        
+        if (newIndex === steps.length - 1) {
+            nextBtn.textContent = 'Place Order';
+            nextBtn.addEventListener('click', placeOrder);
+        } else if (newIndex === 0) {
+            nextBtn.textContent = 'Continue to Payment';
+            // Remove previous event listener
+            nextBtn.replaceWith(nextBtn.cloneNode(true));
+            document.querySelector('.next-btn').addEventListener('click', () => navigateCheckoutStep('next'));
+        } else {
+            nextBtn.textContent = 'Continue to Review';
+            // Remove previous event listener
+            nextBtn.replaceWith(nextBtn.cloneNode(true));
+            document.querySelector('.next-btn').addEventListener('click', () => navigateCheckoutStep('next'));
+        }
+        
+        // Update current step data
+        slidePanel.dataset.currentStep = newStep;
+        slidePanel.dataset.currentStepIndex = newIndex;
     }
     
     function placeOrder() {
-        // Get selected payment method
-        const selectedPayment = document.querySelector('input[name="payment"]:checked');
-        const paymentMethod = selectedPayment ? selectedPayment.value : null;
+        // Check if terms are checked
+        const termsCheckbox = document.getElementById('termsAgreed');
+        if (!termsCheckbox || !termsCheckbox.checked) {
+            showToast('Please agree to the Terms and Conditions');
+            return;
+        }
         
-        // Get selected delivery method
-        const selectedDelivery = document.querySelector('input[name="delivery"]:checked');
-        const deliveryMethod = selectedDelivery ? selectedDelivery.value : null;
-        
-        // Get delivery address
-        const addressElement = document.querySelector('.location-display p:nth-child(2)');
-        const deliveryAddress = addressElement ? addressElement.textContent : 'Address not specified';
-        
-        // In a real app, you would validate all fields here and process the payment
-        
-        // Show confirmation message
+        // Replace checkout content with order confirmation
+        const slidePanel = document.querySelector('.slide-panel');
         slidePanel.innerHTML = '';
         
-        const confirmationContent = document.createElement('div');
-        confirmationContent.className = 'confirmation-content';
-        
+        // Create confirmation header
         const header = document.createElement('div');
         header.className = 'slide-panel-header';
         
         const title = document.createElement('h3');
-        title.textContent = 'Order Confirmed';
+        title.textContent = 'Order Confirmation';
         
         const closeBtn = document.createElement('button');
         closeBtn.className = 'close-panel';
@@ -668,79 +1336,70 @@ document.addEventListener('DOMContentLoaded', function() {
         
         header.appendChild(title);
         header.appendChild(closeBtn);
+        slidePanel.appendChild(header);
         
-        const messageContent = document.createElement('div');
-        messageContent.className = 'confirmation-message';
-        messageContent.innerHTML = `
-            <div class="success-icon">✓</div>
-            <h4>Thank you for your order!</h4>
-            <p>Your order has been successfully placed.</p>
-            <p><strong>Delivery Address:</strong><br>${deliveryAddress}</p>
-            <p><strong>Payment Method:</strong><br>${formatPaymentMethod(paymentMethod)}</p>
-            <p><strong>Delivery Method:</strong><br>${formatDeliveryMethod(deliveryMethod)}</p>
-            <p>An email confirmation has been sent to your inbox.</p>
+        // Create confirmation content
+        const confirmationContent = document.createElement('div');
+        confirmationContent.className = 'confirmation-content';
+        
+        // Success animation
+        const successAnimation = document.createElement('div');
+        successAnimation.className = 'success-animation';
+        successAnimation.innerHTML = `
+            <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+                <circle class="checkmark-circle" cx="26" cy="26" r="25" fill="none"/>
+                <path class="checkmark-check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+            </svg>
         `;
         
-        confirmationContent.appendChild(header);
-        confirmationContent.appendChild(messageContent);
+        // Order details
+        const orderDetails = document.createElement('div');
+        orderDetails.className = 'order-details';
         
-        const footer = document.createElement('div');
-        footer.className = 'slide-panel-footer';
+        const confirmationTitle = document.createElement('h4');
+        confirmationTitle.className = 'confirmation-title';
+        confirmationTitle.textContent = 'Thank You for Your Order!';
         
-        const doneBtn = document.createElement('button');
-        doneBtn.className = 'done-btn';
-        doneBtn.textContent = 'Done';
-        doneBtn.addEventListener('click', function() {
-            cartItems = []; // Clear cart
+        const orderNumber = document.createElement('div');
+        orderNumber.className = 'order-number';
+        orderNumber.innerHTML = `
+            <p>Order Number: <strong>#${Date.now().toString().substr(-6)}</strong></p>
+            <p>A confirmation email has been sent to your email address.</p>
+        `;
+        
+        const deliveryInfo = document.createElement('div');
+        deliveryInfo.className = 'delivery-info';
+        deliveryInfo.innerHTML = `
+            <h5>Delivery Information</h5>
+            <p>Your vehicle will be delivered within 1-2 days.</p>
+            <p>You will receive a call from our delivery team before arrival.</p>
+        `;
+        
+        const continueButton = document.createElement('button');
+        continueButton.className = 'continue-shopping-btn';
+        continueButton.textContent = 'Continue Shopping';
+        continueButton.addEventListener('click', () => {
+            // Clear cart and close panel
+            cartItems = [];
+            updateCartCounter();
             closeSlidePanel();
+            
+            // Scroll to vehicles section
+            const vehiclesSection = document.getElementById('vehicles-section');
+            if (vehiclesSection) {
+                vehiclesSection.scrollIntoView({ behavior: 'smooth' });
+            }
         });
         
-        footer.appendChild(doneBtn);
+        // Assemble confirmation content
+        orderDetails.appendChild(confirmationTitle);
+        orderDetails.appendChild(orderNumber);
+        orderDetails.appendChild(deliveryInfo);
+        orderDetails.appendChild(continueButton);
         
-        confirmationContent.appendChild(footer);
+        confirmationContent.appendChild(successAnimation);
+        confirmationContent.appendChild(orderDetails);
+        
         slidePanel.appendChild(confirmationContent);
-        
-        // Add some basic styles to the confirmation message
-        const style = document.createElement('style');
-        style.textContent = `
-            .confirmation-message {
-                text-align: center;
-                padding: 20px;
-            }
-            .success-icon {
-                background-color: #4CAF50;
-                color: white;
-                font-size: 24px;
-                width: 50px;
-                height: 50px;
-                border-radius: 50%;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                margin: 0 auto 20px;
-            }
-            .done-btn {
-                background-color: #4CAF50;
-            }
-        `;
-        document.head.appendChild(style);
-    }
-    
-    function formatPaymentMethod(method) {
-        switch(method) {
-            case 'credit-card': return 'Credit Card';
-            case 'paypal': return 'PayPal';
-            case 'bank-transfer': return 'Bank Transfer';
-            default: return 'Not specified';
-        }
-    }
-    
-    function formatDeliveryMethod(method) {
-        switch(method) {
-            case 'pickup': return 'Dealership Pickup';
-            case 'standard': return 'Standard Delivery (3-5 days)';
-            case 'express': return 'Express Delivery (1-2 days)';
-            default: return 'Not specified';
-        }
     }
 });
