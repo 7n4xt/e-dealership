@@ -161,6 +161,52 @@
 
     <script src="./js/main.js"></script>
     <script src="./js/cartandwish.js"></script>
+    <link rel="stylesheet" href="./assets/css/order-panel.css">
+    <script src="./js/order-panel.js"></script>
+
+    <div class="order-slide-panel">
+        <div class="panel-header">
+            <h2>Complete Your Order</h2>
+            <button class="close-panel">&times;</button>
+        </div>
+        
+        <div class="panel-content">
+            <!-- Delivery Location Section -->
+            <div class="delivery-section">
+                <h3>Delivery Location</h3>
+                <div class="location-search">
+                    <input type="text" 
+                           id="location-search" 
+                           placeholder="Search your delivery address"
+                           autocomplete="off">
+                    <div id="location-results" class="location-results"></div>
+                </div>
+                <div id="selected-location" class="selected-location">
+                    <p class="address"></p>
+                    <small class="coordinates"></small>
+                </div>
+            </div>
+
+            <!-- Payment Method Section -->
+            <div class="payment-section">
+                <h3>Payment Method</h3>
+                <div class="payment-options">
+                    <label class="payment-option">
+                        <input type="radio" name="payment" value="card" checked>
+                        <span>Credit/Debit Card</span>
+                    </label>
+                    <label class="payment-option">
+                        <input type="radio" name="payment" value="paypal">
+                        <span>PayPal</span>
+                    </label>
+                </div>
+            </div>
+
+            <button id="confirm-order" class="confirm-order-btn">
+                Confirm Order
+            </button>
+        </div>
+    </div>
 </body>
 
 </html>

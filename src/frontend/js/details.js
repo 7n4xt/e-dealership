@@ -243,6 +243,43 @@ function setupCartWishlist() {
       alert('Car added to cart successfully!');
     }
   });
+
+  // Add wishlist functionality
+  addToWishlistBtn.addEventListener('click', function() {
+    if (!currentCar) return;
+
+    const product = {
+      id: currentCar.id,
+      name: `${currentCar.brand} ${currentCar.model}`,
+      price: currentCar.reduction ? 
+        currentCar.price * (1 - currentCar.reduction / 100) : 
+        currentCar.price,
+      image: `${API_URL}/img/${currentCar.images[selectedColor].main}`
+    };
+
+    // Toggle wishlist item
+    toggleWishlist(product);
+
+    // Show notification
+    if (isInWishlist(currentCar.id)) {
+      showNotification('Item added to your wishlist');
+      // Redirect to wishlist page after a short delay
+      setTimeout(() => {
+        window.location.href = './wishlist.html';
+      }, 1000);
+    } else {
+      showNotification('Item removed from your wishlist');
+    }
+  });
+
+  // Update button state based on wishlist status
+  if (isInWishlist(currentCar?.id)) {
+    addToWishlistBtn.classList.add('active');
+    addToWishlistBtn.textContent = 'Remove from Wishlist';
+  } else {
+    addToWishlistBtn.classList.remove('active');
+    addToWishlistBtn.textContent = 'Add to Wishlist';
+  }
 }
 
 // Initialize the page

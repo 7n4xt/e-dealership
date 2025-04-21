@@ -508,7 +508,7 @@ function showEmptyWishlist() {
 }
 
 // Show notification
-function showNotification(message) {
+function showNotification(message, type = 'info') {
     // Create notification if it doesn't exist
     if (!document.querySelector('.notification')) {
         const notification = document.createElement('div');
@@ -518,6 +518,7 @@ function showNotification(message) {
     
     const notificationElement = document.querySelector('.notification');
     notificationElement.textContent = message;
+    notificationElement.className = `notification ${type}`;
     notificationElement.classList.add('active');
     
     // Hide notification after 3 seconds
@@ -526,8 +527,13 @@ function showNotification(message) {
     }, 3000);
 }
 
-// Checkout function
+// Update the checkout function
 function checkout() {
-    // Redirect to checkout page
-    window.location.href = 'checkout.html';
+    if (cart.length === 0) {
+        showNotification('Your cart is empty!', 'error');
+        return;
+    }
+    
+    // Open the order panel instead of direct checkout
+    orderPanel.openPanel();
 }

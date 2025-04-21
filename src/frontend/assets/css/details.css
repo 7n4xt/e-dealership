@@ -259,6 +259,22 @@
     width: 200px;
 }
 
+.btn-outline.active {
+    background-color: #f8f8f8;
+    color: #333;
+    border-color: #333;
+}
+
+#addToWishlist {
+    transition: all 0.3s ease;
+}
+
+#addToWishlist.active:hover {
+    background-color: #ffebee;
+    color: #d32f2f;
+    border-color: #d32f2f;
+}
+
 /* Responsive Styles */
 @media (max-width: 992px) {
     .car-info {
