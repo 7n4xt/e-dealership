@@ -15,6 +15,10 @@ const specYear = document.getElementById('specYear');
 const carDelivery = document.getElementById('carDelivery');
 const addToCartBtn = document.getElementById('addToCart');
 const addToWishlistBtn = document.getElementById('addToWishlist');
+let currentImageIndex = 0;
+let currentImages = [];
+const prevImageBtn = document.getElementById('prevImage');
+const nextImageBtn = document.getElementById('nextImage');
 
 // Configuration
 const API_URL = 'http://localhost:8080'; // Update with your actual API URL
@@ -32,26 +36,26 @@ function getCarIdFromUrl() {
 // Fetch car details
 async function fetchCarDetails() {
   const carId = getCarIdFromUrl();
-  
+
   if (!carId) {
     showError('Car ID not provided');
     return;
   }
-  
+
   try {
     const response = await fetch(`${API_URL}/car/${carId}`);
     const data = await response.json();
-    
+
     if (data.status === 'success') {
       currentCar = data.data;
       selectedColor = currentCar.colors[0]; // Default to first color
-      
+
       // Update the page title
       document.title = `${currentCar.brand.toUpperCase()} ${currentCar.model.toUpperCase()} | E-Dealership`;
-      
+
       // Render car details
       renderCarDetails();
-      
+
       // Hide loading spinner and show car details
       loadingSpinner.style.display = 'none';
       carDetailsElement.style.display = 'block';
@@ -66,20 +70,20 @@ async function fetchCarDetails() {
 // Render car details
 function renderCarDetails() {
   if (!currentCar) return;
-  
+
   // Set basic car information
   carTitle.textContent = `${currentCar.brand.toUpperCase()} ${currentCar.model.toUpperCase()}`;
   carYear.textContent = currentCar.release_date.substring(0, 4);
-  
+
   // Format and set price information
   const formattedPrice = new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency: 'EUR',
     maximumFractionDigits: 0
   }).format(currentCar.price);
-  
+
   carPrice.textContent = formattedPrice;
-  
+
   if (currentCar.reduction) {
     const discountedPrice = currentCar.price * (1 - currentCar.reduction / 100);
     const formattedDiscountedPrice = new Intl.NumberFormat('en-US', {
@@ -87,29 +91,40 @@ function renderCarDetails() {
       currency: 'EUR',
       maximumFractionDigits: 0
     }).format(discountedPrice);
-    
+
     carDiscount.textContent = `${currentCar.reduction}% off! Was ${formattedPrice}`;
     carPrice.textContent = formattedDiscountedPrice;
   } else {
     carDiscount.textContent = '';
   }
-  
+
   // Set description and specs
   carDescription.textContent = currentCar.description;
   carBrand.textContent = currentCar.brand.toUpperCase();
   carModel.textContent = currentCar.model.toUpperCase();
   specYear.textContent = currentCar.release_date.substring(0, 4);
-  
+
   // Set delivery information
   if (currentCar.delivery_price === 0) {
     carDelivery.textContent = `Free, ${currentCar.delivery_time} weeks`;
   } else {
     carDelivery.textContent = `€${currentCar.delivery_price}, ${currentCar.delivery_time} weeks`;
   }
-  
+
+  // Update technical specifications
+  document.getElementById('engineSpec').textContent = currentCar.engine_options;
+  document.getElementById('horsepowerSpec').textContent = `${currentCar.horsepower} HP`;
+  document.getElementById('topSpeedSpec').textContent = `${currentCar.top_speed_kmh} km/h`;
+  document.getElementById('fuelTypeSpec').textContent = currentCar.fuel_type;
+  document.getElementById('weightSpec').textContent = `${currentCar.weight_kg} kg`;
+  document.getElementById('doorsSpec').textContent = `${currentCar.doors} doors`;
+  document.getElementById('mpgSpec').textContent = currentCar.mpg === "N/A" ? "N/A" : `${currentCar.mpg} MPG`;
+  document.getElementById('transmissionSpec').textContent = currentCar.transmission;
+  document.getElementById('drivetrainSpec').textContent = currentCar.drivetrain;
+
   // Render color options
   renderColorOptions();
-  
+
   // Set main image and thumbnails
   updateImages();
 }
@@ -117,67 +132,75 @@ function renderCarDetails() {
 // Render color options
 function renderColorOptions() {
   colorButtons.innerHTML = '';
-  
+
   currentCar.colors.forEach(color => {
     const button = document.createElement('div');
     button.className = `color-button ${color === selectedColor ? 'active' : ''}`;
     button.style.backgroundColor = color;
     button.setAttribute('data-color', color);
     button.title = color.charAt(0).toUpperCase() + color.slice(1);
-    
+
     button.addEventListener('click', () => {
       selectedColor = color;
-      
+
       // Update active state of color buttons
       document.querySelectorAll('.color-button').forEach(btn => {
         btn.classList.remove('active');
       });
       button.classList.add('active');
-      
+
       // Update images
       updateImages();
     });
-    
+
     colorButtons.appendChild(button);
   });
 }
 
 // Update image display
 function updateImages() {
+  // Get all images for the selected color
+  const colorImages = currentCar.images[selectedColor];
+  currentImages = Object.entries(colorImages);
+
   // Set main image
-  mainImage.src = `../backend/img/${currentCar.images[selectedColor][selectedImageType]}`;
-  mainImage.alt = `${currentCar.brand} ${currentCar.model} ${selectedColor} ${selectedImageType}`;
-  
+  updateMainImage();
+
   // Clear thumbnails
   thumbnailImages.innerHTML = '';
-  
-  // Add thumbnails for all image types
-  Object.keys(currentCar.images[selectedColor]).forEach(imageType => {
+
+  // Add thumbnails
+  currentImages.forEach(([imageType, imagePath], index) => {
     const thumb = document.createElement('div');
-    thumb.className = `thumbnail ${imageType === selectedImageType ? 'active' : ''}`;
-    thumb.setAttribute('data-type', imageType);
-    
+    thumb.className = `thumbnail ${index === currentImageIndex ? 'active' : ''}`;
+    thumb.setAttribute('data-index', index);
+
     const img = document.createElement('img');
-    img.src = `../backend/img/${currentCar.images[selectedColor][imageType]}`;
+    img.src = `${API_URL}/img/${imagePath}`;
     img.alt = `${currentCar.brand} ${currentCar.model} ${imageType}`;
-    
+
     thumb.appendChild(img);
     thumbnailImages.appendChild(thumb);
-    
-    // Add click event to thumbnail
+
     thumb.addEventListener('click', () => {
-      selectedImageType = imageType;
-      
-      // Update active state of thumbnails
-      document.querySelectorAll('.thumbnail').forEach(t => {
-        t.classList.remove('active');
-      });
-      thumb.classList.add('active');
-      
-      // Update main image
-      mainImage.src = `../backend/img/${currentCar.images[selectedColor][selectedImageType]}`;
-      mainImage.alt = `${currentCar.brand} ${currentCar.model} ${selectedColor} ${selectedImageType}`;
+      currentImageIndex = index;
+      updateMainImage();
+      updateThumbnailsActive();
     });
+  });
+}
+
+// Update main image
+function updateMainImage() {
+  const [imageType, imagePath] = currentImages[currentImageIndex];
+  mainImage.src = `${API_URL}/img/${imagePath}`;
+  mainImage.alt = `${currentCar.brand} ${currentCar.model} ${imageType}`;
+}
+
+// Update active state of thumbnails
+function updateThumbnailsActive() {
+  document.querySelectorAll('.thumbnail').forEach((thumb, index) => {
+    thumb.classList.toggle('active', index === currentImageIndex);
   });
 }
 
@@ -198,33 +221,25 @@ function showError(message) {
 function setupCartWishlist() {
   addToCartBtn.addEventListener('click', () => {
     if (!currentCar) return;
-    
-    // Get existing cart or create new one
+
     let cart = JSON.parse(localStorage.getItem('cart')) || [];
-    
-    // Check if car is already in cart
     const existingItem = cart.find(item => item.id === currentCar.id);
-    
+
     if (existingItem) {
-      // If car is already in cart, show alert
       alert('This car is already in your cart!');
     } else {
-      // Add car to cart with selected color
       cart.push({
         id: currentCar.id,
         brand: currentCar.brand,
         model: currentCar.model,
-        price: currentCar.reduction ? 
-          currentCar.price * (1 - currentCar.reduction / 100) : 
+        price: currentCar.reduction ?
+          currentCar.price * (1 - currentCar.reduction / 100) :
           currentCar.price,
         color: selectedColor,
-        image: currentCar.images[selectedColor].main
+        image: `${API_URL}/img/${currentCar.images[selectedColor].main}`
       });
-      
-      // Save to localStorage
+
       localStorage.setItem('cart', JSON.stringify(cart));
-      
-      // Show success message
       alert('Car added to cart successfully!');
     }
   });
@@ -234,10 +249,10 @@ function setupCartWishlist() {
 document.addEventListener('DOMContentLoaded', () => {
   // Start loading car details
   fetchCarDetails();
-  
+
   // Setup cart and wishlist handlers
   setupCartWishlist();
-  
+
   // Add scroll event for nav styling
   window.addEventListener('scroll', () => {
     const nav = document.querySelector('nav');
@@ -246,5 +261,18 @@ document.addEventListener('DOMContentLoaded', () => {
     } else {
       nav.classList.remove('nav-scrolled');
     }
+  });
+
+  // Add navigation button handlers
+  prevImageBtn.addEventListener('click', () => {
+    currentImageIndex = (currentImageIndex - 1 + currentImages.length) % currentImages.length;
+    updateMainImage();
+    updateThumbnailsActive();
+  });
+
+  nextImageBtn.addEventListener('click', () => {
+    currentImageIndex = (currentImageIndex + 1) % currentImages.length;
+    updateMainImage();
+    updateThumbnailsActive();
   });
 });

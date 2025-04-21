@@ -25,8 +25,6 @@
         <div class="nav-actions">
             <ul class="nav-links">
                 <li><a href="./index.html">Home</a></li>
-                <li><a href="./inventory.html">Inventory</a></li>
-                <li><a href="./about.html">About</a></li>
             </ul>
             <div class="nav-icons">
                 <div class="icon cart">
@@ -49,7 +47,7 @@
                 <div class="spinner"></div>
                 <p>Loading car details...</p>
             </div>
-            
+
             <div class="car-details" id="carDetails" style="display: none;">
                 <div class="car-header">
                     <div class="car-title">
@@ -61,29 +59,39 @@
                         <p id="carDiscount"></p>
                     </div>
                 </div>
-                
+
                 <div class="car-gallery">
-                    <div class="main-image">
-                        <img id="mainImage" src="" alt="Car Main Image">
-                    </div>
-                    <div class="thumbnail-images" id="thumbnailImages">
-                        <!-- Thumbnails will be inserted here -->
+                    <div class="gallery-container">
+                        <div class="preview-gallery">
+                            <div class="thumbnails-vertical" id="thumbnailImages">
+                                <!-- Thumbnails will be inserted here -->
+                            </div>
+                        </div>
+                        <div class="main-image-container">
+                            <div class="main-image">
+                                <img id="mainImage" src="" alt="Car Main Image">
+                            </div>
+                            <div class="image-navigation">
+                                <button class="nav-btn prev" id="prevImage">❮</button>
+                                <button class="nav-btn next" id="nextImage">❯</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                
+
                 <div class="car-colors" id="colorOptions">
                     <h3>Available Colors</h3>
                     <div class="color-options" id="colorButtons">
                         <!-- Color buttons will be inserted here -->
                     </div>
                 </div>
-                
+
                 <div class="car-info">
                     <div class="car-description">
                         <h3>Description</h3>
                         <p id="carDescription"></p>
                     </div>
-                    
+
                     <div class="car-specs">
                         <h3>Specifications</h3>
                         <div class="specs-grid">
@@ -106,7 +114,58 @@
                         </div>
                     </div>
                 </div>
-                
+
+                <div class="technical-specs">
+                    <h3>Technical Specifications</h3>
+                    <div class="specs-grid">
+                        <div class="spec-group">
+                            <h4>Performance</h4>
+                            <div class="spec-item">
+                                <span class="spec-label">Engine</span>
+                                <span class="spec-value" id="engineSpec"></span>
+                            </div>
+                            <div class="spec-item">
+                                <span class="spec-label">Horsepower</span>
+                                <span class="spec-value" id="horsepowerSpec"></span>
+                            </div>
+                            <div class="spec-item">
+                                <span class="spec-label">Top Speed</span>
+                                <span class="spec-value" id="topSpeedSpec"></span>
+                            </div>
+                            <div class="spec-item">
+                                <span class="spec-label">Fuel Type</span>
+                                <span class="spec-value" id="fuelTypeSpec"></span>
+                            </div>
+                        </div>
+                        <div class="spec-group">
+                            <h4>Dimensions & Weight</h4>
+                            <div class="spec-item">
+                                <span class="spec-label">Weight</span>
+                                <span class="spec-value" id="weightSpec"></span>
+                            </div>
+                            <div class="spec-item">
+                                <span class="spec-label">Doors</span>
+                                <span class="spec-value" id="doorsSpec"></span>
+                            </div>
+                        </div>
+                        <div class="spec-group">
+                            <h4>Efficiency</h4>
+                            <div class="spec-item">
+                                <span class="spec-label">MPG</span>
+                                <span class="spec-value" id="mpgSpec"></span>
+                            </div>
+                            <div class="spec-item">
+                                <span class="spec-label">Transmission</span>
+                                <span class="spec-value" id="transmissionSpec"></span>
+                            </div>
+                            <div class="spec-item">
+                                <span class="spec-label">Drivetrain</span>
+                                <span class="spec-value" id="drivetrainSpec"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="car-actions">
                     <button class="btn btn-primary" id="addToCart">
                         Add to Cart

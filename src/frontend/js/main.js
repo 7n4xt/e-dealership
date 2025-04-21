@@ -14,13 +14,13 @@ async function fetchCars() {
   try {
     const response = await fetch(`${API_URL}/cars`);
     const data = await response.json();
-    
+
     if (data.status === 'success') {
       allCars = data.data;
-      
+
       // Update the counter for available vehicles
       vehiclesAvailable.textContent = `${allCars.length} vehicles available`;
-      
+
       // Load the first page of cars
       loadCarPage(currentPage);
     } else {
@@ -36,17 +36,17 @@ function loadCarPage(page) {
   const startIndex = (page - 1) * carsPerPage;
   const endIndex = Math.min(startIndex + carsPerPage, allCars.length);
   const carsForPage = allCars.slice(startIndex, endIndex);
-  
+
   // If we're on page 1, clear the grid first
   if (page === 1) {
     vehiclesGrid.innerHTML = '';
   }
-  
+
   // Add cars to the grid
   carsForPage.forEach(car => {
     vehiclesGrid.appendChild(createCarCard(car));
   });
-  
+
   // Hide/show load more button based on whether there are more cars
   if (endIndex >= allCars.length) {
     loadMoreBtn.style.display = 'none';
@@ -57,28 +57,27 @@ function loadCarPage(page) {
 
 // Create a car card element
 function createCarCard(car) {
-  // Get the main image for the first available color
   const firstColor = car.colors[0];
   const mainImage = car.images[firstColor].main;
-  
+  const interiorImage = car.images[firstColor].interior;
+
   // Format the price for display
   const formattedPrice = new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency: 'EUR',
     maximumFractionDigits: 0
   }).format(car.price);
-  
-  // Calculate discounted price if there's a reduction
-  const discountedPrice = car.reduction ? 
-    car.price * (1 - car.reduction / 100) : 
+
+  const discountedPrice = car.reduction ?
+    car.price * (1 - car.reduction / 100) :
     car.price;
-  
-  // Create the card element
+
   const card = document.createElement('div');
   card.className = 'vehicle-card';
   card.innerHTML = `
     <div class="vehicle-image">
-      <img src="../backend/img/${mainImage}" alt="${car.brand} ${car.model}">
+      <img src="${API_URL}/img/${mainImage}" alt="${car.brand} ${car.model}" class="exterior-view">
+      <img src="${API_URL}/img/${interiorImage}" alt="${car.brand} ${car.model} Interior" class="interior-view">
       ${car.reduction ? `<div class="vehicle-tag">${car.reduction}% Off</div>` : ''}
     </div>
     <div class="vehicle-details">
@@ -93,25 +92,25 @@ function createCarCard(car) {
     </div>
     <div class="vehicle-features">
       <div class="feature">
-        <img src="../assets/icons/palette-icon.png" alt="Colors">
+        <img src="./assets/icons/colors.png" alt="Colors">
         <span>${car.colors.length} colors</span>
       </div>
       <div class="feature">
-        <img src="../assets/icons/truck-icon.png" alt="Delivery">
+        <img src="./assets/icons/time.png" alt="Delivery">
         <span>${car.delivery_time} weeks delivery</span>
       </div>
       <div class="feature">
-        <img src="../assets/icons/tag-icon.png" alt="Price">
+        <img src="./assets/icons/Delivery.png" alt="Price">
         <span>${car.delivery_price === 0 ? 'Free delivery' : `€${car.delivery_price} delivery`}</span>
       </div>
     </div>
   `;
-  
+
   // Add click event to navigate to details page
   card.addEventListener('click', () => {
     window.location.href = `./pages/details.html?id=${car.id}`;
   });
-  
+
   return card;
 }
 
@@ -124,7 +123,7 @@ loadMoreBtn.addEventListener('click', () => {
 // Sort cars based on selected option
 document.getElementById('sort-select').addEventListener('change', (e) => {
   const sortValue = e.target.value;
-  
+
   switch (sortValue) {
     case 'price-low':
       allCars.sort((a, b) => a.price - b.price);
@@ -140,7 +139,7 @@ document.getElementById('sort-select').addEventListener('change', (e) => {
       allCars.sort((a, b) => a.id - b.id);
       break;
   }
-  
+
   // Reset to page 1 and reload
   currentPage = 1;
   loadCarPage(currentPage);
@@ -152,27 +151,27 @@ const searchButton = document.querySelector('.search-button');
 
 function performSearch() {
   const searchTerm = searchInput.value.toLowerCase().trim();
-  
+
   if (searchTerm === '') {
     // If search is empty, show all cars
     currentPage = 1;
     loadCarPage(currentPage);
     return;
   }
-  
+
   // Filter cars based on search term
-  const filteredCars = allCars.filter(car => 
-    car.brand.toLowerCase().includes(searchTerm) || 
+  const filteredCars = allCars.filter(car =>
+    car.brand.toLowerCase().includes(searchTerm) ||
     car.model.toLowerCase().includes(searchTerm) ||
     car.description.toLowerCase().includes(searchTerm)
   );
-  
+
   // Update the counter
   vehiclesAvailable.textContent = `${filteredCars.length} vehicles available`;
-  
+
   // Clear the grid and display filtered cars
   vehiclesGrid.innerHTML = '';
-  
+
   if (filteredCars.length === 0) {
     vehiclesGrid.innerHTML = `
       <div class="no-results">
@@ -202,7 +201,7 @@ filterTags.forEach(tag => {
   tag.addEventListener('click', () => {
     // Get tag text
     const tagText = tag.textContent.toLowerCase();
-    
+
     // Apply filter based on tag
     if (tagText.includes('€')) {
       // Price range filter
@@ -210,12 +209,12 @@ filterTags.forEach(tag => {
       if (priceRange) {
         const minPrice = parseInt(priceRange[1]);
         const maxPrice = parseInt(priceRange[2]);
-        
+
         const filteredCars = allCars.filter(car => {
           const dailyPrice = Math.round(car.price / 365);
           return dailyPrice >= minPrice && dailyPrice <= maxPrice;
         });
-        
+
         vehiclesAvailable.textContent = `${filteredCars.length} vehicles available`;
         vehiclesGrid.innerHTML = '';
         filteredCars.forEach(car => {
@@ -233,7 +232,7 @@ filterTags.forEach(tag => {
 // Initialize the page
 document.addEventListener('DOMContentLoaded', () => {
   fetchCars();
-  
+
   // Add scroll event for nav styling
   window.addEventListener('scroll', () => {
     const nav = document.querySelector('nav');
