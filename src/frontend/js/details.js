@@ -222,37 +222,50 @@ function setupCartWishlist() {
   addToCartBtn.addEventListener('click', () => {
     if (!currentCar) return;
 
-    let cart = JSON.parse(localStorage.getItem('cart')) || [];
-    const existingItem = cart.find(item => item.id === currentCar.id);
+    try {
+      // Calculate the actual price considering reduction
+      const actualPrice = currentCar.reduction ?
+        currentCar.price * (1 - currentCar.reduction / 100) :
+        currentCar.price;
 
-    if (existingItem) {
-      alert('This car is already in your cart!');
-    } else {
-      cart.push({
+      // Create cart item
+      const cartItem = {
         id: currentCar.id,
-        brand: currentCar.brand,
-        model: currentCar.model,
-        price: currentCar.reduction ?
-          currentCar.price * (1 - currentCar.reduction / 100) :
-          currentCar.price,
+        brand: currentCar.brand.toUpperCase(),
+        model: currentCar.model.toUpperCase(),
+        name: `${currentCar.brand.toUpperCase()} ${currentCar.model.toUpperCase()}`,
+        price: actualPrice,
+        quantity: 1,
         color: selectedColor,
         image: `${API_URL}/img/${currentCar.images[selectedColor].main}`
-      });
+      };
 
-      localStorage.setItem('cart', JSON.stringify(cart));
-      alert('Car added to cart successfully!');
+      // Debug log
+      console.log('Adding to cart:', cartItem);
+
+      // Check if window.addToCart exists
+      if (typeof window.addToCart === 'function') {
+        window.addToCart(cartItem);
+        showNotification('Car added to cart successfully!');
+        openCart();
+      } else {
+        console.error('addToCart function not found');
+        showNotification('Error adding to cart', 'error');
+      }
+    } catch (error) {
+      console.error('Error adding to cart:', error);
+      showNotification('Error adding to cart', 'error');
     }
   });
 
-  // Add wishlist functionality
-  addToWishlistBtn.addEventListener('click', function() {
+  addToWishlistBtn.addEventListener('click', function () {
     if (!currentCar) return;
 
     const product = {
       id: currentCar.id,
       name: `${currentCar.brand} ${currentCar.model}`,
-      price: currentCar.reduction ? 
-        currentCar.price * (1 - currentCar.reduction / 100) : 
+      price: currentCar.reduction ?
+        currentCar.price * (1 - currentCar.reduction / 100) :
         currentCar.price,
       image: `${API_URL}/img/${currentCar.images[selectedColor].main}`
     };

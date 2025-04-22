@@ -5,6 +5,32 @@ let cart = JSON.parse(localStorage.getItem('cart')) || [];
 let wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
 let orderPanel;
 
+// Make certain functions globally accessible
+window.addToCart = function (product) {
+    // Check if product is already in cart
+    const existingProductIndex = cart.findIndex(item => item.id === product.id);
+
+    if (existingProductIndex > -1) {
+        // Update quantity if product exists
+        cart[existingProductIndex].quantity += product.quantity;
+    } else {
+        // Add new product
+        cart.push(product);
+    }
+
+    // Save to localStorage
+    saveCart();
+
+    // Update cart UI
+    renderCartItems();
+    updateCartCount();
+};
+
+window.openCart = openCart;
+window.showNotification = showNotification;
+window.isInWishlist = isInWishlist;
+window.toggleWishlist = toggleWishlist;
+
 // DOM elements
 document.addEventListener('DOMContentLoaded', function () {
     // Initialize cart panel elements
@@ -57,7 +83,7 @@ function setupCartPanel() {
             <div class="cart-header">
                 <h3 class="cart-title">Your Cart</h3>
                 <button class="close-cart">
-                    <img src="../icons/x.png" alt="Close">
+                    <img src="../assets/icons/x.png" alt="Close">
                 </button>
             </div>
             <div class="cart-items">
@@ -67,15 +93,15 @@ function setupCartPanel() {
                 <div class="cart-totals">
                     <div class="cart-total-line">
                         <span>Subtotal</span>
-                        <span class="subtotal">$0.00</span>
+                        <span class="subtotal">€0</span>
                     </div>
                     <div class="cart-total-line">
                         <span>Tax</span>
-                        <span class="tax">$0.00</span>
+                        <span class="tax">€0</span>
                     </div>
                     <div class="cart-total-line total">
                         <span>Total</span>
-                        <span class="total-amount">$0.00</span>
+                        <span class="total-amount">€0</span>
                     </div>
                 </div>
                 <button class="checkout-btn">Proceed to Checkout</button>
@@ -327,7 +353,11 @@ function isInWishlist(productId) {
 
 // Save cart to localStorage
 function saveCart() {
-    localStorage.setItem('cart', JSON.stringify(cart));
+    try {
+        localStorage.setItem('cart', JSON.stringify(cart));
+    } catch (error) {
+        console.error('Error saving cart:', error);
+    }
 }
 
 // Save wishlist to localStorage
@@ -337,53 +367,61 @@ function saveWishlist() {
 
 // Render cart items
 function renderCartItems() {
-    const cartItemsContainer = document.querySelector('.cart-items');
+    try {
+        const cartItemsContainer = document.querySelector('.cart-items');
+        if (!cartItemsContainer) {
+            console.error('Cart items container not found');
+            return;
+        }
 
-    if (cart.length === 0) {
-        cartItemsContainer.innerHTML = `
-            <div class="cart-empty">
-                <p>Your cart is empty</p>
-                <button class="continue-shopping">Start Shopping</button>
-            </div>
-        `;
-
-        // Setup event listener for continue shopping button
-        document.querySelector('.cart-empty .continue-shopping').addEventListener('click', closeCart);
-    } else {
-        let cartHTML = '';
-
-        cart.forEach(item => {
-            cartHTML += `
-                <div class="cart-item" data-id="${item.id}">
-                    <div class="cart-item-image">
-                        <img src="${item.image}" alt="${item.name}">
-                    </div>
-                    <div class="cart-item-details">
-                        <h4 class="cart-item-title">${item.name}</h4>
-                        <div class="cart-item-price">$${item.price.toLocaleString()}</div>
-                        <div class="cart-quantity-control">
-                            <span class="quantity-btn decrease">-</span>
-                            <input type="text" class="cart-quantity" value="${item.quantity}" readonly>
-                            <span class="quantity-btn increase">+</span>
-                        </div>
-                    </div>
-                    <button class="remove-item" data-id="${item.id}">
-                        <img src="../icons/trash.png" alt="Remove">
-                    </button>
+        if (cart.length === 0) {
+            cartItemsContainer.innerHTML = `
+                <div class="cart-empty">
+                    <p>Your cart is empty</p>
+                    <button class="continue-shopping">Start Shopping</button>
                 </div>
             `;
-        });
 
-        cartItemsContainer.innerHTML = cartHTML;
+            document.querySelector('.cart-empty .continue-shopping').addEventListener('click', closeCart);
+        } else {
+            let cartHTML = '';
 
-        // Setup event listeners for quantity buttons
-        setupQuantityControls();
+            cart.forEach(item => {
+                // Format price using Intl.NumberFormat
+                const formattedPrice = new Intl.NumberFormat('de-DE', {
+                    style: 'currency',
+                    currency: 'EUR',
+                    maximumFractionDigits: 0
+                }).format(item.price);
 
-        // Setup event listeners for remove buttons
-        setupRemoveButtons();
+                cartHTML += `
+                    <div class="cart-item" data-id="${item.id}">
+                        <div class="cart-item-image">
+                            <img src="${item.image}" alt="${item.name}">
+                        </div>
+                        <div class="cart-item-details">
+                            <h4 class="cart-item-title">${item.name}</h4>
+                            <div class="cart-item-price">${formattedPrice}</div>
+                            <div class="cart-quantity-control">
+                                <span class="quantity-btn decrease">-</span>
+                                <input type="text" class="cart-quantity" value="${item.quantity}" readonly>
+                                <span class="quantity-btn increase">+</span>
+                            </div>
+                        </div>
+                        <button class="remove-item" data-id="${item.id}">
+                            <img src="../assets/icons/trash.png" alt="Remove">
+                        </button>
+                    </div>
+                `;
+            });
 
-        // Update totals
-        updateCartTotals();
+            cartItemsContainer.innerHTML = cartHTML;
+            setupQuantityControls();
+            setupRemoveButtons();
+            updateCartTotals();
+        }
+    } catch (error) {
+        console.error('Error rendering cart items:', error);
     }
 }
 
@@ -436,15 +474,30 @@ function updateCartTotals() {
     let subtotal = 0;
 
     cart.forEach(item => {
-        subtotal += item.price * item.quantity;
+        // Ensure price and quantity are numbers
+        const price = parseFloat(item.price) || 0;
+        const quantity = parseInt(item.quantity) || 0;
+        subtotal += price * quantity;
     });
 
-    const tax = subtotal * 0.07; // Assuming 7% tax rate
+    const tax = subtotal * 0.07; // 7% tax rate
     const total = subtotal + tax;
 
-    document.querySelector('.subtotal').textContent = `$${subtotal.toFixed(2)}`;
-    document.querySelector('.tax').textContent = `$${tax.toFixed(2)}`;
-    document.querySelector('.total-amount').textContent = `$${total.toFixed(2)}`;
+    // Format currency
+    const formatter = new Intl.NumberFormat('de-DE', {
+        style: 'currency',
+        currency: 'EUR',
+        maximumFractionDigits: 0
+    });
+
+    // Update DOM with formatted values
+    const subtotalElement = document.querySelector('.subtotal');
+    const taxElement = document.querySelector('.tax');
+    const totalElement = document.querySelector('.total-amount');
+
+    if (subtotalElement) subtotalElement.textContent = formatter.format(subtotal);
+    if (taxElement) taxElement.textContent = formatter.format(tax);
+    if (totalElement) totalElement.textContent = formatter.format(total);
 }
 
 // Update cart count
