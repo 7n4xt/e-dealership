@@ -3,6 +3,7 @@
 // Cart state management
 let cart = JSON.parse(localStorage.getItem('cart')) || [];
 let wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
+let orderPanel;
 
 // DOM elements
 document.addEventListener('DOMContentLoaded', function () {
@@ -24,6 +25,25 @@ document.addEventListener('DOMContentLoaded', function () {
     // If we're on the wishlist page, render wishlist items
     if (document.querySelector('.wishlist-section')) {
         renderWishlistItems();
+    }
+
+    // Initialize order panel
+    orderPanel = {
+        panel: document.querySelector('.order-slide-panel'),
+        openPanel() {
+            this.panel.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        },
+        closePanel() {
+            this.panel.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+    };
+
+    // Add event listener for close panel button
+    const closePanelBtn = document.querySelector('.close-panel');
+    if (closePanelBtn) {
+        closePanelBtn.addEventListener('click', () => orderPanel.closePanel());
     }
 });
 
@@ -176,22 +196,6 @@ function setupWishlistButtons() {
             const productId = this.getAttribute('data-id');
 
             removeFromWishlist(productId);
-
-            // Remove card from DOM
-            const card = this.closest('.wishlist-card');
-            card.style.opacity = '0';
-            setTimeout(() => {
-                card.remove();
-                updateWishlistCount();
-
-                // Show empty message if no items left
-                if (wishlist.length === 0) {
-                    showEmptyWishlist();
-                }
-            }, 300);
-
-            // Show notification
-            showNotification('Item removed from your wishlist');
         });
     });
 }
@@ -265,7 +269,35 @@ function updateCartItemQuantity(productId, quantity) {
     }
 }
 
+// Remove from wishlist
+function removeFromWishlist(productId) {
+    // Get the latest wishlist from localStorage
+    let wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
 
+    // Filter out the item
+    wishlist = wishlist.filter(item => item.id !== productId);
+
+    // Save the updated wishlist back to localStorage
+    localStorage.setItem('wishlist', JSON.stringify(wishlist));
+
+    // Update the UI
+    const card = document.querySelector(`.wishlist-card[data-id="${productId}"]`);
+    if (card) {
+        card.style.opacity = '0';
+        setTimeout(() => {
+            card.remove();
+            updateWishlistCount();
+
+            // Show empty message if no items left
+            if (wishlist.length === 0) {
+                showEmptyWishlist();
+            }
+        }, 300);
+    }
+
+    // Show notification
+    showNotification('Item removed from your wishlist');
+}
 
 // Toggle wishlist item
 function toggleWishlist(product) {
@@ -291,14 +323,6 @@ function toggleWishlist(product) {
 // Check if product is in wishlist
 function isInWishlist(productId) {
     return wishlist.some(item => item.id === productId);
-}
-
-// Remove from wishlist
-function removeFromWishlist(productId) {
-    wishlist = wishlist.filter(item => item.id !== productId);
-
-    // Save to localStorage
-    saveWishlist();
 }
 
 // Save cart to localStorage
@@ -453,6 +477,9 @@ function renderWishlistItems() {
 
     if (!wishlistContainer) return;
 
+    // Get fresh data from localStorage
+    const wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
+
     if (wishlist.length === 0) {
         showEmptyWishlist();
     } else {
@@ -460,7 +487,7 @@ function renderWishlistItems() {
 
         wishlist.forEach(item => {
             wishlistHTML += `
-                <div class="wishlist-card">
+                <div class="wishlist-card" data-id="${item.id}">
                     <div class="wishlist-image">
                         <img src="${item.image}" alt="${item.name}">
                         <button class="remove-from-wishlist" data-id="${item.id}">
@@ -542,13 +569,19 @@ function showNotification(message, type = 'info') {
     }, 3000);
 }
 
-// Update the checkout function
+// Update the checkout function to close cart panel first
 function checkout() {
     if (cart.length === 0) {
         showNotification('Your cart is empty!', 'error');
         return;
     }
 
-    // Open the order panel instead of direct checkout
-    orderPanel.openPanel();
+    if (orderPanel) {
+        // Close cart panel first
+        closeCart();
+        // Then open order panel
+        orderPanel.openPanel();
+    } else {
+        showNotification('Unable to process order. Please try again.', 'error');
+    }
 }

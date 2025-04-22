@@ -151,6 +151,7 @@ const searchButton = document.querySelector('.search-button');
 
 function performSearch() {
   const searchTerm = searchInput.value.toLowerCase().trim();
+  const vehiclesSection = document.querySelector('.vehicles-section');
 
   if (searchTerm === '') {
     // If search is empty, show all cars
@@ -184,8 +185,11 @@ function performSearch() {
     filteredCars.forEach(car => {
       vehiclesGrid.appendChild(createCarCard(car));
     });
-    loadMoreBtn.style.display = 'none'; // Hide load more for search results
+    loadMoreBtn.style.display = 'none';
   }
+
+  // Smooth scroll to vehicles section
+  vehiclesSection.scrollIntoView({ behavior: 'smooth' });
 }
 
 searchButton.addEventListener('click', performSearch);
