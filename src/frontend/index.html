@@ -184,18 +184,129 @@
                 </div>
             </div>
 
+            <!-- Delivery Mode Section -->
+            <div class="delivery-section">
+                <h3>Mode de livraison</h3>
+                <div class="delivery-options">
+                    <!-- Home Delivery Option -->
+                    <div class="delivery-option">
+                        <input type="radio" name="delivery" id="home-delivery" value="home">
+                        <label for="home-delivery">
+                            <div class="delivery-icon">🏠</div>
+                            <div class="delivery-info">
+                                <span class="delivery-title">Livraison à domicile</span>
+                                <span class="delivery-desc">2-3 jours ouvrables</span>
+                            </div>
+                            <div class="delivery-price">15.00 €</div>
+                        </label>
+                    </div>
+
+                    <!-- Store Pickup Option -->
+                    <div class="delivery-option">
+                        <input type="radio" name="delivery" id="store-pickup" value="store">
+                        <label for="store-pickup">
+                            <div class="delivery-icon">🏪</div>
+                            <div class="delivery-info">
+                                <span class="delivery-title">Retrait en magasin</span>
+                                <span class="delivery-desc">Gratuit - Disponible sous 24h</span>
+                            </div>
+                            <div class="delivery-price">Gratuit</div>
+                        </label>
+                        <div class="store-details">
+                            <select id="store-select" class="store-select">
+                                <option value="">Sélectionner un magasin</option>
+                                <option value="paris">Paris - 75008</option>
+                                <option value="lyon">Lyon - 69002</option>
+                                <option value="marseille">Marseille - 13001</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Express Delivery Option -->
+                    <div class="delivery-option">
+                        <input type="radio" name="delivery" id="express-delivery" value="express">
+                        <label for="express-delivery">
+                            <div class="delivery-icon">⚡</div>
+                            <div class="delivery-info">
+                                <span class="delivery-title">Livraison Express</span>
+                                <span class="delivery-desc">Livraison le jour même</span>
+                            </div>
+                            <div class="delivery-price">25.00 €</div>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
             <!-- Payment Method Section -->
             <div class="payment-section">
-                <h3>Payment Method</h3>
+                <h3>Méthode de Paiement</h3>
                 <div class="payment-options">
-                    <label class="payment-option">
-                        <input type="radio" name="payment" value="card" checked>
-                        <span>Credit/Debit Card</span>
-                    </label>
-                    <label class="payment-option">
-                        <input type="radio" name="payment" value="paypal">
-                        <span>PayPal</span>
-                    </label>
+                    <div class="payment-option card-option">
+                        <input type="radio" name="payment" value="card" id="card-payment" checked>
+                        <label for="card-payment">
+                            <div class="payment-cards">
+                                <div class="card-option-item" data-card="visa">
+                                    <img src="./assets/icons/visa-card.png" alt="Visa" class="card-logo">
+                                    <div class="card-check"></div>
+                                </div>
+                                <div class="card-option-item" data-card="mastercard">
+                                    <img src="./assets/icons/Mastercard.png" alt="Mastercard" class="card-logo">
+                                    <div class="card-check"></div>
+                                </div>
+                                <div class="card-option-item" data-card="amex">
+                                    <img src="./assets/icons/American_Express-Logo.png" alt="American Express" class="card-logo">
+                                    <div class="card-check"></div>
+                                </div>
+                                <div class="card-option-item" data-card="cb">
+                                    <img src="./assets/icons/CB.png" alt="Carte Bancaire" class="card-logo">
+                                    <div class="card-check"></div>
+                                </div>
+                            </div>
+                            <span>Carte Bancaire</span>
+                        </label>
+                        <div class="card-details">
+                            <div class="form-group">
+                                <input type="text" id="card-number" placeholder="Numéro de carte" maxlength="19">
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <input type="text" id="card-expiry" placeholder="MM/AA" maxlength="5">
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" id="card-cvv" placeholder="CVV" maxlength="3">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" id="card-name" placeholder="Nom sur la carte">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="payment-option paypal-option">
+                        <input type="radio" name="payment" value="paypal" id="paypal-payment">
+                        <label for="paypal-payment">
+                            <span class="payment-icon">
+                                <img src="./assets/icons/paypal-icon.png" alt="PayPal" class="paypal-logo">
+                            </span>
+                            <span>PayPal</span>
+                        </label>
+                        <div class="paypal-details">
+                            <div class="form-group">
+                                <input type="email" id="paypal-email" placeholder="Email PayPal" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="tel" id="paypal-phone" placeholder="Numéro de téléphone" required>
+                            </div>
+                            <div class="paypal-info">
+                                <img src="./assets/icons/secure-payment.png" alt="Secure" class="secure-icon">
+                                <span class="secure-text">Paiement sécurisé via PayPal</span>
+                            </div>
+                            <div class="paypal-redirect-message hidden">
+                                <div class="loading-spinner"></div>
+                                <p>Redirection vers PayPal en cours...</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
