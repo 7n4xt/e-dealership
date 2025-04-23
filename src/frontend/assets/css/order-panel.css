@@ -6,13 +6,14 @@
     width: 100%;
     max-width: 500px;
     height: 100vh;
-    background: white;
-    box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+    background: #0d0d0d;
+    box-shadow: -5px 0 15px rgba(0, 0, 0, 0.3);
     transform: translateX(100%);
     transition: transform 0.3s ease;
     z-index: 1000;
     opacity: 0;
     pointer-events: none;
+    border-left: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .order-slide-panel.active {
@@ -24,7 +25,7 @@
 /* Panel Header */
 .panel-header {
     padding: 20px;
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -33,20 +34,27 @@
 .panel-header h2 {
     font-size: 1.5rem;
     font-weight: 600;
-    color: #333;
+    margin: 0;
+    color: #fff;
 }
 
 .close-panel {
-    background: none;
+    background: transparent;
     border: none;
-    font-size: 24px;
     cursor: pointer;
-    padding: 5px;
-    color: #666;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    transition: background-color 0.3s;
+    font-size: 24px;
+    color: rgba(255, 255, 255, 0.8);
 }
 
 .close-panel:hover {
-    color: #333;
+    background-color: rgba(255, 255, 255, 0.1);
 }
 
 /* Panel Content */
@@ -66,7 +74,7 @@
 .payment-section h3 {
     font-size: 1.2rem;
     margin-bottom: 15px;
-    color: #333;
+    color: #fff;
 }
 
 /* Location Search */
@@ -78,17 +86,18 @@
 .location-search input {
     width: 100%;
     padding: 12px 12px 12px 40px;
-    border: 1px solid #ddd;
+    border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 8px;
     font-size: 14px;
     transition: all 0.3s ease;
-    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23999'%3E%3Cpath d='M23.7 22.3l-5.6-5.6c1.4-1.7 2.3-3.9 2.3-6.3C20.4 5.3 16.1 1 11 1S1.6 5.3 1.6 10.4s4.3 9.4 9.4 9.4c2.4 0 4.6-0.9 6.3-2.3l5.6 5.6c0.2 0.2 0.5 0.3 0.7 0.3s0.5-0.1 0.7-0.3c0.4-0.4 0.4-1 0-1.4zM4.6 10.4c0-3.5 2.9-6.4 6.4-6.4s6.4 2.9 6.4 6.4-2.9 6.4-6.4 6.4-6.4-2.9-6.4-6.4z'/%3E%3C/svg%3E") no-repeat 12px center/16px;
+    background: rgba(255, 255, 255, 0.05);
+    color: #fff;
 }
 
 .location-search input:focus {
     outline: none;
-    border-color: #007bff;
-    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+    border-color: #4f46e5;
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.2);
 }
 
 /* Location Results */
@@ -97,25 +106,26 @@
     top: 100%;
     left: 0;
     right: 0;
-    background: rgb(38, 34, 34);
-    border: 1px solid #ddd;
+    background: #1a1a1a;
+    border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 6px;
     max-height: 200px;
     overflow-y: auto;
     z-index: 1000;
     display: none;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .location-result-item {
     padding: 12px 15px;
     cursor: pointer;
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.8);
     transition: background-color 0.2s;
 }
 
 .location-result-item:hover {
-    background-color: #f5f5f5;
+    background-color: rgba(255, 255, 255, 0.05);
 }
 
 .location-result-item:last-child {
@@ -126,17 +136,16 @@
 .selected-location {
     margin-top: 15px;
     padding: 15px;
-    background: linear-gradient(145deg, #ffffff, #f8f8f8);
+    background: rgba(255, 255, 255, 0.05);
     border-radius: 12px;
     display: none;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-    border: 1px solid rgba(0, 123, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .selected-location .address {
     font-weight: 600;
     margin-bottom: 8px;
-    color: #2c3e50;
+    color: #fff;
     position: relative;
     padding-left: 24px;
 }
@@ -149,11 +158,11 @@
     transform: translateY(-50%);
     width: 16px;
     height: 16px;
-    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23007bff'%3E%3Cpath d='M12 0C7.6 0 4 3.6 4 8c0 5.4 8 16 8 16s8-10.6 8-16c0-4.4-3.6-8-8-8zm0 12c-2.2 0-4-1.8-4-4s1.8-4 4-4 4 1.8 4 4-1.8 4-4 4z'/%3E%3C/svg%3E") no-repeat center/contain;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%234f46e5'%3E%3Cpath d='M12 0C7.6 0 4 3.6 4 8c0 5.4 8 16 8 16s8-10.6 8-16c0-4.4-3.6-8-8-8zm0 12c-2.2 0-4-1.8-4-4s1.8-4 4-4 4 1.8 4 4-1.8 4-4 4z'/%3E%3C/svg%3E") no-repeat center/contain;
 }
 
 .selected-location .coordinates {
-    color: #7f8c8d;
+    color: rgba(255, 255, 255, 0.7);
     font-size: 0.85em;
     display: flex;
     align-items: center;
@@ -171,8 +180,8 @@
     height: 200px;
     border-radius: 8px;
     overflow: hidden;
-    border: 1px solid #ddd;
-    background: #f0f0f0;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: #1a1a1a;
     position: relative;
 }
 
@@ -184,9 +193,9 @@
     transform: translate(-50%, -50%);
     width: 20px;
     height: 20px;
-    background: #007bff;
+    background: #4f46e5;
     border-radius: 50%;
-    box-shadow: 0 0 0 4px rgba(0, 123, 255, 0.2);
+    box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.2);
 }
 
 .location-map::before {
@@ -197,7 +206,7 @@
     transform: translate(-50%, -50%);
     width: 40px;
     height: 40px;
-    background: rgba(0, 123, 255, 0.1);
+    background: rgba(79, 70, 229, 0.1);
     border-radius: 50%;
     animation: pulse 2s infinite;
 }
@@ -207,6 +216,7 @@
         transform: translate(-50%, -50%) scale(1);
         opacity: 1;
     }
+
     100% {
         transform: translate(-50%, -50%) scale(2);
         opacity: 0;
@@ -226,48 +236,53 @@
     align-items: center;
     gap: 10px;
     cursor: pointer;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 6px;
-    transition: border-color 0.2s;
+    padding: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    transition: border-color 0.2s, background-color 0.2s;
+    background: rgba(255, 255, 255, 0.05);
 }
 
 .payment-option:hover {
-    border-color: #007bff;
+    border-color: #4f46e5;
+    background: rgba(255, 255, 255, 0.08);
 }
 
 .payment-option input[type="radio"] {
     margin: 0;
+    accent-color: #4f46e5;
 }
 
 .payment-option span {
     font-size: 14px;
-    color: #333;
+    color: #fff;
 }
 
 /* Confirm Order Button */
 .confirm-order-btn {
     width: 100%;
-    padding: 15px;
-    background: #007bff;
-    color: white;
+    padding: 14px;
+    background: linear-gradient(90deg, #6366f1, #4f46e5);
+    color: #fff;
     border: none;
-    border-radius: 6px;
+    border-radius: 8px;
     cursor: pointer;
-    font-weight: 500;
+    font-weight: 600;
     margin-top: 20px;
-    transition: background-color 0.2s;
+    transition: opacity 0.3s;
+    font-size: 1rem;
+    text-align: center;
 }
 
 .confirm-order-btn:hover {
-    background: #0056b3;
+    opacity: 0.9;
 }
 
 /* Error States */
 .location-error {
     padding: 12px;
-    color: #dc2626;
-    background: rgba(220, 38, 38, 0.1);
+    color: #ff6b6b;
+    background: rgba(255, 107, 107, 0.1);
     border-radius: 6px;
     text-align: center;
     font-size: 14px;
@@ -277,6 +292,7 @@
 @media (max-width: 576px) {
     .order-slide-panel {
         max-width: 100%;
+        right: -100%;
     }
 
     .panel-header {

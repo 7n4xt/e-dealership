@@ -7,7 +7,7 @@ class OrderPanel {
         this.selectedLocation = document.getElementById('selected-location');
         this.confirmButton = document.getElementById('confirm-order');
         this.closeButton = document.querySelector('.close-panel');
-        
+
         this.initializeEventListeners();
     }
 
@@ -47,7 +47,7 @@ class OrderPanel {
             if (!response.ok) throw new Error('Network response was not ok');
 
             const data = await response.json();
-            
+
             if (data.results.length === 0) {
                 this.resultsContainer.innerHTML = '<div class="location-error">No locations found</div>';
                 this.resultsContainer.style.display = 'block';
@@ -64,7 +64,7 @@ class OrderPanel {
 
     displayResults(results) {
         this.resultsContainer.innerHTML = '';
-        
+
         results.forEach(result => {
             const div = document.createElement('div');
             div.className = 'location-result-item';
@@ -83,29 +83,29 @@ class OrderPanel {
     selectLocation(location) {
         const addressElem = this.selectedLocation.querySelector('.address') || document.createElement('p');
         const coordsElem = this.selectedLocation.querySelector('.coordinates') || document.createElement('small');
-        
+
         addressElem.className = 'address';
         coordsElem.className = 'coordinates';
-        
+
         addressElem.textContent = location.address;
         coordsElem.textContent = `Lat: ${location.lat.toFixed(4)}, Lng: ${location.lng.toFixed(4)}`;
-        
+
         this.selectedLocation.innerHTML = '';
         this.selectedLocation.appendChild(addressElem);
         this.selectedLocation.appendChild(coordsElem);
-        
+
         this.selectedLocation.style.display = 'block';
         this.resultsContainer.style.display = 'none';
         this.searchInput.value = location.address;
 
-        // Add map background pattern
+        // Add map background pattern for dark theme
         const map = document.getElementById('location-map');
         if (map) {
             map.style.background = `
-                linear-gradient(45deg, #f8f9fa 25%, transparent 25%),
-                linear-gradient(-45deg, #f8f9fa 25%, transparent 25%),
-                linear-gradient(45deg, transparent 75%, #f8f9fa 75%),
-                linear-gradient(-45deg, transparent 75%, #f8f9fa 75%)
+                linear-gradient(45deg, #1a1a1a 25%, #222 25%),
+                linear-gradient(-45deg, #1a1a1a 25%, #222 25%),
+                linear-gradient(45deg, #222 75%, #1a1a1a 75%),
+                linear-gradient(-45deg, #222 75%, #1a1a1a 75%)
             `;
             map.style.backgroundSize = '20px 20px';
             map.style.backgroundPosition = '0 0, 0 10px, 10px -10px, -10px 0px';

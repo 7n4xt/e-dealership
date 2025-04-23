@@ -53,8 +53,8 @@
 }
 
 .close-cart img {
-    width: 18px;
-    height: 18px;
+    width: 30px;
+    height: 30px;
     opacity: 0.8;
 }
 
@@ -186,8 +186,8 @@
 }
 
 .remove-item img {
-    width: 16px;
-    height: 16px;
+    width: 23px;
+    height: 23px;
 }
 
 .cart-summary {

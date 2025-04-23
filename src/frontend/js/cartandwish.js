@@ -83,7 +83,7 @@ function setupCartPanel() {
             <div class="cart-header">
                 <h3 class="cart-title">Your Cart</h3>
                 <button class="close-cart">
-                    <img src="../assets/icons/x.png" alt="Close">
+                    <img src="./assets/icons/exit.png" alt="Close">
                 </button>
             </div>
             <div class="cart-items">
@@ -341,9 +341,7 @@ function toggleWishlist(product) {
     saveWishlist();
 
     // Update wishlist count if on wishlist page
-    if (document.querySelector('.wishlist-count')) {
-        updateWishlistCount();
-    }
+
 }
 
 // Check if product is in wishlist
@@ -409,7 +407,7 @@ function renderCartItems() {
                             </div>
                         </div>
                         <button class="remove-item" data-id="${item.id}">
-                            <img src="../assets/icons/trash.png" alt="Remove">
+                            <img src="./assets/icons/delete.png" alt="Remove">
                         </button>
                     </div>
                 `;
@@ -516,13 +514,7 @@ function updateCartCount() {
 }
 
 // Update wishlist count
-function updateWishlistCount() {
-    const wishlistCountElements = document.querySelectorAll('.wishlist-count');
 
-    wishlistCountElements.forEach(element => {
-        element.textContent = wishlist.length;
-    });
-}
 
 // Render wishlist items
 function renderWishlistItems() {
@@ -544,7 +536,7 @@ function renderWishlistItems() {
                     <div class="wishlist-image">
                         <img src="${item.image}" alt="${item.name}">
                         <button class="remove-from-wishlist" data-id="${item.id}">
-                            <img src="../assets/icons/trash.png" alt="Remove">
+                            <img src="../assets/icons/delete.png" alt="Remove">
                         </button>
                     </div>
                     <div class="wishlist-details">
@@ -592,7 +584,6 @@ function showEmptyWishlist() {
                 <p>Browse our collection of premium vehicles and add your favorites to your wishlist.</p>
                 <a href="../index.html" class="browse-vehicles-btn">
                     Browse Vehicles
-                    <img src="../assets/icons/arrow-right.png" alt="Arrow">
                 </a>
             </div>
         `;
