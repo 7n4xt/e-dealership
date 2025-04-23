@@ -30,6 +30,9 @@ window.openCart = openCart;
 window.showNotification = showNotification;
 window.isInWishlist = isInWishlist;
 window.toggleWishlist = toggleWishlist;
+window.renderCartItems = renderCartItems;
+window.updateCartCount = updateCartCount;
+window.cart = cart;
 
 // DOM elements
 document.addEventListener('DOMContentLoaded', function () {
@@ -275,7 +278,10 @@ function removeFromCart(productId) {
 
 // Update item quantity
 function updateCartItemQuantity(productId, quantity) {
-    const productIndex = cart.findIndex(item => item.id === productId);
+    console.log('Updating quantity for product:', productId, 'to', quantity);
+
+    // Find product in cart - ensure consistent type comparison
+    const productIndex = cart.findIndex(item => String(item.id) === String(productId));
 
     if (productIndex > -1) {
         cart[productIndex].quantity = quantity;
@@ -292,6 +298,8 @@ function updateCartItemQuantity(productId, quantity) {
         // Update cart UI
         renderCartItems();
         updateCartCount();
+    } else {
+        console.error('Product not found in cart:', productId);
     }
 }
 
@@ -450,7 +458,8 @@ function setupQuantityControls() {
             const quantityInput = cartItem.querySelector('.cart-quantity');
             const currentQuantity = parseInt(quantityInput.value);
 
-            updateCartItemQuantity(productId, currentQuantity + 1);
+            // Fix: Convert productId to string to match the data type in the cart array
+            updateCartItemQuantity(productId.toString(), currentQuantity + 1);
         });
     });
 }

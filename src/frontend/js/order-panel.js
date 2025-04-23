@@ -143,6 +143,24 @@ class OrderPanel {
             paymentMethod: paymentMethod
         });
 
+        // Clear the cart after successful purchase
+        localStorage.removeItem('cart');
+
+        // Reset cart array if it exists in the current context
+        if (typeof cart !== 'undefined') {
+            cart = [];
+            renderCartItems();
+            updateCartCount();
+        } else if (window.cart) {
+            window.cart = [];
+            if (typeof window.renderCartItems === 'function') {
+                window.renderCartItems();
+            }
+            if (typeof window.updateCartCount === 'function') {
+                window.updateCartCount();
+            }
+        }
+
         alert('Order confirmed! Thank you for your purchase.');
         this.closePanel();
     }

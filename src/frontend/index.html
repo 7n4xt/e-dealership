@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="./assets/css/universal.css">
     <link rel="stylesheet" href="./assets/css/cart.css">
     <link rel="stylesheet" href="./assets/css/wishlist.css">
-    
+
 
     <title>E-Dealership | Premium Performance Cars</title>
 </head>
@@ -93,18 +93,15 @@
                 <h2 class="section-title">Choose your vehicle</h2>
                 <p class="vehicles-available">16 vehicles available</p>
             </div>
-            
+
             <div class="filter-sort-container">
                 <div class="filter-section">
                     <button class="filter-button">
                         <span>Filter</span>
                         <img src="./assets/icons/filter.png" alt="Filter">
                     </button>
-                    <div class="filter-tags">
-                        <div class="filter-tag">€50 - €100</div>
-                        <div class="filter-tag">€150 - €200</div>
-                        <div class="filter-tag">SUV</div>
-                        <div class="filter-tag">Automatic</div>
+                    <div class="filter-tags" id="filter-tags">
+                        <!-- Filter tags will be dynamically generated -->
                     </div>
                 </div>
                 <div class="sort-section">
@@ -118,7 +115,7 @@
             </div>
 
             <div class="vehicles-grid">
-                
+
             </div>
 
             <div class="load-more">
@@ -159,7 +156,7 @@
         </div>
     </footer>
 
-    
+
     <script src="./js/main.js"></script>
     <script src="./js/cartandwish.js"></script>
     <link rel="stylesheet" href="./assets/css/order-panel.css">
@@ -170,16 +167,14 @@
             <h2>Complete Your Order</h2>
             <button class="close-panel">&times;</button>
         </div>
-        
+
         <div class="panel-content">
             <!-- Delivery Location Section -->
             <div class="delivery-section">
                 <h3>Delivery Location</h3>
                 <div class="location-search">
-                    <input type="text" 
-                           id="location-search" 
-                           placeholder="Search your delivery address"
-                           autocomplete="off">
+                    <input type="text" id="location-search" placeholder="Search your delivery address"
+                        autocomplete="off">
                     <div id="location-results" class="location-results"></div>
                 </div>
                 <div id="selected-location" class="selected-location">

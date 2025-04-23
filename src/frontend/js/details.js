@@ -240,18 +240,33 @@ function setupCartWishlist() {
         image: `${API_URL}/img/${currentCar.images[selectedColor].main}`
       };
 
-      // Debug log
-      console.log('Adding to cart:', cartItem);
+      // Add to cart via localStorage
+      let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
-      // Check if window.addToCart exists
-      if (typeof window.addToCart === 'function') {
-        window.addToCart(cartItem);
-        showNotification('Car added to cart successfully!');
-        openCart();
+      // Check if product is already in cart
+      const existingProductIndex = cart.findIndex(item => item.id === cartItem.id);
+
+      if (existingProductIndex > -1) {
+        // Update quantity if product exists
+        cart[existingProductIndex].quantity += cartItem.quantity;
       } else {
-        console.error('addToCart function not found');
-        showNotification('Error adding to cart', 'error');
+        // Add new product
+        cart.push(cartItem);
       }
+
+      // Save to localStorage
+      localStorage.setItem('cart', JSON.stringify(cart));
+
+      // Set session flag to open cart on redirect
+      sessionStorage.setItem('openCartOnLoad', 'true');
+
+      // Show notification
+      showNotification('Car added to cart successfully!');
+
+      // Redirect to main page
+      setTimeout(() => {
+        window.location.href = '../index.html';
+      }, 1000);
     } catch (error) {
       console.error('Error adding to cart:', error);
       showNotification('Error adding to cart', 'error');

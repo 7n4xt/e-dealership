@@ -21,6 +21,9 @@ async function fetchCars() {
       // Update the counter for available vehicles
       vehiclesAvailable.textContent = `${allCars.length} vehicles available`;
 
+      // Generate filter tags based on the data
+      generateFilterTags(allCars);
+
       // Load the first page of cars
       loadCarPage(currentPage);
     } else {
@@ -29,6 +32,86 @@ async function fetchCars() {
   } catch (error) {
     console.error('Failed to fetch cars:', error);
   }
+}
+
+// Generate filter tags dynamically
+function generateFilterTags(cars) {
+  const filterTagsContainer = document.getElementById('filter-tags');
+  if (!filterTagsContainer) return;
+
+  // Clear existing tags
+  filterTagsContainer.innerHTML = '';
+
+  // Get unique brands
+  const brands = [...new Set(cars.map(car => car.brand))];
+
+  // Take top 3 brands (or all if fewer than 3)
+  const topBrands = brands.slice(0, 3);
+
+  topBrands.forEach(brand => {
+    const brandTag = document.createElement('div');
+    brandTag.className = 'filter-tag';
+    brandTag.textContent = brand.toUpperCase();
+    brandTag.dataset.type = 'brand';
+    brandTag.dataset.value = brand;
+    filterTagsContainer.appendChild(brandTag);
+  });
+
+  // Add event listeners to all filter tags
+  setupFilterTagListeners();
+}
+
+// Setup event listeners for filter tags
+function setupFilterTagListeners() {
+  const filterTags = document.querySelectorAll('.filter-tag');
+
+  filterTags.forEach(tag => {
+    tag.addEventListener('click', () => {
+      // Toggle active class
+      tag.classList.toggle('active');
+
+      // Apply filters
+      applyFilters();
+    });
+  });
+}
+
+// Apply all active filters
+function applyFilters() {
+  const activeTags = document.querySelectorAll('.filter-tag.active');
+
+  if (activeTags.length === 0) {
+    // If no active filters, show all cars
+    currentPage = 1;
+    loadCarPage(currentPage);
+    vehiclesAvailable.textContent = `${allCars.length} vehicles available`;
+    return;
+  }
+
+  // Start with all cars
+  let filteredCars = [...allCars];
+
+  // Apply each active filter
+  activeTags.forEach(tag => {
+    const filterType = tag.dataset.type;
+
+    if (filterType === 'brand') {
+      const brand = tag.dataset.value;
+      filteredCars = filteredCars.filter(car => car.brand.toLowerCase() === brand.toLowerCase());
+    }
+  });
+
+  // Update vehicles count
+  vehiclesAvailable.textContent = `${filteredCars.length} vehicles available`;
+
+  // Display filtered cars
+  vehiclesGrid.innerHTML = '';
+  filteredCars.forEach(car => {
+    vehiclesGrid.appendChild(createCarCard(car));
+  });
+
+  // Hide load more button when filtering
+  loadMoreBtn.style.display = 'none';
 }
 
 // Load a specific page of cars
@@ -72,13 +155,19 @@ function createCarCard(car) {
     car.price * (1 - car.reduction / 100) :
     car.price;
 
+  const formattedDiscountedPrice = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'EUR',
+    maximumFractionDigits: 0
+  }).format(discountedPrice);
+
   const card = document.createElement('div');
   card.className = 'vehicle-card';
   card.innerHTML = `
     <div class="vehicle-image">
       <img src="${API_URL}/img/${mainImage}" alt="${car.brand} ${car.model}" class="exterior-view">
       <img src="${API_URL}/img/${interiorImage}" alt="${car.brand} ${car.model} Interior" class="interior-view">
-      ${car.reduction ? `<div class="vehicle-tag">${car.reduction}% Off</div>` : ''}
+      ${car.reduction ? `<div class="vehicle-tag">SAVE ${car.reduction}%</div>` : ''}
     </div>
     <div class="vehicle-details">
       <div class="vehicle-name-type">
@@ -86,8 +175,8 @@ function createCarCard(car) {
         <p>${car.release_date.substring(0, 4)}</p>
       </div>
       <div class="vehicle-price">
-        <div class="price">€${Math.round(discountedPrice / 365)}<span class="price-period">/day</span></div>
-        <div class="price-total">${formattedPrice} total</div>
+        <div class="price">${formattedDiscountedPrice}</div>
+        ${car.reduction ? `<div class="price-total">Was ${formattedPrice}</div>` : ''}
       </div>
     </div>
     <div class="vehicle-features">
@@ -236,6 +325,19 @@ filterTags.forEach(tag => {
 // Initialize the page
 document.addEventListener('DOMContentLoaded', () => {
   fetchCars();
+
+  // Check if we need to open cart (coming from details page)
+  if (sessionStorage.getItem('openCartOnLoad') === 'true') {
+    // Clear the flag
+    sessionStorage.removeItem('openCartOnLoad');
+
+    // Wait a bit for the cart to initialize
+    setTimeout(() => {
+      if (typeof window.openCart === 'function') {
+        window.openCart();
+      }
+    }, 500);
+  }
 
   // Add scroll event for nav styling
   window.addEventListener('scroll', () => {
