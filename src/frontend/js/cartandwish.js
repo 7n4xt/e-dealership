@@ -303,7 +303,8 @@ function addToCart(product) {
 
 // Remove item from cart
 function removeFromCart(productId) {
-    cart = cart.filter(item => item.id !== productId);
+    // Ensure consistent string comparison for IDs
+    cart = cart.filter(item => String(item.id) !== String(productId));
 
     // Save to localStorage
     saveCart();
@@ -311,6 +312,9 @@ function removeFromCart(productId) {
     // Update cart UI
     renderCartItems();
     updateCartCount();
+
+    // Show notification
+    showNotification('Item removed from your cart');
 }
 
 // Update item quantity
@@ -323,7 +327,7 @@ function updateCartItemQuantity(productId, quantity) {
     if (productIndex > -1) {
         cart[productIndex].quantity = quantity;
 
-        // Remove item if quantity is 0
+        // Remove item if quantity is 0 or less
         if (quantity <= 0) {
             removeFromCart(productId);
             return;
@@ -521,7 +525,7 @@ function setupQuantityControls() {
             const quantityInput = cartItem.querySelector('.cart-quantity');
             const currentQuantity = parseInt(quantityInput.value);
 
-            // Fix: Convert productId to string to match the data type in the cart array
+            // Always convert productId to string to ensure consistent comparison
             updateCartItemQuantity(productId.toString(), currentQuantity + 1);
         });
     });
