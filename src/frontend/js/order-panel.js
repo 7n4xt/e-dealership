@@ -418,61 +418,85 @@ class OrderPanel {
     }
 
     handleOrderConfirmation() {
-        const selectedAddress = this.selectedLocation.querySelector('.address')?.textContent;
+        const selectedAddress = this.selectedLocation?.querySelector('.address')?.textContent;
         const paymentMethod = document.querySelector('input[name="payment"]:checked')?.value;
+        const deliveryMethod = document.querySelector('input[name="delivery"]:checked')?.value;
 
-        if (!selectedAddress) {
+        // Check if delivery method is selected
+        if (!deliveryMethod) {
+            alert('Veuillez sélectionner un mode de livraison');
+            return;
+        }
+
+        // If store pickup, check if store is selected
+        if (deliveryMethod === 'store') {
+            const selectedStore = document.getElementById('store-select').value;
+            if (!selectedStore) {
+                alert('Veuillez sélectionner un magasin');
+                return;
+            }
+        } else if (!selectedAddress) {
+            // For other delivery methods, check address
             alert('Veuillez sélectionner une adresse de livraison');
             return;
         }
 
-        if (!this.validatePaymentDetails()) {
-            return;
-        }
-
+        // Handle payment processing
         if (paymentMethod === 'paypal') {
-            this.handlePayPalPayment();
-            return;
+            this.processPayPalPayment();
+        } else {
+            this.processCardPayment();
         }
-
-        // Process payment and update stock
-        this.processOrder();
     }
 
-    async processOrder() {
-        // Show loading indicator
-        const confirmButton = document.getElementById('confirm-order');
-        const originalText = confirmButton.textContent;
-        confirmButton.innerHTML = '<span class="loading-spinner"></span> Processing...';
-        confirmButton.disabled = true;
+    processCardPayment() {
+        // Show processing message
+        const message = document.createElement('div');
+        message.className = 'payment-processing-message';
+        message.innerHTML = `
+            <div class="loading-spinner"></div>
+            <p>Traitement du paiement en cours...</p>
+        `;
+        document.querySelector('.panel-content').appendChild(message);
 
-        try {
-            // Update stock for all items in cart
-            const success = await window.updateStockAfterPurchase();
+        // Simulate payment processing
+        setTimeout(() => {
+            // Remove processing message
+            message.remove();
+            
+            // Show success message
+            alert('Paiement accepté ! Merci pour votre commande.');
+            
+            // Clear cart and close panel
+            this.clearCartAndClose();
+        }, 2000);
+    }
 
-            if (success) {
-                // Complete order
-                alert('Order confirmed! Thank you for your purchase.');
-                this.closePanel();
+    processPayPalPayment() {
+        const redirectMessage = document.querySelector('.paypal-redirect-message');
+        redirectMessage.classList.remove('hidden');
 
-                // Clear cart (should already be done in updateStockAfterPurchase)
-                if (typeof cart !== 'undefined') {
-                    cart = [];
-                    renderCartItems?.();
-                    updateCartCount?.();
-                }
-            } else {
-                // Reset button state
-                confirmButton.innerHTML = originalText;
-                confirmButton.disabled = false;
-            }
-        } catch (error) {
-            console.error('Error processing order:', error);
-            alert('Error processing your order. Please try again.');
+        // Simulate PayPal redirect
+        setTimeout(() => {
+            alert('Redirection vers PayPal...');
+            // In production, you would redirect to PayPal here
+            this.clearCartAndClose();
+        }, 2000);
+    }
 
-            // Reset button state
-            confirmButton.innerHTML = originalText;
-            confirmButton.disabled = false;
+    clearCartAndClose() {
+        // Clear cart
+        localStorage.removeItem('cart');
+        if (typeof updateCartCount === 'function') {
+            updateCartCount();
+        }
+
+        // Close panel
+        this.closePanel();
+
+        // Refresh cart display if on cart page
+        if (typeof renderCartItems === 'function') {
+            renderCartItems();
         }
     }
 }
