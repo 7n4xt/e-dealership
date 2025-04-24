@@ -7,11 +7,28 @@ class OrderPanel {
         this.selectedLocation = document.getElementById('selected-location');
         this.confirmButton = document.getElementById('confirm-order');
         this.closeButton = document.querySelector('.close-panel');
+        this.overlay = null;
 
         this.initializeEventListeners();
         this.initializePaymentHandlers();
         this.initializeCardSelection();
         this.initializeDeliveryOptions();
+        this.createOverlay();
+    }
+
+    createOverlay() {
+        // Create overlay if it doesn't exist
+        if (!document.querySelector('.order-overlay')) {
+            const overlay = document.createElement('div');
+            overlay.className = 'order-overlay';
+            document.body.appendChild(overlay);
+            this.overlay = overlay;
+
+            // Add click event listener to close panel when overlay is clicked
+            overlay.addEventListener('click', () => this.closePanel());
+        } else {
+            this.overlay = document.querySelector('.order-overlay');
+        }
     }
 
     initializeEventListeners() {
@@ -390,11 +407,13 @@ class OrderPanel {
 
     openPanel() {
         this.panel.classList.add('active');
+        this.overlay.classList.add('active');
         document.body.style.overflow = 'hidden';
     }
 
     closePanel() {
         this.panel.classList.remove('active');
+        this.overlay.classList.remove('active');
         document.body.style.overflow = '';
     }
 
@@ -460,5 +479,8 @@ class OrderPanel {
 
 // Initialize the OrderPanel when the DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
-    window.orderPanel = new OrderPanel();
+    const orderPanel = new OrderPanel();
+
+    // Make orderPanel globally accessible
+    window.orderPanel = orderPanel;
 });

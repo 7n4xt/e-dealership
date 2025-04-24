@@ -45,12 +45,19 @@
     background-clip: text;
     -webkit-background-clip: text;
     color: transparent;
+    opacity: 0;
+    transform: translateY(10px);
+    animation: text-reveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 .car-title p {
     font-size: 1.2rem;
     color: rgba(255, 255, 255, 0.7);
     margin: 5px 0 0;
+    opacity: 0;
+    transform: translateY(10px);
+    animation: text-reveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    animation-delay: 0.1s;
 }
 
 .car-price h2 {
@@ -65,6 +72,143 @@
     color: rgba(255, 255, 255, 0.7);
     margin: 5px 0 0;
     text-align: right;
+}
+
+/* Enhanced pricing styles with Apple-like aesthetic */
+.car-pricing {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    transform: translateZ(0);
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.price-container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    margin-bottom: 16px;
+    transform: translateZ(0);
+}
+
+.original-price {
+    font-size: 1.1rem;
+    color: rgba(255, 255, 255, 0.7);
+    text-decoration: line-through;
+    font-weight: 400;
+    margin-bottom: 6px;
+    opacity: 0.8;
+    transition: all 0.3s ease;
+    animation: text-reveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    animation-delay: 0.3s;
+}
+
+.current-price {
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: #fff;
+    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    animation: text-reveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    animation-delay: 0.4s;
+}
+
+.discount-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #f94144, #f9c74f);
+    color: #fff;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    margin-bottom: 12px;
+    animation: badge-pulse 2s infinite;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 12px rgba(249, 65, 68, 0.25);
+    transform: translateZ(0);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    animation-delay: 0.2s;
+}
+
+.current-price.discounted {
+    color: #f9c74f;
+    text-shadow: 0 0 20px rgba(249, 199, 79, 0.4);
+    animation: price-glow 3s ease-in-out infinite;
+    position: relative;
+}
+
+.current-price.discounted::before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(ellipse at center, rgba(249, 199, 79, 0.2) 0%, rgba(249, 199, 79, 0) 70%);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    z-index: -1;
+    filter: blur(10px);
+    opacity: 0;
+    animation: halo-pulse 3s ease-in-out infinite;
+}
+
+@keyframes badge-pulse {
+    0% {
+        transform: scale(1) translateZ(0);
+        box-shadow: 0 4px 12px rgba(249, 65, 68, 0.25);
+    }
+
+    50% {
+        transform: scale(1.05) translateZ(0);
+        box-shadow: 0 6px 18px rgba(249, 65, 68, 0.35);
+    }
+
+    100% {
+        transform: scale(1) translateZ(0);
+        box-shadow: 0 4px 12px rgba(249, 65, 68, 0.25);
+    }
+}
+
+@keyframes price-glow {
+
+    0%,
+    100% {
+        text-shadow: 0 0 20px rgba(249, 199, 79, 0.3);
+    }
+
+    50% {
+        text-shadow: 0 0 30px rgba(249, 199, 79, 0.6);
+    }
+}
+
+@keyframes halo-pulse {
+
+    0%,
+    100% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.8);
+    }
+
+    50% {
+        opacity: 0.8;
+        transform: translate(-50%, -50%) scale(1.2);
+    }
+}
+
+@keyframes text-reveal {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 /* Update the gallery styles */
@@ -123,6 +267,12 @@
     justify-content: space-between;
     transform: translateY(-50%);
     padding: 0 20px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.main-image-container:hover .image-navigation {
+    opacity: 1;
 }
 
 .nav-btn {
@@ -133,10 +283,13 @@
     width: 40px;
     height: 40px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
 }
 
 .nav-btn:hover {
+    transform: scale(1.1);
     background: rgba(0, 0, 0, 0.8);
 }
 
@@ -148,6 +301,9 @@
     font-size: 1.4rem;
     font-weight: 600;
     margin-bottom: 15px;
+    opacity: 0;
+    transform: translateY(10px);
+    animation: text-reveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 .color-options {
@@ -161,7 +317,7 @@
     height: 50px;
     border-radius: 50%;
     cursor: pointer;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     position: relative;
 }
 
@@ -177,8 +333,8 @@
 }
 
 .color-button:hover {
-    transform: scale(1.1);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    transform: scale(1.12);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
 }
 
 .car-info {
@@ -193,6 +349,9 @@
     font-size: 1.4rem;
     font-weight: 600;
     margin-bottom: 15px;
+    opacity: 0;
+    transform: translateY(10px);
+    animation: text-reveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 .car-description p {
@@ -212,6 +371,9 @@
 .technical-specs h3 {
     font-size: 1.4rem;
     margin-bottom: 25px;
+    opacity: 0;
+    transform: translateY(10px);
+    animation: text-reveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 .specs-grid {
@@ -257,6 +419,47 @@
     padding: 15px 30px;
     font-size: 1.1rem;
     width: 200px;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    transform: translateZ(0);
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-primary {
+    background-color: #0071e3;
+    box-shadow: 0 4px 12px rgba(0, 113, 227, 0.2);
+}
+
+.btn-primary:hover {
+    background-color: #0077ED;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 113, 227, 0.4);
+}
+
+.btn-primary:active {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 113, 227, 0.2);
+}
+
+.btn-outline {
+    background-color: transparent;
+    overflow: hidden;
+}
+
+.btn-outline::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.1);
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: -1;
+}
+
+.btn-outline:hover::before {
+    left: 0;
 }
 
 .btn-outline.active {
@@ -313,32 +516,128 @@ button:disabled {
     .car-info {
         grid-template-columns: 1fr;
     }
+
+    .car-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .car-pricing {
+        width: 100%;
+        align-items: flex-start;
+        margin-top: 24px;
+    }
+
+    .price-container {
+        align-items: flex-start;
+    }
+
+    .gallery-container {
+        flex-direction: column-reverse;
+    }
+
+    .preview-gallery {
+        width: 100%;
+    }
+
+    .thumbnails-vertical {
+        flex-direction: row;
+        max-height: none;
+        overflow-x: auto;
+        overflow-y: hidden;
+        padding-bottom: 10px;
+    }
+
+    .thumbnail {
+        width: 80px;
+        height: 60px;
+    }
 }
 
 @media (max-width: 768px) {
     .car-header {
-        flex-direction: column;
+        margin-bottom: 24px;
     }
 
-    .car-price {
-        margin-top: 20px;
-        text-align: left;
+    .current-price {
+        font-size: 1.8rem;
     }
 
-    .car-price h2,
-    .car-price p {
-        text-align: left;
+    .original-price {
+        font-size: 1rem;
+    }
+
+    .discount-badge {
+        font-size: 0.8rem;
+        padding: 5px 10px;
     }
 
     .main-image {
-        height: 300px;
+        height: 250px;
     }
 
     .car-actions {
         flex-direction: column;
+        gap: 12px;
     }
 
     .car-actions .btn {
         width: 100%;
+        padding: 14px 20px;
     }
+
+    .technical-specs {
+        padding: 20px;
+    }
+
+    .specs-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .car-title h1 {
+        font-size: 2rem;
+    }
+
+    .car-title p {
+        font-size: 1rem;
+    }
+
+    .current-price {
+        font-size: 1.6rem;
+    }
+
+    .original-price {
+        font-size: 0.9rem;
+    }
+
+    .discount-badge {
+        font-size: 0.75rem;
+    }
+
+    .color-button {
+        width: 40px;
+        height: 40px;
+    }
+
+    .main-image {
+        height: 200px;
+    }
+
+    .car-header,
+    .car-colors,
+    .car-info {
+        margin-bottom: 20px;
+    }
+}
+
+/* Add subtle hover effect to main image */
+.main-image img {
+    transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.main-image:hover img {
+    transform: scale(1.03);
 }

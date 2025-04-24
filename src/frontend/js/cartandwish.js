@@ -92,18 +92,26 @@ document.addEventListener('DOMContentLoaded', function () {
         renderWishlistItems();
     }
 
-    // Initialize order panel
-    orderPanel = {
-        panel: document.querySelector('.order-slide-panel'),
-        openPanel() {
-            this.panel.classList.add('active');
-            document.body.style.overflow = 'hidden';
-        },
-        closePanel() {
-            this.panel.classList.remove('active');
-            document.body.style.overflow = '';
-        }
-    };
+    // Initialize order panel reference
+    if (window.orderPanel) {
+        orderPanel = window.orderPanel;
+    } else {
+        // Fallback if orderPanel isn't initialized yet
+        orderPanel = {
+            panel: document.querySelector('.order-slide-panel'),
+            overlay: document.querySelector('.order-overlay'),
+            openPanel() {
+                this.panel.classList.add('active');
+                this.overlay.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            },
+            closePanel() {
+                this.panel.classList.remove('active');
+                this.overlay.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        };
+    }
 
     // Add event listener for close panel button
     const closePanelBtn = document.querySelector('.close-panel');
@@ -440,61 +448,62 @@ function saveWishlist() {
 
 // Render cart items
 function renderCartItems() {
-    try {
-        const cartItemsContainer = document.querySelector('.cart-items');
-        if (!cartItemsContainer) {
-            console.error('Cart items container not found');
-            return;
-        }
+    const cartItemsContainer = document.querySelector('.cart-items');
 
-        if (cart.length === 0) {
-            cartItemsContainer.innerHTML = `
-                <div class="cart-empty">
-                    <p>Your cart is empty</p>
-                    <button class="continue-shopping">Start Shopping</button>
+    if (!cartItemsContainer) return;
+
+    // Get fresh data from localStorage
+    const cartItems = JSON.parse(localStorage.getItem('cart')) || [];
+
+    if (cartItems.length === 0) {
+        cartItemsContainer.innerHTML = `
+            <div class="cart-empty">
+                <h3>Your cart is empty</h3>
+                <p>Add some items to your cart to see them here.</p>
+            </div>
+        `;
+    } else {
+        let cartHTML = '';
+
+        cartItems.forEach((item, index) => {
+            // Format prices consistently
+            const formattedPrice = new Intl.NumberFormat('en-US', {
+                style: 'currency',
+                currency: 'EUR',
+                maximumFractionDigits: 0
+            }).format(item.price);
+
+            cartHTML += `
+                <div class="cart-item" data-id="${item.id}" style="--item-index: ${index}">
+                    <div class="cart-item-image">
+                        <img src="${item.image}" alt="${item.name}">
+                    </div>
+                    <div class="cart-item-details">
+                        <h4 class="cart-item-title">${item.name}</h4>
+                        <div class="cart-item-price">${formattedPrice}</div>
+                        <div class="cart-quantity-control">
+                            <span class="quantity-btn decrease">-</span>
+                            <input type="text" class="cart-quantity" value="${item.quantity}" readonly>
+                            <span class="quantity-btn increase">+</span>
+                        </div>
+                    </div>
+                    <button class="remove-item" data-id="${item.id}">
+                        <img src="./assets/icons/delete.png" alt="Remove">
+                    </button>
                 </div>
             `;
+        });
 
-            document.querySelector('.cart-empty .continue-shopping').addEventListener('click', closeCart);
-        } else {
-            let cartHTML = '';
+        cartItemsContainer.innerHTML = cartHTML;
 
-            cart.forEach(item => {
-                // Format price using Intl.NumberFormat
-                const formattedPrice = new Intl.NumberFormat('de-DE', {
-                    style: 'currency',
-                    currency: 'EUR',
-                    maximumFractionDigits: 0
-                }).format(item.price);
+        // Setup quantity controls for the newly added items
+        setupQuantityControls();
 
-                cartHTML += `
-                    <div class="cart-item" data-id="${item.id}">
-                        <div class="cart-item-image">
-                            <img src="${item.image}" alt="${item.name}">
-                        </div>
-                        <div class="cart-item-details">
-                            <h4 class="cart-item-title">${item.name}</h4>
-                            <div class="cart-item-price">${formattedPrice}</div>
-                            <div class="cart-quantity-control">
-                                <span class="quantity-btn decrease">-</span>
-                                <input type="text" class="cart-quantity" value="${item.quantity}" readonly>
-                                <span class="quantity-btn increase">+</span>
-                            </div>
-                        </div>
-                        <button class="remove-item" data-id="${item.id}">
-                            <img src="./assets/icons/delete.png" alt="Remove">
-                        </button>
-                    </div>
-                `;
-            });
+        // Setup remove buttons
+        setupRemoveButtons();
 
-            cartItemsContainer.innerHTML = cartHTML;
-            setupQuantityControls();
-            setupRemoveButtons();
-            updateCartTotals();
-        }
-    } catch (error) {
-        console.error('Error rendering cart items:', error);
+        // Update cart totals
+        updateCartTotals();
     }
 }
 
@@ -603,7 +612,7 @@ function renderWishlistItems() {
     } else {
         let wishlistHTML = '';
 
-        wishlist.forEach(item => {
+        wishlist.forEach((item, index) => {
             // Format prices consistently
             const formattedPrice = new Intl.NumberFormat('en-US', {
                 style: 'currency',
@@ -612,7 +621,7 @@ function renderWishlistItems() {
             }).format(item.price);
 
             wishlistHTML += `
-                <div class="wishlist-card" data-id="${item.id}">
+                <div class="wishlist-card" data-id="${item.id}" style="--card-index: ${index}">
                     <div class="wishlist-image">
                         <img src="${item.image}" alt="${item.name}">
                         <button class="remove-from-wishlist" data-id="${item.id}">
@@ -654,8 +663,8 @@ function renderWishlistItems() {
         wishlistContainer.innerHTML = wishlistHTML;
 
         // Setup event listeners for all buttons
-        setupAddToCartButtons();
         setupRemoveWishlistButtons();
+        setupAddToCartButtons();
     }
 }
 
@@ -694,18 +703,24 @@ function setupRemoveWishlistButtons() {
     });
 }
 
-// Show notification
+// Show notification with improved animation
 function showNotification(message, type = 'info') {
     // Create notification if it doesn't exist
     if (!document.querySelector('.notification')) {
         const notification = document.createElement('div');
         notification.className = 'notification';
+        notification.style.transform = 'translateZ(0)'; // Force GPU acceleration
+        notification.style.willChange = 'transform, opacity';
         document.body.appendChild(notification);
     }
 
     const notificationElement = document.querySelector('.notification');
     notificationElement.textContent = message;
     notificationElement.className = `notification ${type}`;
+
+    // Force reflow to ensure animation plays
+    void notificationElement.offsetWidth;
+
     notificationElement.classList.add('active');
 
     // Hide notification after 3 seconds

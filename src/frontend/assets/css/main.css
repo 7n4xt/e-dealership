@@ -56,7 +56,7 @@ body {
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
-    animation: fadeSlideUp 1s ease-out;
+    animation: fadeSlideUp 1.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .hero-subtitle {
@@ -64,7 +64,7 @@ body {
     font-weight: 400;
     margin-bottom: 2rem;
     color: rgba(255, 255, 255, 0.9);
-    animation: fadeSlideUp 1s ease-out 0.3s backwards;
+    animation: fadeSlideUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.2s backwards;
 }
 
 .search-container {
@@ -78,8 +78,8 @@ body {
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.2);
-    animation: fadeSlideUp 1s ease-out 0.6s backwards;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    animation: fadeSlideUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.4s backwards;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .search-container:hover {
@@ -97,6 +97,7 @@ body {
     color: #fff;
     font-weight: 400;
     outline: none;
+    transition: color 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .search-input::placeholder {
@@ -112,7 +113,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: background-color 0.3s;
+    transition: background-color 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .search-button:hover {
@@ -144,6 +145,9 @@ body {
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: sectionTitleReveal 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 .brands-slider {
@@ -221,11 +225,13 @@ body {
     display: flex;
     align-items: center;
     gap: 8px;
-    transition: background-color 0.3s;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .filter-button:hover {
     background: #2a2a2a;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
 .filter-button img {
@@ -247,16 +253,20 @@ body {
     border-radius: 8px;
     font-size: 0.9rem;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .filter-tag:hover {
     background: #2a2a2a;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
 .filter-tag.active {
     background: #4f46e5;
     border-color: #4f46e5;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
 }
 
 .sort-section {
@@ -285,6 +295,7 @@ body {
     background-repeat: no-repeat;
     background-position: right 10px center;
     background-size: 12px;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .vehicles-grid {
@@ -299,12 +310,17 @@ body {
     border-radius: 16px;
     overflow: hidden;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    opacity: 0;
+    animation: cardReveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    animation-delay: calc(var(--card-index, 0) * 0.1s);
+    will-change: transform, opacity;
+    backface-visibility: hidden;
 }
 
 .vehicle-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
 }
 
 .vehicle-image {
@@ -320,7 +336,7 @@ body {
     position: absolute;
     top: 0;
     left: 0;
-    transition: opacity 0.5s ease;
+    transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .vehicle-image .exterior-view {
@@ -333,15 +349,12 @@ body {
 
 .vehicle-card:hover .vehicle-image .exterior-view {
     opacity: 0;
+    transform: scale(1.05);
 }
 
 .vehicle-card:hover .vehicle-image .interior-view {
     opacity: 1;
-}
-
-.vehicle-card:hover .vehicle-image img {
-    transform: none;
-    /* Remove the scale effect on hover */
+    transform: scale(1.05);
 }
 
 .vehicle-tag {
@@ -354,24 +367,10 @@ body {
     border-radius: 20px;
     font-weight: 600;
     font-size: 0.9rem;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-    animation: pulse-discount 2s infinite;
+    box-shadow: 0 4px 16px rgba(249, 65, 68, 0.3);
+    animation: badge-pulse 2.5s cubic-bezier(0.16, 1, 0.3, 1) infinite;
     z-index: 2;
     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
-}
-
-@keyframes pulse-discount {
-    0% {
-        transform: scale(1);
-    }
-
-    50% {
-        transform: scale(1.05);
-    }
-
-    100% {
-        transform: scale(1);
-    }
 }
 
 .vehicle-details {
@@ -406,6 +405,7 @@ body {
     display: flex;
     align-items: center;
     gap: 5px;
+    position: relative;
 }
 
 .price-period {
@@ -421,22 +421,25 @@ body {
     font-style: italic;
 }
 
-/* Add a highlight color for discounted prices */
 .vehicle-card:has(.vehicle-tag) .price {
-    color: #f9d423;
-    animation: highlight-price 2s ease-in-out infinite;
+    color: #f9c74f;
+    animation: price-glow 3s cubic-bezier(0.16, 1, 0.3, 1) infinite;
 }
 
-@keyframes highlight-price {
-
-    0%,
-    100% {
-        text-shadow: 0 0 5px rgba(249, 212, 35, 0.3);
-    }
-
-    50% {
-        text-shadow: 0 0 15px rgba(249, 212, 35, 0.6);
-    }
+.vehicle-card:has(.vehicle-tag) .price::before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(ellipse at center, rgba(249, 199, 79, 0.2) 0%, rgba(249, 199, 79, 0) 70%);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    z-index: -1;
+    filter: blur(10px);
+    opacity: 0;
+    animation: halo-pulse 3s cubic-bezier(0.16, 1, 0.3, 1) infinite;
 }
 
 .vehicle-features {
@@ -477,12 +480,32 @@ body {
     font-size: 1rem;
     font-weight: 500;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    position: relative;
+    overflow: hidden;
 }
 
 .load-more-button:hover {
     background: rgba(255, 255, 255, 0.1);
     border-color: rgba(255, 255, 255, 0.3);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.load-more-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.1);
+    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: -1;
+}
+
+.load-more-button:hover::before {
+    left: 0;
 }
 
 /* Stock Status Styles */
@@ -610,7 +633,80 @@ footer {
     }
 }
 
+@keyframes sectionTitleReveal {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes cardReveal {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes badge-pulse {
+    0% {
+        transform: scale(1) translateZ(0);
+        box-shadow: 0 4px 16px rgba(249, 65, 68, 0.3);
+    }
+
+    50% {
+        transform: scale(1.05) translateZ(0);
+        box-shadow: 0 8px 24px rgba(249, 65, 68, 0.4);
+    }
+
+    100% {
+        transform: scale(1) translateZ(0);
+        box-shadow: 0 4px 16px rgba(249, 65, 68, 0.3);
+    }
+}
+
+@keyframes price-glow {
+
+    0%,
+    100% {
+        text-shadow: 0 0 20px rgba(249, 199, 79, 0.3);
+    }
+
+    50% {
+        text-shadow: 0 0 30px rgba(249, 199, 79, 0.6);
+    }
+}
+
+@keyframes halo-pulse {
+
+    0%,
+    100% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.8);
+    }
+
+    50% {
+        opacity: 0.8;
+        transform: translate(-50%, -50%) scale(1.2);
+    }
+}
+
 /* Responsive */
+@media (max-width: 992px) {
+    .vehicles-grid {
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    }
+}
+
 @media (max-width: 768px) {
     .hero-title {
         font-size: 2.5rem;
@@ -634,6 +730,26 @@ footer {
     .footer-content {
         flex-direction: column;
     }
+
+    .vehicles-grid {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    }
+
+    .vehicle-card:hover {
+        transform: translateY(-5px) scale(1.01);
+    }
 }
 
-/* Add this to your main.css or create a new CSS file */
+@media (max-width: 480px) {
+    .vehicle-card {
+        animation-delay: calc(var(--card-index, 0) * 0.05s);
+    }
+
+    .vehicle-card:hover {
+        transform: translateY(-3px);
+    }
+
+    .hero-title {
+        font-size: 2.2rem;
+    }
+}

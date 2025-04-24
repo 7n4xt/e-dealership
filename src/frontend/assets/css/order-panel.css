@@ -6,20 +6,54 @@
     width: 100%;
     max-width: 500px;
     height: 100vh;
-    background: #0d0d0d;
+    background: rgba(13, 13, 13, 0.97);
     box-shadow: -5px 0 15px rgba(0, 0, 0, 0.3);
     transform: translateX(100%);
-    transition: transform 0.3s ease;
+    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.5s cubic-bezier(0.16, 1, 0.3, 1);
     z-index: 1000;
     opacity: 0;
     pointer-events: none;
     border-left: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
 }
 
 .order-slide-panel.active {
     transform: translateX(0);
     opacity: 1;
     pointer-events: all;
+    animation: panelShadowIn 0.5s forwards;
+}
+
+@keyframes panelShadowIn {
+    from {
+        box-shadow: -5px 0 15px rgba(0, 0, 0, 0);
+    }
+
+    to {
+        box-shadow: -15px 0 30px rgba(0, 0, 0, 0.5);
+    }
+}
+
+/* Order Panel Overlay */
+.order-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+}
+
+.order-overlay.active {
+    opacity: 1;
+    visibility: visible;
 }
 
 /* Panel Header */

@@ -82,7 +82,18 @@ function renderCarDetails() {
     maximumFractionDigits: 0
   }).format(currentCar.price);
 
-  carPrice.textContent = formattedPrice;
+  // Create price container if it doesn't exist
+  let priceContainer = document.querySelector('.price-container');
+  if (!priceContainer) {
+    priceContainer = document.createElement('div');
+    priceContainer.className = 'price-container';
+
+    // Create animation wrapper for smoother animations
+    const pricingWrapper = document.querySelector('.car-pricing') || carPrice.parentNode;
+    pricingWrapper.appendChild(priceContainer);
+  } else {
+    priceContainer.innerHTML = ''; // Clear existing content
+  }
 
   if (currentCar.reduction) {
     const discountedPrice = currentCar.price * (1 - currentCar.reduction / 100);
@@ -92,10 +103,45 @@ function renderCarDetails() {
       maximumFractionDigits: 0
     }).format(discountedPrice);
 
-    carDiscount.textContent = `${currentCar.reduction}% off! Was ${formattedPrice}`;
-    carPrice.textContent = formattedDiscountedPrice;
-  } else {
+    // Calculate the savings amount
+    const savingsAmount = currentCar.price - discountedPrice;
+    const formattedSavings = new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: 'EUR',
+      maximumFractionDigits: 0
+    }).format(savingsAmount);
+
+    // Create discount badge
+    const discountBadge = document.createElement('div');
+    discountBadge.className = 'discount-badge';
+    discountBadge.textContent = `SAVE ${currentCar.reduction}% (${formattedSavings})`;
+
+    // Create original price element
+    const originalPrice = document.createElement('div');
+    originalPrice.className = 'original-price';
+    originalPrice.textContent = formattedPrice;
+
+    // Update current price with discounted price and add class
+    const currentPriceElement = document.createElement('div');
+    currentPriceElement.className = 'current-price discounted';
+    currentPriceElement.textContent = formattedDiscountedPrice;
+
+    // Add elements to price container
+    priceContainer.appendChild(discountBadge);
+    priceContainer.appendChild(originalPrice);
+    priceContainer.appendChild(currentPriceElement);
+
+    // Clear the discount element as we're now using the new structure
     carDiscount.textContent = '';
+    carPrice.style.display = 'none';
+  } else {
+    const currentPriceElement = document.createElement('div');
+    currentPriceElement.className = 'current-price';
+    currentPriceElement.textContent = formattedPrice;
+
+    priceContainer.appendChild(currentPriceElement);
+    carDiscount.textContent = '';
+    carPrice.style.display = 'none';
   }
 
   // Add stock information
@@ -363,4 +409,29 @@ document.addEventListener('DOMContentLoaded', () => {
     updateMainImage();
     updateThumbnailsActive();
   });
+
+  // Apply smooth scrolling to anchor links
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+      e.preventDefault();
+
+      const targetId = this.getAttribute('href');
+      const targetElement = document.querySelector(targetId);
+
+      if (targetElement) {
+        targetElement.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start'
+        });
+      }
+    });
+  });
+
+  // Enhance image navigation with smooth transitions
+  if (prevImageBtn && nextImageBtn) {
+    // Add smooth transition class to main image if not already present
+    if (!mainImage.classList.contains('smooth-transition')) {
+      mainImage.classList.add('smooth-transition');
+    }
+  }
 });

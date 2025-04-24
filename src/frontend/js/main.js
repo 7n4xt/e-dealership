@@ -114,8 +114,21 @@ function applyFilters() {
   loadMoreBtn.style.display = 'none';
 }
 
+// Initialize card counter for staggered animations
+let carCounter = 0;
+
+// Reset counter when changing filters or loading more cars
+function resetCardCounter() {
+  carCounter = 0;
+}
+
 // Load a specific page of cars
 function loadCarPage(page) {
+  // If we're on page 1, reset card counter for proper staggered animation
+  if (page === 1) {
+    resetCardCounter();
+  }
+
   const startIndex = (page - 1) * carsPerPage;
   const endIndex = Math.min(startIndex + carsPerPage, allCars.length);
   const carsForPage = allCars.slice(startIndex, endIndex);
@@ -207,6 +220,10 @@ function createCarCard(car) {
       </div>
     </div>
   `;
+
+  // Add card index for staggered animations
+  card.style.setProperty('--card-index', carCounter);
+  carCounter++;
 
   // Add click event to navigate to details page
   card.addEventListener('click', () => {
@@ -360,5 +377,18 @@ document.addEventListener('DOMContentLoaded', () => {
     } else {
       nav.classList.remove('nav-scrolled');
     }
+  });
+
+  // Add enhanced scroll animations
+  document.addEventListener('scroll', () => {
+    const scrollCards = document.querySelectorAll('.vehicle-card:not(.animated)');
+    scrollCards.forEach(card => {
+      const cardTop = card.getBoundingClientRect().top;
+      if (cardTop < window.innerHeight * 0.85) {
+        card.classList.add('animated');
+        card.style.animationDelay = '0.1s';
+        card.style.animationPlayState = 'running';
+      }
+    });
   });
 });
