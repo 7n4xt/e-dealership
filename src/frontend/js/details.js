@@ -98,6 +98,19 @@ function renderCarDetails() {
     carDiscount.textContent = '';
   }
 
+  // Add stock information
+  const stockInfo = document.getElementById('stockInfo');
+  if (stockInfo) {
+    if (currentCar.stock <= 0) {
+      stockInfo.innerHTML = '<span class="stock-status out">Out of Stock</span>';
+      if (addToCartBtn) addToCartBtn.disabled = true;
+    } else if (currentCar.stock <= 2) {
+      stockInfo.innerHTML = `<span class="stock-status low">Only ${currentCar.stock} left in stock!</span>`;
+    } else {
+      stockInfo.innerHTML = `<span class="stock-status available">${currentCar.stock} available in stock</span>`;
+    }
+  }
+
   // Set description and specs
   carDescription.textContent = currentCar.description;
   carBrand.textContent = currentCar.brand.toUpperCase();

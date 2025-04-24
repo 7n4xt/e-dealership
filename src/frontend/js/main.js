@@ -161,6 +161,16 @@ function createCarCard(car) {
     maximumFractionDigits: 0
   }).format(discountedPrice);
 
+  // Add stock status indicator
+  let stockStatus = '';
+  if (car.stock <= 0) {
+    stockStatus = '<span class="stock-status out">Out of Stock</span>';
+  } else if (car.stock <= 2) {
+    stockStatus = `<span class="stock-status low">Only ${car.stock} left!</span>`;
+  } else {
+    stockStatus = `<span class="stock-status available">${car.stock} in Stock</span>`;
+  }
+
   const card = document.createElement('div');
   card.className = 'vehicle-card';
   card.innerHTML = `
@@ -178,6 +188,9 @@ function createCarCard(car) {
         <div class="price">${formattedDiscountedPrice}</div>
         ${car.reduction ? `<div class="price-total">Was ${formattedPrice}</div>` : ''}
       </div>
+    </div>
+    <div class="vehicle-stock">
+      ${stockStatus}
     </div>
     <div class="vehicle-features">
       <div class="feature">

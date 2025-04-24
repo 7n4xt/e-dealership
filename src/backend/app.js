@@ -2,6 +2,9 @@ const express = require('express');
 const app = express();
 const port = 8080;
 
+// Add body-parser middleware
+app.use(express.json());
+
 const cors = require('cors');
 app.use(cors({
     origin: "*"
@@ -9,7 +12,6 @@ app.use(cors({
 
 const carsRoutes = require('./routes/cars')
 app.use(carsRoutes);
-
 
 //route
 app.listen(port, () => {

@@ -51,7 +51,8 @@
       "top_speed_kmh": 250,
       "transmission": "8-speed automatic",
       "fuel_type": "Gasolirs",
-      "year": 2023
+      "year": 2023,
+      "stock": 5
     },
     {
       "id": 2,
@@ -104,7 +105,8 @@
       "top_speed_kmh": 305,
       "transmission": "8-speed automatic",
       "fuel_type": "Gasoline",
-      "year": 2023
+      "year": 2023,
+      "stock": 3
     },
     {
       "id": 3,
@@ -157,7 +159,8 @@
       "top_speed_kmh": 305,
       "transmission": "8-speed automatic",
       "fuel_type": "Gasoline",
-      "year": 2023
+      "year": 2023,
+      "stock": 4
     },
     {
       "id": 4,
@@ -210,7 +213,8 @@
       "top_speed_kmh": 280,
       "transmission": "8-speed automatic",
       "fuel_type": "Gasoline",
-      "year": 2024
+      "year": 2024,
+      "stock": 0
     },
     {
       "id": 5,
@@ -263,7 +267,8 @@
       "top_speed_kmh": 290,
       "transmission": "7-speed dual-clutch",
       "fuel_type": "Gasoline",
-      "year": 2023
+      "year": 2023,
+      "stock": 6
     },
     {
       "id": 6,
@@ -316,7 +321,8 @@
       "top_speed_kmh": 290,
       "transmission": "9-speed automatic",
       "fuel_type": "Hybrid",
-      "year": 2023
+      "year": 2023,
+      "stock": 2
     },
     {
       "id": 7,
@@ -369,7 +375,8 @@
       "top_speed_kmh": 220,
       "transmission": "9-speed automatic",
       "fuel_type": "Gasoline",
-      "year": 2023
+      "year": 2023,
+      "stock": 7
     },
     {
       "id": 8,
@@ -422,7 +429,8 @@
       "top_speed_kmh": 315,
       "transmission": "9-speed automatic",
       "fuel_type": "Gasoline",
-      "year": 2024
+      "year": 2024,
+      "stock": 3
     },
     {
       "id": 9,
@@ -475,7 +483,8 @@
       "top_speed_kmh": 316,
       "transmission": "9-speed automatic",
       "fuel_type": "Hybrid",
-      "year": 2023
+      "year": 2023,
+      "stock": 0
     },
     {
       "id": 10,
@@ -519,7 +528,8 @@
       "top_speed_kmh": 280,
       "transmission": "9-speed automatic",
       "fuel_type": "Hybrid",
-      "year": 2023
+      "year": 2023,
+      "stock": 8
     },
     {
       "id": 11,
@@ -572,7 +582,8 @@
       "top_speed_kmh": 280,
       "transmission": "8-speed automatic",
       "fuel_type": "Gasoline",
-      "year": 2023
+      "year": 2023,
+      "stock": 5
     },
     {
       "id": 12,
@@ -625,7 +636,8 @@
       "top_speed_kmh": 290,
       "transmission": "8-speed automatic",
       "fuel_type": "Gasoline",
-      "year": 2023
+      "year": 2023,
+      "stock": 4
     },
     {
       "id": 13,
@@ -678,7 +690,8 @@
       "top_speed_kmh": 305,
       "transmission": "8-speed automatic",
       "fuel_type": "Gasoline",
-      "year": 2023
+      "year": 2023,
+      "stock": 0
     },
     {
       "id": 14,
@@ -731,7 +744,8 @@
       "top_speed_kmh": 290,
       "transmission": "8-speed automatic",
       "fuel_type": "Gasoline",
-      "year": 2023
+      "year": 2023,
+      "stock": 6
     },
     {
       "id": 15,
@@ -784,7 +798,8 @@
       "top_speed_kmh": 305,
       "transmission": "8-speed automatic",
       "fuel_type": "Gasoline",
-      "year": 2023
+      "year": 2023,
+      "stock": 3
     },
     {
       "id": 16,
@@ -838,7 +853,8 @@
       "top_speed_kmh": 240,
       "transmission": "Single-speed automatic",
       "fuel_type": "Electric",
-      "year": 2023
+      "year": 2023,
+      "stock": 4
     }
   ]
 }

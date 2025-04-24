@@ -275,6 +275,39 @@
     border-color: #d32f2f;
 }
 
+/* Stock Information */
+.stock-info {
+    margin-top: 10px;
+}
+
+.stock-status {
+    display: inline-block;
+    padding: 5px 12px;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.stock-status.available {
+    background-color: rgba(16, 185, 129, 0.1);
+    color: #10b981;
+}
+
+.stock-status.low {
+    background-color: rgba(245, 158, 11, 0.1);
+    color: #f59e0b;
+}
+
+.stock-status.out {
+    background-color: rgba(239, 68, 68, 0.1);
+    color: #ef4444;
+}
+
+button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
 /* Responsive Styles */
 @media (max-width: 992px) {
     .car-info {

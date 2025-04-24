@@ -1,4 +1,6 @@
 const data = require("../data.json");
+const fs = require('fs');
+const path = require('path');
 
 // Get all cars
 exports.getCars = (_, res) => {
@@ -48,6 +50,67 @@ exports.getCarById = (req, res) => {
             data: car
         });
     } catch (error) {
+        return res.status(500).json({
+            status: "error",
+            message: "Internal server error"
+        });
+    }
+};
+
+// Update car stock
+exports.updateStock = (req, res) => {
+    try {
+        const { id, quantity } = req.body;
+
+        if (!id || quantity === undefined) {
+            return res.status(400).json({
+                status: "error",
+                message: "ID and quantity are required"
+            });
+        }
+
+        const carId = parseInt(id);
+        if (isNaN(carId)) {
+            return res.status(400).json({
+                status: "error",
+                message: "Invalid ID format"
+            });
+        }
+
+        const carIndex = data.cars.findIndex(car => car.id === carId);
+
+        if (carIndex === -1) {
+            return res.status(404).json({
+                status: "error",
+                message: "Car not found"
+            });
+        }
+
+        const car = data.cars[carIndex];
+
+        // Check if there's enough stock
+        if (car.stock < quantity) {
+            return res.status(400).json({
+                status: "error",
+                message: "Not enough stock available",
+                availableStock: car.stock
+            });
+        }
+
+        // Update stock
+        car.stock -= quantity;
+
+        // Save the updated data back to the file
+        const dataPath = path.join(__dirname, '../data.json');
+        fs.writeFileSync(dataPath, JSON.stringify(data, null, 2));
+
+        return res.status(200).json({
+            status: "success",
+            message: "Stock updated successfully",
+            currentStock: car.stock
+        });
+    } catch (error) {
+        console.error("Error updating stock:", error);
         return res.status(500).json({
             status: "error",
             message: "Internal server error"

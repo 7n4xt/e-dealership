@@ -76,7 +76,7 @@ class OrderPanel {
     }
 
     validatePayPalInput(input, type) {
-        const errorMessage = input.parentElement.querySelector('.error-message') 
+        const errorMessage = input.parentElement.querySelector('.error-message')
             || this.createErrorMessage(input.parentElement);
 
         if (type === 'email') {
@@ -112,8 +112,8 @@ class OrderPanel {
     async handlePayPalPayment() {
         const email = document.getElementById('paypal-email');
         const phone = document.getElementById('paypal-phone');
-        
-        if (!this.validatePayPalInput(email, 'email') || 
+
+        if (!this.validatePayPalInput(email, 'email') ||
             !this.validatePayPalInput(phone, 'phone')) {
             return false;
         }
@@ -139,10 +139,10 @@ class OrderPanel {
                 cardItems.forEach(card => card.classList.remove('selected'));
                 // Add selection to clicked card
                 item.classList.add('selected');
-                
+
                 // Update card number input placeholder based on selection
                 const cardType = item.dataset.card;
-                switch(cardType) {
+                switch (cardType) {
                     case 'visa':
                     case 'mastercard':
                         cardNumberInput.maxLength = 19; // 16 digits + 3 spaces
@@ -157,7 +157,7 @@ class OrderPanel {
                         cardNumberInput.placeholder = 'XXXX XXXX XXXX XXXX';
                         break;
                 }
-                
+
                 // Clear any existing input
                 cardNumberInput.value = '';
             });
@@ -175,7 +175,7 @@ class OrderPanel {
         deliveryOptions.forEach(option => {
             option.addEventListener('change', (e) => {
                 const deliveryType = e.target.value;
-                
+
                 // Toggle location search visibility
                 if (deliveryType === 'store') {
                     locationSearch.style.display = 'none';
@@ -195,7 +195,7 @@ class OrderPanel {
         const basePrice = parseFloat(localStorage.getItem('cartTotal')) || 0;
         let deliveryPrice = 0;
 
-        switch(deliveryType) {
+        switch (deliveryType) {
             case 'home':
                 deliveryPrice = 15.00;
                 break;
@@ -219,7 +219,7 @@ class OrderPanel {
         number = number.replace(/[\s-]/g, '');
 
         let cardType = null;
-        
+
         // Visa
         if (number.match(/^4/)) {
             cardType = 'visa';
@@ -338,7 +338,7 @@ class OrderPanel {
 
     validatePaymentDetails() {
         const paymentMethod = document.querySelector('input[name="payment"]:checked').value;
-        
+
         if (paymentMethod === 'card') {
             const cardNumber = document.getElementById('card-number').value;
             const cardExpiry = document.getElementById('card-expiry').value;
@@ -363,8 +363,8 @@ class OrderPanel {
     validateCardNumber(number, type) {
         // Remove spaces and dashes
         number = number.replace(/[\s-]/g, '');
-        
-        switch(type) {
+
+        switch (type) {
             case 'visa':
                 return /^4[0-9]{15}$/.test(number);
             case 'mastercard':
@@ -380,11 +380,11 @@ class OrderPanel {
 
     formatCardNumber(number, type) {
         number = number.replace(/\D/g, '');
-        
+
         if (type === 'amex') {
             return number.replace(/(\d{4})(\d{6})(\d{5})/, '$1 $2 $3');
         }
-        
+
         return number.replace(/(\d{4})(?=\d)/g, '$1 ');
     }
 
@@ -416,16 +416,44 @@ class OrderPanel {
             return;
         }
 
-        // Process card payment
-        alert('Commande confirmée! Merci pour votre achat.');
-        this.closePanel();
-        
-        // Clear cart and update UI
-        localStorage.removeItem('cart');
-        if (typeof cart !== 'undefined') {
-            cart = [];
-            renderCartItems?.();
-            updateCartCount?.();
+        // Process payment and update stock
+        this.processOrder();
+    }
+
+    async processOrder() {
+        // Show loading indicator
+        const confirmButton = document.getElementById('confirm-order');
+        const originalText = confirmButton.textContent;
+        confirmButton.innerHTML = '<span class="loading-spinner"></span> Processing...';
+        confirmButton.disabled = true;
+
+        try {
+            // Update stock for all items in cart
+            const success = await window.updateStockAfterPurchase();
+
+            if (success) {
+                // Complete order
+                alert('Order confirmed! Thank you for your purchase.');
+                this.closePanel();
+
+                // Clear cart (should already be done in updateStockAfterPurchase)
+                if (typeof cart !== 'undefined') {
+                    cart = [];
+                    renderCartItems?.();
+                    updateCartCount?.();
+                }
+            } else {
+                // Reset button state
+                confirmButton.innerHTML = originalText;
+                confirmButton.disabled = false;
+            }
+        } catch (error) {
+            console.error('Error processing order:', error);
+            alert('Error processing your order. Please try again.');
+
+            // Reset button state
+            confirmButton.innerHTML = originalText;
+            confirmButton.disabled = false;
         }
     }
 }

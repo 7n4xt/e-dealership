@@ -714,17 +714,113 @@ function showNotification(message, type = 'info') {
     }, 3000);
 }
 
-// Update the checkout function to close cart panel first
+// Update the checkout function to update stock and close cart panel first
 function checkout() {
     if (cart.length === 0) {
         showNotification('Your cart is empty!', 'error');
         return;
     }
 
-    if (orderPanel) {
-        closeCart(); // Close cart panel first
-        orderPanel.openPanel(); // Then open order panel
-    } else {
-        showNotification('Unable to process order. Please try again.', 'error');
+    // First, check the stock for all items
+    checkStockForCart()
+        .then(stockAvailable => {
+            if (stockAvailable) {
+                // Continue with checkout
+                if (orderPanel) {
+                    closeCart(); // Close cart panel first
+                    orderPanel.openPanel(); // Then open order panel
+                } else {
+                    showNotification('Unable to process order. Please try again.', 'error');
+                }
+            }
+        })
+        .catch(error => {
+            console.error('Error checking stock:', error);
+            showNotification('Error checking stock. Please try again.', 'error');
+        });
+}
+
+// Check stock for all items in cart
+async function checkStockForCart() {
+    try {
+        let allItemsAvailable = true;
+
+        for (const item of cart) {
+            const response = await fetch(`${API_URL}/car/${item.id}`);
+            const data = await response.json();
+
+            if (data.status === 'success') {
+                const car = data.data;
+                if (car.stock < item.quantity) {
+                    showNotification(`Only ${car.stock} units of ${item.name} available`, 'error');
+                    allItemsAvailable = false;
+
+                    // Update the cart item quantity to match available stock
+                    if (car.stock > 0) {
+                        updateCartItemQuantity(item.id, car.stock);
+                        showNotification(`${item.name} quantity adjusted to available stock`, 'info');
+                    } else {
+                        removeFromCart(item.id);
+                        showNotification(`${item.name} removed from cart - out of stock`, 'error');
+                    }
+                }
+            } else {
+                showNotification(`Error checking stock for ${item.name}`, 'error');
+                allItemsAvailable = false;
+            }
+        }
+
+        return allItemsAvailable;
+    } catch (error) {
+        console.error('Error checking stock:', error);
+        throw error;
+    }
+}
+
+// Add this function to handle stock updates when an order is confirmed
+async function updateStockAfterPurchase() {
+    try {
+        const stockUpdates = cart.map(async (item) => {
+            const response = await fetch(`${API_URL}/car/updateStock`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    id: item.id,
+                    quantity: item.quantity
+                })
+            });
+
+            return response.json();
+        });
+
+        const results = await Promise.all(stockUpdates);
+
+        // Check if all updates were successful
+        const allSuccessful = results.every(result => result.status === 'success');
+
+        if (allSuccessful) {
+            // Clear cart
+            cart = [];
+            saveCart();
+            renderCartItems();
+            updateCartCount();
+
+            showNotification('Order completed successfully!', 'success');
+            return true;
+        } else {
+            // Some updates failed
+            const failedItems = results
+                .filter(result => result.status === 'error')
+                .map(result => result.message);
+
+            showNotification(`Order processing error: ${failedItems.join(', ')}`, 'error');
+            return false;
+        }
+    } catch (error) {
+        console.error('Error updating stock:', error);
+        showNotification('Error processing your order. Please try again.', 'error');
+        return false;
     }
 }
