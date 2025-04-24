@@ -34,6 +34,38 @@ window.renderCartItems = renderCartItems;
 window.updateCartCount = updateCartCount;
 window.cart = cart;
 
+// Update wishlist count
+function updateWishlistCount() {
+    // Get fresh wishlist data
+    const wishlistArray = JSON.parse(localStorage.getItem('wishlist')) || [];
+    const count = wishlistArray.length;
+
+    console.log('Updating wishlist count to:', count);
+
+    // Update wishlist count elements in the page
+    const wishlistCountElements = document.querySelectorAll('.wishlist-count');
+    wishlistCountElements.forEach(element => {
+        element.textContent = count;
+    });
+
+    // Add count badge to wishlist icon if it doesn't exist
+    const wishlistIcon = document.querySelector('.nav-icons .wishlist a');
+    if (wishlistIcon) {
+        let countBadge = wishlistIcon.querySelector('.wishlist-count');
+
+        if (!countBadge) {
+            countBadge = document.createElement('span');
+            countBadge.className = 'wishlist-count';
+            wishlistIcon.appendChild(countBadge);
+        }
+
+        countBadge.textContent = count;
+
+        // Hide badge if count is 0
+        countBadge.style.display = count > 0 ? 'flex' : 'none';
+    }
+}
+
 // DOM elements
 document.addEventListener('DOMContentLoaded', function () {
     // Initialize cart panel elements
@@ -50,6 +82,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Update cart counter
     updateCartCount();
+
+    // Update wishlist counter - force refresh from localStorage
+    wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
+    updateWishlistCount();
 
     // If we're on the wishlist page, render wishlist items
     if (document.querySelector('.wishlist-section')) {
@@ -197,7 +233,7 @@ function setupWishlistButtons() {
             const productPrice = parseFloat(this.getAttribute('data-price'));
             const productImage = this.getAttribute('data-image');
 
-            toggleWishlist({
+            const addedToWishlist = toggleWishlist({
                 id: productId,
                 name: productName,
                 price: productPrice,
@@ -208,7 +244,7 @@ function setupWishlistButtons() {
             this.classList.toggle('active');
 
             // Show notification
-            if (isInWishlist(productId)) {
+            if (addedToWishlist) {
                 showNotification('Item added to your wishlist');
             } else {
                 showNotification('Item removed from your wishlist');
@@ -222,8 +258,9 @@ function setupWishlistButtons() {
     removeWishlistButtons.forEach(button => {
         button.addEventListener('click', function (e) {
             e.preventDefault();
+            e.stopPropagation(); // Prevent event bubbling
             const productId = this.getAttribute('data-id');
-
+            console.log('Removing item from wishlist:', productId);
             removeFromWishlist(productId);
         });
     });
@@ -305,14 +342,21 @@ function updateCartItemQuantity(productId, quantity) {
 
 // Remove from wishlist
 function removeFromWishlist(productId) {
-    // Get the latest wishlist from localStorage
-    let wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
+    console.log('removeFromWishlist called with ID:', productId);
 
-    // Filter out the item
-    wishlist = wishlist.filter(item => item.id !== productId);
+    // Get the latest wishlist from localStorage
+    let wishlistArray = JSON.parse(localStorage.getItem('wishlist')) || [];
+    console.log('Current wishlist:', wishlistArray);
+
+    // Filter out the item - ensure string comparison
+    wishlistArray = wishlistArray.filter(item => String(item.id) !== String(productId));
+    console.log('Updated wishlist:', wishlistArray);
+
+    // Update global wishlist variable
+    wishlist = wishlistArray;
 
     // Save the updated wishlist back to localStorage
-    localStorage.setItem('wishlist', JSON.stringify(wishlist));
+    localStorage.setItem('wishlist', JSON.stringify(wishlistArray));
 
     // Update the UI
     const card = document.querySelector(`.wishlist-card[data-id="${productId}"]`);
@@ -320,12 +364,14 @@ function removeFromWishlist(productId) {
         card.style.opacity = '0';
         setTimeout(() => {
             card.remove();
-            updateWishlistCount();
 
             // Show empty message if no items left
-            if (wishlist.length === 0) {
+            if (wishlistArray.length === 0) {
                 showEmptyWishlist();
             }
+
+            // Update wishlist count
+            updateWishlistCount();
         }, 300);
     }
 
@@ -335,26 +381,43 @@ function removeFromWishlist(productId) {
 
 // Toggle wishlist item
 function toggleWishlist(product) {
-    const existingProductIndex = wishlist.findIndex(item => item.id === product.id);
+    console.log('Toggling wishlist item:', product);
+
+    // Get fresh wishlist data from localStorage
+    let wishlistArray = JSON.parse(localStorage.getItem('wishlist')) || [];
+
+    // Check if product is already in wishlist
+    const existingProductIndex = wishlistArray.findIndex(item => String(item.id) === String(product.id));
 
     if (existingProductIndex > -1) {
         // Remove from wishlist
-        wishlist.splice(existingProductIndex, 1);
+        wishlistArray.splice(existingProductIndex, 1);
+        console.log('Removed from wishlist');
     } else {
         // Add to wishlist
-        wishlist.push(product);
+        wishlistArray.push(product);
+        console.log('Added to wishlist');
     }
 
+    // Update global wishlist variable
+    wishlist = wishlistArray;
+
     // Save to localStorage
-    saveWishlist();
+    localStorage.setItem('wishlist', JSON.stringify(wishlistArray));
 
-    // Update wishlist count if on wishlist page
+    // Update wishlist count
+    updateWishlistCount();
 
+    return existingProductIndex === -1; // Return true if added, false if removed
 }
 
 // Check if product is in wishlist
 function isInWishlist(productId) {
-    return wishlist.some(item => item.id === productId);
+    if (!productId) return false;
+
+    // Get fresh wishlist data from localStorage
+    const wishlistArray = JSON.parse(localStorage.getItem('wishlist')) || [];
+    return wishlistArray.some(item => String(item.id) === String(productId));
 }
 
 // Save cart to localStorage
@@ -522,9 +585,6 @@ function updateCartCount() {
     }
 }
 
-// Update wishlist count
-
-
 // Render wishlist items
 function renderWishlistItems() {
     const wishlistContainer = document.querySelector('.wishlist-items');
@@ -540,6 +600,13 @@ function renderWishlistItems() {
         let wishlistHTML = '';
 
         wishlist.forEach(item => {
+            // Format prices consistently
+            const formattedPrice = new Intl.NumberFormat('en-US', {
+                style: 'currency',
+                currency: 'EUR',
+                maximumFractionDigits: 0
+            }).format(item.price);
+
             wishlistHTML += `
                 <div class="wishlist-card" data-id="${item.id}">
                     <div class="wishlist-image">
@@ -554,8 +621,17 @@ function renderWishlistItems() {
                             <p>Premium Vehicle</p>
                         </div>
                         <div class="wishlist-price">
-                            <div class="price">€${Math.round(item.price / 365)}<span class="price-period">/day</span></div>
-                            <div class="price-total">€${item.price.toLocaleString()} total</div>
+                            <div class="price">${formattedPrice}</div>
+                        </div>
+                    </div>
+                    <div class="wishlist-features">
+                        <div class="feature">
+                            <img src="../assets/icons/engine.png" alt="Engine">
+                            <span>Premium Performance</span>
+                        </div>
+                        <div class="feature">
+                            <img src="../assets/icons/Delivery.png" alt="Delivery">
+                            <span>Free Delivery</span>
                         </div>
                     </div>
                     <div class="wishlist-actions">
@@ -573,12 +649,9 @@ function renderWishlistItems() {
 
         wishlistContainer.innerHTML = wishlistHTML;
 
-        // Update all wishlist counters
-        updateWishlistCount();
-
-        // Setup event listeners
+        // Setup event listeners for all buttons
         setupAddToCartButtons();
-        setupWishlistButtons();
+        setupRemoveWishlistButtons();
     }
 }
 
@@ -600,6 +673,21 @@ function showEmptyWishlist() {
         // Update all wishlist counters to 0
         updateWishlistCount();
     }
+}
+
+// Specific function for wishlist remove buttons
+function setupRemoveWishlistButtons() {
+    const removeButtons = document.querySelectorAll('.remove-from-wishlist');
+
+    removeButtons.forEach(button => {
+        button.addEventListener('click', function (e) {
+            e.preventDefault();
+            e.stopPropagation(); // Prevent event bubbling
+            const productId = this.getAttribute('data-id');
+            console.log('Removing item from wishlist:', productId);
+            removeFromWishlist(productId);
+        });
+    });
 }
 
 // Show notification
@@ -630,10 +718,8 @@ function checkout() {
     }
 
     if (orderPanel) {
-        // Close cart panel first
-        closeCart();
-        // Then open order panel
-        orderPanel.openPanel();
+        closeCart(); // Close cart panel first
+        orderPanel.openPanel(); // Then open order panel
     } else {
         showNotification('Unable to process order. Please try again.', 'error');
     }

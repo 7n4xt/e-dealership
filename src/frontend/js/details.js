@@ -276,31 +276,41 @@ function setupCartWishlist() {
   addToWishlistBtn.addEventListener('click', function () {
     if (!currentCar) return;
 
-    const product = {
-      id: currentCar.id,
-      name: `${currentCar.brand} ${currentCar.model}`,
-      price: currentCar.reduction ?
+    try {
+      // Calculate actual price considering reduction
+      const actualPrice = currentCar.reduction ?
         currentCar.price * (1 - currentCar.reduction / 100) :
-        currentCar.price,
-      image: `${API_URL}/img/${currentCar.images[selectedColor].main}`
-    };
+        currentCar.price;
 
-    // Toggle wishlist item
-    toggleWishlist(product);
+      const product = {
+        id: currentCar.id,
+        name: `${currentCar.brand.toUpperCase()} ${currentCar.model.toUpperCase()}`,
+        price: actualPrice,
+        image: `${API_URL}/img/${currentCar.images[selectedColor].main}`
+      };
 
-    // Show notification
-    if (isInWishlist(currentCar.id)) {
-      showNotification('Item added to your wishlist');
-      // Redirect to wishlist page after a short delay
-      setTimeout(() => {
-        window.location.href = './wishlist.html';
-      }, 1000);
-    } else {
-      showNotification('Item removed from your wishlist');
+      console.log('Adding to wishlist:', product);
+
+      // Toggle wishlist item and get result (true if added, false if removed)
+      const isAdded = toggleWishlist(product);
+
+      // Update button text and style
+      if (isAdded) {
+        addToWishlistBtn.classList.add('active');
+        addToWishlistBtn.textContent = 'Remove from Wishlist';
+        showNotification('Item added to your wishlist');
+      } else {
+        addToWishlistBtn.classList.remove('active');
+        addToWishlistBtn.textContent = 'Add to Wishlist';
+        showNotification('Item removed from your wishlist');
+      }
+    } catch (error) {
+      console.error('Error toggling wishlist:', error);
+      showNotification('Error updating wishlist', 'error');
     }
   });
 
-  // Update button state based on wishlist status
+  // Update button state based on wishlist status on load
   if (isInWishlist(currentCar?.id)) {
     addToWishlistBtn.classList.add('active');
     addToWishlistBtn.textContent = 'Remove from Wishlist';
