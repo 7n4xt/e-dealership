@@ -14,6 +14,7 @@ class OrderPanel {
         this.initializeCardSelection();
         this.initializeDeliveryOptions();
         this.createOverlay();
+        this.initializeConfirmOrderButton();
     }
 
     createOverlay() {
@@ -417,36 +418,136 @@ class OrderPanel {
         document.body.style.overflow = '';
     }
 
-    handleOrderConfirmation() {
+    initializeConfirmOrderButton() {
+        const confirmOrderBtn = document.getElementById('confirm-order');
+        if (confirmOrderBtn) {
+            confirmOrderBtn.addEventListener('click', () => this.handleOrderConfirmation());
+        }
+    }
+
+    async handleOrderConfirmation() {
+        // Get required elements
         const selectedAddress = this.selectedLocation?.querySelector('.address')?.textContent;
         const paymentMethod = document.querySelector('input[name="payment"]:checked')?.value;
         const deliveryMethod = document.querySelector('input[name="delivery"]:checked')?.value;
+        const confirmOrderBtn = document.getElementById('confirm-order');
 
-        // Check if delivery method is selected
-        if (!deliveryMethod) {
-            alert('Veuillez sélectionner un mode de livraison');
-            return;
-        }
-
-        // If store pickup, check if store is selected
-        if (deliveryMethod === 'store') {
-            const selectedStore = document.getElementById('store-select').value;
-            if (!selectedStore) {
-                alert('Veuillez sélectionner un magasin');
-                return;
+        // Basic validation
+        if (!this.validateOrderInputs()) {
+            if (typeof showNotification === 'function') {
+                showNotification('Please fill in all required fields', 'error');
+            } else {
+                alert('Please fill in all required fields');
             }
-        } else if (!selectedAddress) {
-            // For other delivery methods, check address
-            alert('Veuillez sélectionner une adresse de livraison');
             return;
         }
 
-        // Handle payment processing
-        if (paymentMethod === 'paypal') {
-            this.processPayPalPayment();
-        } else {
-            this.processCardPayment();
+        // Show loading state
+        confirmOrderBtn.disabled = true;
+        confirmOrderBtn.textContent = 'Processing...';
+
+        try {
+            // Check if the updateStockAfterPurchase function exists
+            if (typeof updateStockAfterPurchase === 'function') {
+                // Call the stock update function from cartandwish.js
+                const stockUpdateSuccess = await updateStockAfterPurchase();
+
+                if (stockUpdateSuccess) {
+                    // Display success message
+                    if (typeof showNotification === 'function') {
+                        showNotification('Order completed successfully!', 'success');
+                    } else {
+                        alert('Order completed successfully!');
+                    }
+
+                    // Clear cart and close panel after small delay
+                    setTimeout(() => {
+                        this.clearCartAndClose();
+                        // Reset button
+                        confirmOrderBtn.disabled = false;
+                        confirmOrderBtn.textContent = 'Confirm Order';
+                    }, 1500);
+                } else {
+                    // Reset button state
+                    confirmOrderBtn.disabled = false;
+                    confirmOrderBtn.textContent = 'Confirm Order';
+                }
+            } else {
+                // Fallback to legacy payment processing if updateStockAfterPurchase not available
+                if (paymentMethod === 'paypal') {
+                    this.processPayPalPayment();
+                } else {
+                    this.processCardPayment();
+                }
+                confirmOrderBtn.disabled = false;
+                confirmOrderBtn.textContent = 'Confirm Order';
+            }
+        } catch (error) {
+            console.error('Error processing order:', error);
+            if (typeof showNotification === 'function') {
+                showNotification('Error processing your order. Please try again.', 'error');
+            } else {
+                alert('Error processing your order. Please try again.');
+            }
+
+            // Reset button state
+            confirmOrderBtn.disabled = false;
+            confirmOrderBtn.textContent = 'Confirm Order';
         }
+    }
+
+    validateOrderInputs() {
+        // Get selected delivery option
+        const selectedDelivery = document.querySelector('input[name="delivery"]:checked');
+        if (!selectedDelivery) {
+            return false;
+        }
+
+        // Check location if home or express delivery
+        if (selectedDelivery.value === 'home' || selectedDelivery.value === 'express') {
+            const addressElement = document.querySelector('.selected-location .address');
+            if (!addressElement || !addressElement.textContent.trim()) {
+                return false;
+            }
+        }
+
+        // Check store selection if store pickup
+        if (selectedDelivery.value === 'store') {
+            const storeSelect = document.getElementById('store-select');
+            if (!storeSelect || !storeSelect.value) {
+                return false;
+            }
+        }
+
+        // Check payment method
+        const selectedPayment = document.querySelector('input[name="payment"]:checked');
+        if (!selectedPayment) {
+            return false;
+        }
+
+        // Validate card details if card payment
+        if (selectedPayment.value === 'card') {
+            const cardNumber = document.getElementById('card-number').value;
+            const cardExpiry = document.getElementById('card-expiry').value;
+            const cardCvv = document.getElementById('card-cvv').value;
+            const cardName = document.getElementById('card-name').value;
+
+            if (!cardNumber || !cardExpiry || !cardCvv || !cardName) {
+                return false;
+            }
+        }
+
+        // Validate PayPal details if PayPal
+        if (selectedPayment.value === 'paypal') {
+            const paypalEmail = document.getElementById('paypal-email').value;
+            const paypalPhone = document.getElementById('paypal-phone').value;
+
+            if (!paypalEmail || !paypalPhone) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     processCardPayment() {
@@ -463,10 +564,10 @@ class OrderPanel {
         setTimeout(() => {
             // Remove processing message
             message.remove();
-            
+
             // Show success message
             alert('Paiement accepté ! Merci pour votre commande.');
-            
+
             // Clear cart and close panel
             this.clearCartAndClose();
         }, 2000);

@@ -33,6 +33,7 @@ window.toggleWishlist = toggleWishlist;
 window.renderCartItems = renderCartItems;
 window.updateCartCount = updateCartCount;
 window.cart = cart;
+window.updateStockAfterPurchase = updateStockAfterPurchase; // Make sure this is defined
 
 // Update wishlist count
 function updateWishlistCount() {
