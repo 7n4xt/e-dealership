@@ -408,7 +408,6 @@ function initializeSlideshow() {
     '2023-Audi-RS7-Sportback-Performance-001-2160.jpg',
     '2023-Audi-RS7-Sportback-Performance-008-1440w.jpg',
     '2023-BMW-7-Series-004-2160.jpg',
-    '2024-Nissan-GT-R-T-Spec-Takumi-Edition-002-2160.jpg',
     '2025-BMW-M5-Touring-011-2160.jpg',
     '2025-Mercedes-AMG-G63-002-2160.jpg',
     '2025-Mercedes-AMG-GT63-PRO-001-2160.jpg'
