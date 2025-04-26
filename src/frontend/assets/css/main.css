@@ -15,17 +15,43 @@ body {
     padding: 0 15px;
 }
 
-/* Hero Section */
+/* Hero Section with Slideshow */
 .hero {
     position: relative;
-    height: 80vh;
-    background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)),
-        url(../images/2024-Nissan-GT-R-T-Spec-Takumi-Edition-002-2160.jpg);
-    background-size: cover;
-    background-position: center;
+    height: 82vh;
+    min-height: 700px;
     display: flex;
     align-items: center;
+    justify-content: center;
     overflow: hidden;
+}
+
+.slideshow-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+}
+
+.slideshow-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 2s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 0;
+    filter: brightness(0.6);
+    /* Make image dimmer */
+}
+
+.slideshow-image.active {
+    opacity: 1;
+    z-index: 1;
 }
 
 .hero::after {
@@ -33,9 +59,22 @@ body {
     position: absolute;
     bottom: 0;
     left: 0;
-    right: 0;
-    height: 150px;
-    background: linear-gradient(to top, #000, transparent);
+    width: 100%;
+    height: 70%;
+    /* Increased height of gradient */
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+    z-index: 1;
+}
+
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.3);
+    /* Additional overlay to dim the entire image */
     z-index: 1;
 }
 
@@ -132,10 +171,6 @@ body {
 }
 
 /* Featured Brands Section */
-.featured-brands {
-    background-color: #000;
-}
-
 .section-title {
     font-size: 2rem;
     font-weight: 600;

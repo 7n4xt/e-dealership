@@ -391,4 +391,53 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   });
+
+  // Setup hero section slideshow
+  initializeSlideshow();
 });
+
+// Function to initialize the slideshow in the hero section
+function initializeSlideshow() {
+  const slideshowContainer = document.querySelector('.slideshow-container');
+  if (!slideshowContainer) return;
+
+  // List of image filenames
+  const imageFiles = [
+    '2024-Audi-RS6-Avant-GT-009-2160.jpg',
+    '2005-BMW-M3-GTR-Need-For-Speed-001-2160.jpg',
+    '2023-Audi-RS7-Sportback-Performance-001-2160.jpg',
+    '2023-Audi-RS7-Sportback-Performance-008-1440w.jpg',
+    '2023-BMW-7-Series-004-2160.jpg',
+    '2024-Nissan-GT-R-T-Spec-Takumi-Edition-002-2160.jpg',
+    '2025-BMW-M5-Touring-011-2160.jpg',
+    '2025-Mercedes-AMG-G63-002-2160.jpg',
+    '2025-Mercedes-AMG-GT63-PRO-001-2160.jpg'
+  ];
+
+  // Select a random image index to start with
+  let currentImageIndex = Math.floor(Math.random() * imageFiles.length);
+
+  // Create image elements and add them to the slideshow container
+  imageFiles.forEach((filename, index) => {
+    const img = document.createElement('img');
+    img.src = `./assets/images/${filename}`;
+    img.className = 'slideshow-image' + (index === currentImageIndex ? ' active' : '');
+    img.alt = `Premium performance car ${index + 1}`;
+    img.loading = 'eager'; // Ensure the initial image loads quickly
+    slideshowContainer.appendChild(img);
+  });
+
+  // Function to change the active image
+  function changeImage() {
+    const images = document.querySelectorAll('.slideshow-image');
+    images[currentImageIndex].classList.remove('active');
+
+    // Move to the next image
+    currentImageIndex = (currentImageIndex + 1) % images.length;
+
+    images[currentImageIndex].classList.add('active');
+  }
+
+  // Set interval to change image every 30 seconds
+  setInterval(changeImage, 30000);
+}
