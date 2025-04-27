@@ -649,7 +649,7 @@ function renderWishlistItems() {
                     </div>
                     <div class="wishlist-features">
                         <div class="feature">
-                            <img src="../assets/icons/engine.png" alt="Engine">
+                            <img src="../assets/icons/Premium.png" alt="Engine">
                             <span>Premium Performance</span>
                         </div>
                         <div class="feature">
