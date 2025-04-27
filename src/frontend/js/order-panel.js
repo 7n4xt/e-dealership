@@ -101,7 +101,7 @@ class OrderPanel {
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             if (!emailRegex.test(input.value)) {
                 input.classList.add('invalid-input');
-                errorMessage.textContent = 'Email PayPal invalide';
+                errorMessage.textContent = 'Invalid PayPal email';
                 errorMessage.classList.add('show');
                 return false;
             }
@@ -109,7 +109,7 @@ class OrderPanel {
             const phoneRegex = /^[+]?[(]?[0-9]{3}[)]?[-\s.]?[0-9]{3}[-\s.]?[0-9]{4,6}$/;
             if (!phoneRegex.test(input.value)) {
                 input.classList.add('invalid-input');
-                errorMessage.textContent = 'Numéro de téléphone invalide';
+                errorMessage.textContent = 'Invalid phone number';
                 errorMessage.classList.add('show');
                 return false;
             }
@@ -366,12 +366,12 @@ class OrderPanel {
             const cardType = selectedCard?.dataset.card;
 
             if (!cardNumber || !cardExpiry || !cardCvv || !cardName) {
-                alert('Veuillez remplir tous les champs de la carte');
+                alert('Please fill in all card fields');
                 return false;
             }
 
             if (!this.validateCardNumber(cardNumber, cardType)) {
-                alert('Numéro de carte invalide');
+                alert('Invalid card number');
                 return false;
             }
         }
@@ -556,7 +556,7 @@ class OrderPanel {
         message.className = 'payment-processing-message';
         message.innerHTML = `
             <div class="loading-spinner"></div>
-            <p>Traitement du paiement en cours...</p>
+            <p>Processing payment...</p>
         `;
         document.querySelector('.panel-content').appendChild(message);
 
@@ -566,7 +566,7 @@ class OrderPanel {
             message.remove();
 
             // Show success message
-            alert('Paiement accepté ! Merci pour votre commande.');
+            alert('Payment accepted! Thank you for your order.');
 
             // Clear cart and close panel
             this.clearCartAndClose();
@@ -579,7 +579,7 @@ class OrderPanel {
 
         // Simulate PayPal redirect
         setTimeout(() => {
-            alert('Redirection vers PayPal...');
+            alert('Redirecting to PayPal...');
             // In production, you would redirect to PayPal here
             this.clearCartAndClose();
         }, 2000);

@@ -438,5 +438,5 @@ function initializeSlideshow() {
   }
 
   // Set interval to change image every 30 seconds
-  setInterval(changeImage, 30000);
+  setInterval(changeImage, 15000);
 }
