@@ -405,12 +405,15 @@ function initializeSlideshow() {
   const imageFiles = [
     '2024-Audi-RS6-Avant-GT-009-2160.jpg',
     '2005-BMW-M3-GTR-Need-For-Speed-001-2160.jpg',
-    '2023-Audi-RS7-Sportback-Performance-001-2160.jpg',
     '2023-Audi-RS7-Sportback-Performance-008-1440w.jpg',
     '2023-BMW-7-Series-004-2160.jpg',
     '2025-BMW-M5-Touring-011-2160.jpg',
     '2025-Mercedes-AMG-G63-002-2160.jpg',
-    '2025-Mercedes-AMG-GT63-PRO-001-2160.jpg'
+    '2025-Mercedes-AMG-GT63-PRO-001-2160.jpg',
+    '2020-Audi-RS5-Coupe-010-2160.jpg',
+    '2022-Audi-S8-007-2160.jpg',
+    '2025-Audi-RS3-Sportback-006-2160.jpg',
+    '2023-BMW-M8-Competition-007-2160.jpg'
   ];
 
   // Select a random image index to start with
