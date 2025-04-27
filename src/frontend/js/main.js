@@ -404,7 +404,6 @@ function initializeSlideshow() {
   // List of image filenames
   const imageFiles = [
     '2024-Audi-RS6-Avant-GT-009-2160.jpg',
-    '2005-BMW-M3-GTR-Need-For-Speed-001-2160.jpg',
     '2023-Audi-RS7-Sportback-Performance-008-1440w.jpg',
     '2023-BMW-7-Series-004-2160.jpg',
     '2025-BMW-M5-Touring-011-2160.jpg',
