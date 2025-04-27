@@ -214,11 +214,20 @@ function setupAddToCartButtons() {
                 quantity: 1
             });
 
+            // Determine if we're on the wishlist page
+            const isWishlistPage = document.querySelector('.wishlist-section') !== null;
+
             // Show notification
             showNotification('Item added to your cart');
 
-            // Open cart
-            openCart();
+            // If on wishlist page, remove item from wishlist but don't open cart
+            if (isWishlistPage && button.classList.contains('wishlist-add-to-cart')) {
+                removeFromWishlist(productId);
+                showNotification('Item moved from wishlist to cart');
+            } else {
+                // On other pages, open cart as usual
+                openCart();
+            }
         });
     });
 }
