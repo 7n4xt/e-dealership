@@ -84,17 +84,12 @@ e-dealership/
 
 3. Start the backend server:
    ```bash
-   npm run start:backend
+   npm run start
    ```
 
-4. Start the frontend development server:
-   ```bash
-   npm run start:frontend
+5. Use open live server extention from vscode in the index.html file:
    ```
-
-5. Open your browser and navigate to:
-   ```
-   http://localhost:8080
+   index.html
    ```
 
 ## Usage
