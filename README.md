@@ -84,7 +84,7 @@ e-dealership/
 
 3. Start the backend server:
    ```bash
-   npm run start
+   npm start
    ```
 
 5. Use open live server extention from vscode in the index.html file:
